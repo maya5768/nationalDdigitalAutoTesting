@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הסבר שאלה 1 — בדיקת API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Heebo', Arial, sans-serif;
+            line-height: 1.8;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f0f4ff 0%, #fafafa 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #0b4f8a 0%, #1a73c8 100%);
+            color: white;
+            padding: 40px 48px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 32px rgba(11, 79, 138, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 50%;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: 40px;
+            width: 140px;
+            height: 140px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .page-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .page-header p {
+            font-size: 1rem;
+            opacity: 0.85;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid #e8ecf0;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .step-badge {
+            background: #0b4f8a;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0b4f8a;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            color: #4a5568;
+            margin-bottom: 12px;
+            font-size: 0.97rem;
+        }
+
+        /* Code */
+        code {
+            direction: ltr;
+            display: inline;
+            background: #edf2ff;
+            color: #2b5cb8;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        pre {
+            direction: ltr;
+            text-align: left;
+            background: #1a1d2e;
+            padding: 24px 28px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.65;
+            margin: 16px 0;
+            position: relative;
+            border: 1px solid #2d3151;
+        }
+
+        pre::before {
+            content: 'JavaScript';
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            font-size: 0.7rem;
+            color: #6b7db3;
+            font-family: 'Heebo', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        pre.url-block::before {
+            content: 'URL';
+        }
+
+        pre.regex-block::before {
+            content: 'RegExp';
+        }
+
+        pre code {
+            display: block;
+            background: transparent;
+            color: #e2e8f0;
+            padding: 0;
+            border-radius: 0;
+            white-space: pre;
+            font-size: 0.88rem;
+        }
+
+        /* Syntax highlighting */
+        .kw { color: #c792ea; }
+        .fn { color: #82aaff; }
+        .str { color: #c3e88d; }
+        .cm { color: #546e7a; font-style: italic; }
+        .num { color: #f78c6c; }
+        .prop { color: #ffcb6b; }
+
+        /* Note */
+        .note {
+            background: #fffbeb;
+            border-right: 4px solid #f6ad55;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: #744210;
+            font-size: 0.93rem;
+        }
+
+        .note strong {
+            color: #c05621;
+        }
+
+        /* Info box */
+        .info {
+            background: #ebf8ff;
+            border-right: 4px solid #4299e1;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: #2c5282;
+            font-size: 0.93rem;
+        }
+
+        /* List */
+        ul {
+            padding-right: 20px;
+            margin: 12px 0;
+        }
+
+        ul li {
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        ul li code {
+            direction: ltr;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px solid #e8ecf0;
+            margin: 24px 0;
+        }
+
+        /* Summary card */
+        .summary-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e8f4fd 100%);
+            border: 1px solid #bee3f8;
+            border-radius: 12px;
+            padding: 28px 36px;
+            margin-bottom: 24px;
+        }
+
+        .summary-card h2 {
+            color: #2b6cb0;
+            margin-bottom: 12px;
+        }
+
+        .summary-card p {
+            color: #2c5282;
+        }
+
+        /* Regex breakdown table */
+        .regex-breakdown {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            direction: rtl;
+        }
+
+        .regex-breakdown th {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 10px 16px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.3px;
+        }
+
+        .regex-breakdown td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #e8ecf0;
+            vertical-align: top;
+        }
+
+        .regex-breakdown tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        .regex-breakdown tr:hover td {
+            background: #edf2ff;
+        }
+
+        .regex-breakdown td:first-child {
+            direction: ltr;
+            text-align: left;
+            font-family: 'Consolas', monospace;
+            font-weight: 700;
+            color: #e53e3e;
+            white-space: nowrap;
+            width: 200px;
+        }
+
+        .regex-breakdown td:last-child {
+            color: #4a5568;
+        }
+
+        /* Visual regex strip */
+        .regex-visual {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin: 20px 0;
+            direction: ltr;
+            align-items: flex-end;
+        }
+
+        .regex-part {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .regex-part .token {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 2px solid transparent;
+        }
+
+        .regex-part .label {
+            font-size: 0.68rem;
+            color: #718096;
+            text-align: center;
+            max-width: 80px;
+            line-height: 1.3;
+            direction: rtl;
+        }
+
+        .t1 .token { background: #fff5f5; border-color: #fc8181; color: #c53030; }
+        .t2 .token { background: #fffff0; border-color: #f6e05e; color: #744210; }
+        .t3 .token { background: #f0fff4; border-color: #68d391; color: #276749; }
+        .t4 .token { background: #ebf8ff; border-color: #63b3ed; color: #2b6cb0; }
+        .t5 .token { background: #faf5ff; border-color: #b794f4; color: #553c9a; }
+        .t6 .token { background: #fff5f5; border-color: #fc8181; color: #c53030; }
+        .t7 .token { background: #e6fffa; border-color: #4fd1c5; color: #234e52; }
+
+        /* Match/No match examples */
+        .match-examples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .match-box {
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .match-box.yes {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+        }
+
+        .match-box.no {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+        }
+
+        .match-box .match-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .match-box.yes .match-title { color: #276749; }
+        .match-box.no .match-title { color: #c53030; }
+
+        .match-box code {
+            display: block;
+            direction: ltr;
+            text-align: left;
+            margin-bottom: 6px;
+            background: transparent;
+            padding: 2px 0;
+            font-size: 0.83rem;
+            color: inherit;
+        }
+
+        .match-box.yes code { color: #276749; }
+        .match-box.no code { color: #c53030; }
+
+        /* Concept / success / warning boxes */
+        .concept-box {
+            background: #f0f9ff;
+            border-right: 4px solid #0ea5e9;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: #0c4a6e;
+            font-size: 0.93rem;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-right: 4px solid #22c55e;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: #14532d;
+            font-size: 0.93rem;
+        }
+
+        /* Trace table (loop walkthrough) */
+        .trace-table {
+            margin: 18px 0;
+            border: 1px solid #dbeafe;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .trace-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            direction: rtl;
+        }
+
+        .trace-table th {
+            background: #dbeafe;
+            color: #1e3a8a;
+            padding: 10px 14px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .trace-table td {
+            padding: 9px 14px;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        .trace-table tr:last-child td { border-bottom: none; }
+
+        .cell-yes  { color: #15803d; font-weight: 700; }
+        .cell-no   { color: #b91c1c; font-weight: 700; }
+        .hint-update { background: #dcfce7; color: #166534; font-weight: 700; border-radius: 6px; padding: 2px 8px; display: inline-block; }
+        .hint-same   { background: #fee2e2; color: #991b1b; font-weight: 700; border-radius: 6px; padding: 2px 8px; display: inline-block; }
+
+        /* Flow steps */
+        .flow-line {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 18px 0;
+        }
+
+        .flow-step {
+            background: #f8fafc;
+            border: 1px solid #dbeafe;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #334155;
+            line-height: 1.5;
+        }
+
+        .flow-step strong {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #1a73e8;
+            color: white;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+        }
+
+        /* Final answer box */
+        .final-answer {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin: 18px 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #166534;
+            text-align: center;
+        }
+
+        /* Question code quote */
+        .question-quote {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.88rem;
+            direction: ltr;
+            text-align: left;
+            color: #e2e8f0;
+            background: #1a1d2e;
+        }
+
+        /* Diagram (dark ASCII/flow box) */
+        .diagram {
+            background: #1e293b;
+            color: #94a3b8;
+            border-radius: 8px;
+            padding: 20px 24px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            direction: ltr;
+            text-align: left;
+            line-height: 2;
+            margin: 16px 0;
+        }
+
+        .diagram .arrow   { color: #fbbf24; }
+        .diagram .ok      { color: #86efac; }
+        .diagram .bad     { color: #f87171; }
+        .diagram .neutral { color: #93c5fd; }
+        .diagram .dim     { color: #475569; }
+
+        /* General table used in Q1 */
+        .general-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.9rem;
+            direction: rtl;
+        }
+
+        .general-table th {
+            background: #f1f5f9;
+            padding: 10px 14px;
+            text-align: right;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        .general-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+            color: #4a5568;
+        }
+
+        .general-table tr:last-child td { border-bottom: none; }
+
+        .general-table td code {
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* Section separator */
+        .part-separator {
+            background: linear-gradient(135deg, #1e3a5f 0%, #1a73c8 100%);
+            color: white;
+            padding: 20px 32px;
+            border-radius: 12px;
+            margin: 40px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .part-separator .part-num {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .part-separator h2 {
+            color: white;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            .flow-line { grid-template-columns: 1fr; }
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            background: #ebf4ff;
+            color: #2b6cb0;
+            border: 1px solid #bee3f8;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <main>
+
+        <header class="page-header">
+            <div class="badge">Part I | API Testing</div>
+            <h1>הסבר שאלה 1</h1>
+            <p>בדיקת API לאתר gov.il — אימות שפת עמוד</p>
+        </header>
+
+        <!-- Request -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>כתובת הבקשה</h2>
+            </div>
+
+            <p>הבקשה נשלחת בשיטת <code>GET</code> לכתובת הגרסה האנגלית של האתר:</p>
+
+            <pre class="url-block"><code>https://www.gov.il/en</code></pre>
+
+            <div class="note">
+                <strong>שים לב:</strong> חשוב להשתמש ב-<code>https</code> ולא ב-<code>http</code>, כדי למנוע שגיאות שרת כמו סטטוס <code>520</code>.
+            </div>
+        </div>
+
+        <!-- Test Code -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>קוד הבדיקה — Post-response Scripts</h2>
+            </div>
+
+            <pre><code><span class="cm">// Test 1: Validate that the request was successful</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Status code is 200"</span>, <span class="kw">function</span> () {
+    <span class="cm">// Status 200 means the page was loaded successfully</span>
+    <span class="prop">pm</span>.response.to.have.<span class="fn">status</span>(<span class="num">200</span>);
+});
+
+
+<span class="cm">// Test 2: Validate that the page language is English</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Page language is English"</span>, <span class="kw">function</span> () {
+    <span class="kw">var</span> responseText = <span class="prop">pm</span>.response.<span class="fn">text</span>();
+
+    <span class="cm">// Search for the lang attribute inside the &lt;html&gt; tag</span>
+    <span class="cm">// Example matches: &lt;html lang="en"&gt;  /  &lt;html lang="en-US"&gt;</span>
+    <span class="kw">var</span> langMatch = responseText.<span class="fn">match</span>(<span class="str">/&lt;html[^&gt;]*\slang=["']([^"']+)["']/i</span>);
+
+    <span class="cm">// Make sure that the lang attribute exists</span>
+    <span class="prop">pm</span>.<span class="fn">expect</span>(langMatch).to.not.be.null;
+
+    <span class="cm">// Extract and normalize the language value (e.g. "en" or "en-US")</span>
+    <span class="kw">var</span> pageLang = langMatch[<span class="num">1</span>].<span class="fn">toLowerCase</span>();
+
+    <span class="cm">// Verify that the language starts with "en"</span>
+    <span class="prop">pm</span>.<span class="fn">expect</span>(pageLang).to.<span class="fn">match</span>(<span class="str">/^(en\b|en-)/</span>);
+});</code></pre>
+        </div>
+
+        <!-- Explanation -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>הסבר על הבדיקות</h2>
+            </div>
+
+            <h3>בדיקה 1 — סטטוס 200</h3>
+            <p>
+                מוודאת שהשרת החזיר קוד סטטוס <code>200 OK</code>.
+                קוד זה מציין שהבקשה הצליחה והעמוד נטען בצורה תקינה.
+            </p>
+
+            <hr class="divider">
+
+            <h3>בדיקה 2 — שפת העמוד</h3>
+            <p>
+                בודקת את מאפיין <code>lang</code> שנמצא בתגית <code>&lt;html&gt;</code>.
+                מאפיין זה מציין את שפת העמוד. לדוגמה:
+            </p>
+
+            <pre class="url-block"><code>&lt;html lang="en"&gt;</code></pre>
+
+            <div class="info">
+                אם הערך של <code>lang</code> מתחיל ב-<code>en</code>, ניתן להסיק שהעמוד מוגדר באנגלית.
+            </div>
+        </div>
+
+        <!-- Regex -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">4</div>
+                <h2>הסבר מפורט על ה-Regular Expression</h2>
+            </div>
+
+            <h3>רג'קס 1 — מציאת מאפיין השפה בתגית HTML</h3>
+            <pre class="regex-block"><code>/&lt;html[^&gt;]*\slang=["']([^"']+)["']/i</code></pre>
+
+            <p>הרג'קס מחפש בתוך קוד ה-HTML של הדף את תגית <code>&lt;html&gt;</code> ומוציא ממנה את ערך השפה.</p>
+
+            <!-- Visual breakdown -->
+            <div class="regex-visual">
+                <div class="regex-part t1">
+                    <span class="token">&lt;html</span>
+                    <span class="label">התחלת תגית html</span>
+                </div>
+                <div class="regex-part t2">
+                    <span class="token">[^&gt;]*</span>
+                    <span class="label">כל תו עד &gt;</span>
+                </div>
+                <div class="regex-part t3">
+                    <span class="token">\s</span>
+                    <span class="label">רווח לפני lang</span>
+                </div>
+                <div class="regex-part t4">
+                    <span class="token">lang=</span>
+                    <span class="label">שם המאפיין</span>
+                </div>
+                <div class="regex-part t5">
+                    <span class="token">["']</span>
+                    <span class="label">פתיחת מרכאות</span>
+                </div>
+                <div class="regex-part t6">
+                    <span class="token">([^"']+)</span>
+                    <span class="label">capture group — ערך השפה</span>
+                </div>
+                <div class="regex-part t7">
+                    <span class="token">["']</span>
+                    <span class="label">סגירת מרכאות</span>
+                </div>
+            </div>
+
+            <!-- Table breakdown -->
+            <table class="regex-breakdown">
+                <thead>
+                    <tr>
+                        <th>חלק ברג'קס</th>
+                        <th>מה הוא עושה</th>
+                        <th>למה צריך אותו?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&lt;html</td>
+                        <td>מחפש את המחרוזת המדויקת <code>&lt;html</code></td>
+                        <td>מבטיח שאנחנו מסתכלים רק על תגית ה-html הראשית ולא על תגיות אחרות</td>
+                    </tr>
+                    <tr>
+                        <td>[^&gt;]*</td>
+                        <td>מתאים לכל תו שאינו <code>&gt;</code>, אפס פעמים או יותר</td>
+                        <td>מאפשר לדלג על מאפיינים אחרים כמו <code>dir="rtl"</code> שעשויים להופיע לפני <code>lang</code></td>
+                    </tr>
+                    <tr>
+                        <td>\s</td>
+                        <td>מחפש תו רווח (space, tab וכו')</td>
+                        <td>בין מאפיינים ב-HTML תמיד יש רווח — <code>&lt;html dir="rtl" lang="en"&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>lang=</td>
+                        <td>מחפש את המחרוזת המדויקת <code>lang=</code></td>
+                        <td>מזהה את שם המאפיין הספציפי שאנחנו מחפשים</td>
+                    </tr>
+                    <tr>
+                        <td>["']</td>
+                        <td>מתאים לגרש כפול <code>"</code> או לגרש בודד <code>'</code></td>
+                        <td>ב-HTML מותר לכתוב גם <code>lang="en"</code> וגם <code>lang='en'</code></td>
+                    </tr>
+                    <tr>
+                        <td>([^"']+)</td>
+                        <td><strong>Capture Group</strong> — תופס את הערך בין המרכאות</td>
+                        <td>זה החלק שמוחזר ב-<code>langMatch[1]</code> — כאן יהיה <code>en</code> או <code>en-US</code></td>
+                    </tr>
+                    <tr>
+                        <td>/i</td>
+                        <td>דגל <em>case-insensitive</em></td>
+                        <td>גורם לכך שגם <code>LANG="EN"</code> יתאים (הגנה מפני HTML לא סטנדרטי)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>דוגמאות — מה יתאים ומה לא:</h3>
+            <div class="match-examples">
+                <div class="match-box yes">
+                    <div class="match-title">✓ יתאים (match)</div>
+                    <code>&lt;html lang="en"&gt;</code>
+                    <code>&lt;html lang="en-US"&gt;</code>
+                    <code>&lt;html dir="ltr" lang="en"&gt;</code>
+                    <code>&lt;html lang='en-GB'&gt;</code>
+                </div>
+                <div class="match-box no">
+                    <div class="match-title">✗ לא יתאים (no match)</div>
+                    <code>&lt;html lang="he"&gt;</code>
+                    <code>&lt;html lang="ar"&gt;</code>
+                    <code>&lt;div lang="en"&gt;</code>
+                    <code>&lt;htmllang="en"&gt;</code>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>Capture Group</strong> — הסוגריים <code>( )</code> ברג'קס הם "לכידה". כשקוראים <code>langMatch[1]</code>, מקבלים רק את מה שנלכד בתוך הסוגריים — כלומר ערך השפה בלבד, בלי שאר תגית ה-html.
+            </div>
+
+            <hr class="divider">
+
+            <h3>רג'קס 2 — אימות שהשפה היא אנגלית</h3>
+            <pre class="regex-block"><code>/^(en\b|en-)/</code></pre>
+
+            <table class="regex-breakdown">
+                <thead>
+                    <tr>
+                        <th>חלק ברג'קס</th>
+                        <th>מה הוא עושה</th>
+                        <th>למה צריך אותו?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>^</td>
+                        <td>עוגן תחילת מחרוזת</td>
+                        <td>מבטיח שהמחרוזת <strong>מתחילה</strong> ב-<code>en</code> ולא מכילה אותה רק בתוכה</td>
+                    </tr>
+                    <tr>
+                        <td>( | )</td>
+                        <td>OR — אחת מהאפשרויות</td>
+                        <td>מאפשר שתי צורות לגיטימיות של קוד שפה אנגלית</td>
+                    </tr>
+                    <tr>
+                        <td>en\b</td>
+                        <td><code>en</code> + word boundary</td>
+                        <td>מתאים ל-<code>"en"</code> בלבד — מונע התאמה ל-<code>"enu"</code> או <code>"england"</code></td>
+                    </tr>
+                    <tr>
+                        <td>en-</td>
+                        <td><code>en</code> ואחריו מקף</td>
+                        <td>מתאים לכל קוד אזורי: <code>en-US</code>, <code>en-GB</code>, <code>en-AU</code> וכו'</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="match-examples">
+                <div class="match-box yes">
+                    <div class="match-title">✓ יעבור את הבדיקה</div>
+                    <code>"en"     → en\b מתאים</code>
+                    <code>"en-US"  → en- מתאים</code>
+                    <code>"en-GB"  → en- מתאים</code>
+                    <code>"en-AU"  → en- מתאים</code>
+                </div>
+                <div class="match-box no">
+                    <div class="match-title">✗ לא יעבור את הבדיקה</div>
+                    <code>"he"     → מתחיל ב-he</code>
+                    <code>"ar"     → מתחיל ב-ar</code>
+                    <code>"fr"     → מתחיל ב-fr</code>
+                    <code>"english" → לא en\b ולא en-</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-card">
+            <h2>סיכום</h2>
+            <p>
+                הבדיקה תקינה כי היא מוודאת גם שהעמוד נטען בהצלחה וגם שהעמוד שהתקבל מוגדר בשפה האנגלית.
+                שילוב שתי הבדיקות נותן מענה מלא לדרישת השאלה.
+            </p>
+            <div class="tags">
+                <span class="tag">Postman</span>
+                <span class="tag">GET Request</span>
+                <span class="tag">Status 200</span>
+                <span class="tag">lang attribute</span>
+                <span class="tag">RegExp</span>
+                <span class="tag">gov.il</span>
+            </div>
+        </div>
+
+        <!-- Part III Q1 separator -->
+        <div class="part-separator">
+            <span class="part-num">Part III | General Questions</span>
+            <h2>שאלה 1 — מדוע הקוד נכשל?</h2>
+        </div>
+
+        <!-- Q1: Cypress command queue -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>הקוד שנתון בשאלה</h2>
+            </div>
+
+            <div class="question-quote">
+                <code style="color:#f9a8d4; background:transparent; padding:0;">const</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;"> SearchInputBox = cy.get(</code>
+                <code style="color:#86efac; background:transparent; padding:0;">'.gLFyf'</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">);</code><br>
+                <code style="color:#93c5fd; background:transparent; padding:0;">cy.visit(</code>
+                <code style="color:#86efac; background:transparent; padding:0;">'https://www.google.com/'</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">);</code><br>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">SearchInputBox.first().type(</code>
+                <code style="color:#86efac; background:transparent; padding:0;">'Gov.il'</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">);</code>
+            </div>
+
+            <p>לפני שמנתחים את הכשל — צריך להבין איך Cypress מבצע פקודות בפועל.</p>
+        </div>
+
+        <!-- Cypress Command Queue -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>מושג מפתח: Cypress Command Queue</h2>
+            </div>
+
+            <div class="concept-box">
+                <strong>Cypress Command Queue (תור פקודות)</strong><br>
+                כל פקודות Cypress כמו <code>cy.get()</code>, <code>cy.visit()</code>, <code>cy.click()</code>
+                <strong>לא מתבצעות מיידית</strong>. הן מתווספות ל<strong>תור ביצוע</strong> ורצות רק כאשר
+                Cypress מוכן — אחרי שהדף נטען, ורק כשהתור שלהן.
+            </div>
+
+            <p>הבעיה בקוד: <code>cy.get('.gLFyf')</code> נרשם לתור הפקודות <strong>לפני</strong> <code>cy.visit()</code>.<br>
+            כשהתור מתבצע — Cypress מנסה למצוא את האלמנט על עמוד שעדיין לא נטען.</p>
+
+            <div class="diagram">
+<span class="neutral">שלב 1:</span> cy.get('.gLFyf')   <span class="arrow">→</span> <span class="bad">נוסף לתור "חיפוש אלמנט"</span><br>
+<span class="neutral">           </span>  SearchInputBox = Chainer (לא תוצאה מיידית!)<br>
+<br>
+<span class="neutral">שלב 2:</span> cy.visit(...)       <span class="arrow">→</span> <span class="ok">נוסף לתור "טעינת עמוד"</span><br>
+<span class="neutral">שלב 3:</span> .first().type(...)  <span class="arrow">→</span> <span class="ok">נוסף לתור "הקלד"</span><br>
+<br>
+<span class="arrow">── ביצוע התור ─────────────────────────────</span><br>
+<span class="bad">✗  "חיפוש .gLFyf"  → רץ לפני שהדף נטען! האלמנט לא קיים.</span><br>
+<span class="ok">✓   "טעינת עמוד"</span><br>
+<span class="ok">✓   "הקלד"</span>
+            </div>
+
+            <table class="general-table">
+                <thead>
+                    <tr>
+                        <th>מצב</th>
+                        <th>קוד</th>
+                        <th>מה קורה</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>שגוי — get לפני visit</strong></td>
+                        <td><code>const el = cy.get('.x');<br>cy.visit(url);<br>el.click();</code></td>
+                        <td>get רץ לפני טעינת הדף — האלמנט לא קיים</td>
+                    </tr>
+                    <tr>
+                        <td><strong>שרשרת תקינה</strong></td>
+                        <td><code>cy.visit(url);<br>cy.get('.x').click();</code></td>
+                        <td>visit מסתיים לפני get — תקין</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <strong>התשובה הנכונה: Malfunction in the order of operations — תקלה בסדר הפעולות.</strong><br><br>
+                הבעיה אינה בסלקטור, בערכים, או בתוכן הפקודות — אלא בכך ש-<code>cy.get('.gLFyf')</code>
+                נרשם לתור הפקודות <strong>לפני</strong> <code>cy.visit()</code>.<br>
+                כשהתור רץ, Cypress מנסה למצוא את האלמנט על עמוד שעדיין לא נטען — ולכן נכשל.<br><br>
+                <strong>הפתרון:</strong> תמיד לשים <code>cy.visit()</code> לפני <code>cy.get()</code>.
+            </div>
+        </div>
+
+        <!-- Part III Q2 separator -->
+        <div class="part-separator">
+            <span class="part-num">Part III | General Questions</span>
+            <h2>שאלה 2 — מה יודפס בסוף ריצת הקוד?</h2>
+        </div>
+
+        <!-- Java code question -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>הקוד שנתון בשאלה</h2>
+            </div>
+
+            <div class="question-quote">
+                <code style="color:#f9a8d4; background:transparent; padding:0;">int</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;"> n1 = </code>
+                <code style="color:#fcd34d; background:transparent; padding:0;">55</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">, n2 = </code>
+                <code style="color:#fcd34d; background:transparent; padding:0;">66</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">, hint = </code>
+                <code style="color:#fcd34d; background:transparent; padding:0;">1</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">;</code><br><br>
+                <code style="color:#f9a8d4; background:transparent; padding:0;">for</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">(</code>
+                <code style="color:#f9a8d4; background:transparent; padding:0;">int</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;"> i = 1; i &lt;= n1; ++i)</code><br>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">{</code><br>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">&nbsp;&nbsp;</code>
+                <code style="color:#f9a8d4; background:transparent; padding:0;">if</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">(n1 % i == 0 &amp;&amp; n2 % i == 0)</code><br>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;hint = i;</code><br>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">}</code><br><br>
+                <code style="color:#93c5fd; background:transparent; padding:0;">System.out.println</code>
+                <code style="color:#e2e8f0; background:transparent; padding:0;">("hint is: " + hint);</code>
+            </div>
+
+            <p>לפני שמנתחים — צריך להבין שני מושגים: <strong>אופרטור Modulo</strong> ו<strong>לולאת for</strong>.</p>
+        </div>
+
+        <!-- Modulo explanation -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>אופרטור % (Modulo) — שארית חלוקה</h2>
+            </div>
+
+            <p><code>a % b</code> מחזיר את <strong>השארית</strong> של חלוקת <code>a</code> ב-<code>b</code>.</p>
+            <p><strong>כאשר התוצאה היא 0 — b מחלק את a בדיוק, ללא שארית.</strong></p>
+
+            <div class="concept-box">
+                <strong>דוגמאות:</strong><br>
+                <code>10 % 5 = 0</code> &nbsp;→ 5 מחלק את 10 בדיוק<br>
+                <code>10 % 3 = 1</code> &nbsp;→ 3 לא מחלק את 10 בדיוק (שארית 1)<br>
+                <code>55 % 11 = 0</code> → 11 מחלק את 55 בדיוק<br>
+                <code>66 % 11 = 0</code> → 11 מחלק את 66 בדיוק
+            </div>
+
+            <p>תנאי ה-<code>if</code> בקוד בודק: <em>"האם <code>i</code> מחלק בדיוק גם את n1 וגם את n2?"</em> — כלומר, האם <code>i</code> הוא <strong>מחלק משותף</strong>.</p>
+        </div>
+
+        <!-- Loop walkthrough -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>מה הלולאה עושה בפועל?</h2>
+            </div>
+
+            <p>הלולאה עוברת על כל ערך של <code>i</code> מ-1 עד 55. בכל איטרציה בודקת:<br>
+            האם <code>i</code> מחלק את <code>55</code> <strong>וגם</strong> מחלק את <code>66</code> — אם כן, שומרת את <code>i</code> ב-<code>hint</code>.<br>
+            בסוף הלולאה, <code>hint</code> מכיל את הערך <strong>האחרון</strong> שעמד בתנאי.</p>
+
+            <div class="flow-line">
+                <div class="flow-step"><strong>1</strong><br>לולאה עוברת ערך חדש של <code>i</code></div>
+                <div class="flow-step"><strong>2</strong><br>בודקת <code>55 % i == 0</code></div>
+                <div class="flow-step"><strong>3</strong><br>בודקת <code>66 % i == 0</code></div>
+                <div class="flow-step"><strong>4</strong><br>רק אם שניהם מתקיימים — נכנס ל-<code>if</code></div>
+                <div class="flow-step"><strong>5</strong><br><code>hint</code> מקבל את ערך <code>i</code></div>
+            </div>
+
+            <h3>מעקב אחרי ערכים מעניינים בלולאה:</h3>
+
+            <div class="trace-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>i</th>
+                            <th>55 % i == 0 ?</th>
+                            <th>66 % i == 0 ?</th>
+                            <th>נכנס ל-if ?</th>
+                            <th>מה קורה ל-hint?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>1</code></td>
+                            <td class="cell-yes">כן</td>
+                            <td class="cell-yes">כן</td>
+                            <td class="cell-yes">כן</td>
+                            <td><span class="hint-update">hint = 1</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>5</code></td>
+                            <td class="cell-yes">כן</td>
+                            <td class="cell-no">לא</td>
+                            <td class="cell-no">לא</td>
+                            <td><span class="hint-same">נשאר 1</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>6</code></td>
+                            <td class="cell-no">לא</td>
+                            <td class="cell-yes">כן</td>
+                            <td class="cell-no">לא</td>
+                            <td><span class="hint-same">נשאר 1</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>11</code></td>
+                            <td class="cell-yes">כן</td>
+                            <td class="cell-yes">כן</td>
+                            <td class="cell-yes">כן</td>
+                            <td><span class="hint-update">hint = 11</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>55</code></td>
+                            <td class="cell-yes">כן</td>
+                            <td class="cell-no">לא</td>
+                            <td class="cell-no">לא</td>
+                            <td><span class="hint-same">נשאר 11</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="concept-box">
+                <strong>אופרטור && (AND):</strong> תנאי ה-if מתקיים <em>רק</em> כאשר <strong>שני</strong> התנאים נכונים.
+                אם אחד מהם שגוי — לא נכנסים לגוף ה-if ו-<code>hint</code> לא משתנה.
+            </div>
+        </div>
+
+        <!-- GCD explanation -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">4</div>
+                <h2>למה התוצאה היא דווקא 11?</h2>
+            </div>
+
+            <p>המחלקים המשותפים של 55 ו-66 הם: <strong>1</strong> ו-<strong>11</strong>.</p>
+
+            <div class="concept-box">
+                <strong>רקע מתמטי — GCD (Greatest Common Divisor):</strong><br>
+                המחלק המשותף הגדול ביותר הוא המספר הגדול ביותר שמחלק בדיוק את שני המספרים.<br><br>
+                55 = 5 × 11 &nbsp;&nbsp;|&nbsp;&nbsp; 66 = 6 × 11<br>
+                המחלקים המשותפים: 1 ו-11. ה-GCD = <strong>11</strong>.
+            </div>
+
+            <p>
+                הלולאה עוברת בסדר עולה (1 עד 55), ולכן בכל פעם שמוצאים מחלק משותף — <code>hint</code> מתעדכן לערך הגדול יותר.
+                בסוף הלולאה, <code>hint</code> מכיל את ה-GCD — <strong>11</strong>.
+            </p>
+
+            <div class="final-answer">
+                הפלט: &nbsp;<code style="background:rgba(0,0,0,0.1); color:#166534;">hint is: 11</code>
+            </div>
+
+            <div class="success-box">
+                <strong>התשובה הנכונה: □ 11</strong><br><br>
+                הלולאה מחשבת בפועל את ה-GCD (מחלק משותף גדול ביותר) של 55 ו-66.
+                המחלקים המשותפים הם 1 ו-11. הלולאה עוברת בסדר עולה, כך ש-<code>hint</code> מתעדכן לבסוף ל-11.
+            </div>
+        </div>
+
+        <!-- Summary Part III -->
+        <div class="summary-card">
+            <h2>סיכום — Part III שאלה 2</h2>
+            <p>
+                הקוד מחשב את המחלק המשותף הגדול ביותר (GCD) של 55 ו-66 על ידי מעבר על כל המספרים מ-1 עד n1.
+                בכל איטרציה שבה המספר מחלק בדיוק את שניהם — <code>hint</code> מתעדכן. התוצאה הסופית היא <strong>11</strong>.
+            </p>
+            <div class="tags">
+                <span class="tag">Java</span>
+                <span class="tag">Modulo %</span>
+                <span class="tag">for loop</span>
+                <span class="tag">GCD</span>
+                <span class="tag">Part III</span>
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>
