@@ -1,0 +1,19 @@
+{
+  "validSearch": {
+    "term": "passport",
+    "expectedMinResults": 1,
+    "expectedUrlSegment": "search"
+  },
+  "anotherValidSearch": {
+    "term": "health",
+    "expectedMinResults": 1
+  },
+  "shortSearch": {
+    "term": "pa",
+    "description": "partial term to trigger autocomplete suggestions"
+  },
+  "specialCharSearch": {
+    "term": "!@#$%",
+    "description": "should not crash the page"
+  }
+}

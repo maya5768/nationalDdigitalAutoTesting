@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gov.il Demo Search</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        color: #17324d;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 48px;
+        background: #ffffff;
+        border-bottom: 1px solid #d8e0ea;
+      }
+
+      .brand {
+        font-size: 24px;
+        font-weight: 700;
+        color: #005eb8;
+      }
+
+      .search-toggle,
+      .search-submit,
+      .clear-cookie {
+        border: 0;
+        border-radius: 4px;
+        padding: 10px 16px;
+        background: #005eb8;
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      .search-box {
+        display: none;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .search-box.is-open {
+        display: flex;
+      }
+
+      .search-input input {
+        width: 320px;
+        padding: 10px;
+        border: 1px solid #8aa3bd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      main {
+        max-width: 900px;
+        margin: 48px auto;
+        padding: 0 24px;
+      }
+
+      .search-results {
+        display: none;
+        margin-top: 28px;
+        padding: 20px;
+        background: #ffffff;
+        border: 1px solid #d8e0ea;
+        border-radius: 8px;
+      }
+
+      .search-results.is-visible {
+        display: block;
+      }
+
+      .result-item {
+        padding: 14px 0;
+        border-bottom: 1px solid #e5ebf2;
+      }
+
+      .cookie-banner {
+        position: fixed;
+        inset-inline: 24px;
+        bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px;
+        background: #17324d;
+        color: #ffffff;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">gov.il demo</div>
+      <button class="search-toggle" type="button" aria-label="search">חיפוש</button>
+      <form class="search-box" role="search">
+        <label class="search-input">
+          <span hidden>search term</span>
+          <input type="search" placeholder="search" />
+        </label>
+        <button class="search-submit" type="submit">חפש</button>
+      </form>
+    </header>
+
+    <main>
+      <h1>אתר דמו לבדיקות אוטומציה</h1>
+      <p>העמוד הזה מדמה רכיב חיפוש ממשלתי לצורך תרגול Cypress בלבד.</p>
+
+      <section class="search-results" aria-live="polite">
+        <h2>תוצאות חיפוש</h2>
+        <div class="result-item">דרכון - חידוש והנפקה</div>
+        <div class="result-item">בריאות - שירותים ממשלתיים</div>
+        <div class="result-item">רשות האוכלוסין וההגירה</div>
+      </section>
+    </main>
+
+    <div class="cookie-banner">
+      <span>אתר זה משתמש בעוגיות לצורך הדגמה.</span>
+      <button class="clear-cookie" type="button">אישור</button>
+    </div>
+
+    <script>
+      const toggleButton = document.querySelector('.search-toggle');
+      const searchBox = document.querySelector('.search-box');
+      const searchInput = document.querySelector('.search-input input');
+      const results = document.querySelector('.search-results');
+      const cookieBanner = document.querySelector('.cookie-banner');
+
+      toggleButton.addEventListener('click', () => {
+        searchBox.classList.add('is-open');
+        searchInput.focus();
+      });
+
+      searchBox.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const term = encodeURIComponent(searchInput.value.trim());
+        window.history.pushState({}, '', `?search=${term}#search`);
+        results.classList.add('is-visible');
+      });
+
+      cookieBanner.querySelector('button').addEventListener('click', () => {
+        cookieBanner.remove();
+      });
+    </script>
+  </body>
+</html>

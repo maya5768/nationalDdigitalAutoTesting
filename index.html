@@ -1176,6 +1176,291 @@
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             PART II | CYPRESS
+        ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator">
+            <span class="part-num">Part II | Cypress</span>
+            <h2>שאלה 2 — בדיקות אוטומטיות לרכיב החיפוש באתר Gov.il</h2>
+        </div>
+
+        <!-- מה נדרש -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>מה נדרש בשאלה</h2>
+            </div>
+            <p>
+                בקרו באתר <code>gov.il</code> וכתבו לפחות <strong>3 בדיקות אוטומטיות</strong> לרכיב החיפוש שב-Header.<br>
+                סדרו את הקוד במבנה <strong>Object Oriented</strong>.
+            </p>
+            <div class="concept-box">
+                <strong>הגישה שנבחרה: Page Object Model (POM) + TypeScript</strong><br>
+                POM הוא דפוס עיצוב שבו כל דף (או רכיב) מיוצג על ידי <strong>מחלקה (class)</strong> אחת.
+                המחלקה מכילה את ה-Selectors ואת הפעולות על הדף — הבדיקות עצמן לא מכירות את ה-HTML, רק קוראות למתודות.
+            </div>
+        </div>
+
+        <!-- מבנה הקבצים -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>מבנה הפרויקט</h2>
+            </div>
+            <pre class="url-block"><code>cypress/
+├── e2e/
+│   └── search.cy.ts        ← קבצי הבדיקות
+├── pages/
+│   ├── BasePage.ts          ← POM — מחלקת אב משותפת
+│   └── SearchPage.ts        ← POM — רכיב החיפוש
+├── fixtures/
+│   ├── gov-demo/
+│   │   └── search.html      ← אתר דמו מקומי במקום gov.il החסום
+│   └── search/
+│       └── searchData.json  ← נתוני הבדיקה
+└── support/
+    ├── index.d.ts           ← הגדרות טיפוסים ל-Custom Commands
+    ├── commands.ts          ← פקודות מותאמות אישית
+    ├── commands.js          ← טעינה בטוחה של Custom Commands
+    └── e2e.ts               ← קובץ אתחול גלובלי
+cypress.config.js
+tsconfig.json</code></pre>
+            <div class="info">
+                <strong>למה 3 שכבות?</strong><br>
+                <strong>POM</strong> — מנהל את ה-UI (selectors + actions)<br>
+                <strong>Tests</strong> — מכיל את ה-assertions בלבד, לא מכיר HTML<br>
+                <strong>Fixtures</strong> — נתוני הבדיקה מופרדים מהקוד, קל לשנות ערכים
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">!</div>
+                <h2>עדכון חשוב — למה עברנו לאתר דמו?</h2>
+            </div>
+            <p>
+                במהלך ההרצה מול האתר האמיתי <code>https://www.gov.il/he</code> התקבלה חסימת אבטחה של האתר:
+                <code>403 Forbidden</code> ובהמשך מסך <code>Sorry, you have been blocked</code>.
+                זו אינה שגיאת קוד בבדיקות, אלא מנגנון הגנה של האתר הממשלתי שמזהה וחוסם תעבורת אוטומציה.
+            </p>
+            <div class="note">
+                <strong>החלטת התיקון:</strong>
+                לא עוקפים את מנגנון האבטחה של אתר ממשלתי. במקום זאת יצרנו עמוד דמו מקומי בתוך הפרויקט:
+                <code>cypress/fixtures/gov-demo/search.html</code>.
+                העמוד מדמה Header עם רכיב חיפוש, תיבת חיפוש, תוצאות חיפוש ובאנר Cookies, כך שהבדיקות ממשיכות לתרגל Cypress,
+                Page Object Model ו-Fixtures בצורה יציבה ובטוחה.
+            </div>
+            <p>
+                בנוסף תוקנו בעיות סביבתיות שעלו בדרך: הגדרת <code>ignoreDeprecations</code> ב-<code>tsconfig.json</code>
+                עבור TypeScript 6, והוספת הפקודה <code>cy.dismissCookieBanner()</code> גם ל-<code>commands.js</code>
+                כדי ש-Cypress יטען אותה בוודאות.
+            </p>
+        </div>
+
+        <!-- BasePage -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>BasePage.ts — מחלקת אב</h2>
+            </div>
+            <p>
+                מחלקת בסיס שמכילה פעולות <strong>משותפות לכל הדפים</strong>.
+                כל Page Object יורש ממנה עם <code>extends</code>.
+            </p>
+            <pre><code><span class="kw">export default class</span> <span class="fn">BasePage</span> {
+
+  <span class="fn">visit</span>(<span class="prop">path</span>: <span class="str">string</span> = <span class="str">'cypress/fixtures/gov-demo/search.html'</span>): <span class="str">void</span> {
+    <span class="prop">cy</span>.<span class="fn">visit</span>(<span class="prop">path</span>);
+    <span class="kw">this</span>.<span class="fn">waitForPageLoad</span>();
+  }
+
+  <span class="kw">protected</span> <span class="fn">waitForPageLoad</span>(): <span class="str">void</span> {
+    <span class="prop">cy</span>.<span class="fn">document</span>().<span class="fn">its</span>(<span class="str">'readyState'</span>).<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="str">'complete'</span>);
+  }
+}</code></pre>
+            <table class="general-table">
+                <thead><tr><th>מילת מפתח</th><th>משמעות</th></tr></thead>
+                <tbody>
+                    <tr><td><code>export default class</code></td><td>מגדיר מחלקה שניתן לייבא בקבצים אחרים</td></tr>
+                    <tr><td><code>protected</code></td><td>המתודה נגישה רק למחלקה עצמה ולילדיה — לא מחוץ למחלקה</td></tr>
+                    <tr><td><code>: void</code></td><td>TypeScript — המתודה לא מחזירה ערך</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SearchPage -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">4</div>
+                <h2>SearchPage.ts — Page Object לרכיב החיפוש</h2>
+            </div>
+            <p>יורש מ-<code>BasePage</code> ומכיל את כל ה-Selectors והפעולות הקשורות לחיפוש.</p>
+            <pre><code><span class="kw">import</span> BasePage <span class="kw">from</span> <span class="str">'./BasePage'</span>;
+
+<span class="kw">class</span> <span class="fn">SearchPage</span> <span class="kw">extends</span> <span class="fn">BasePage</span> {
+
+  <span class="cm">// Selectors — מוגדרים פעם אחת, שינוי כאן מתקן את כל הבדיקות</span>
+  <span class="kw">get</span> <span class="fn">searchToggleBtn</span>(): <span class="str">Cypress.Chainable</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.search-toggle, [aria-label*="חיפוש"]'</span>).<span class="fn">first</span>();
+  }
+
+  <span class="kw">get</span> <span class="fn">searchInput</span>(): <span class="str">Cypress.Chainable</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'input[type="search"], input[placeholder*="חיפוש"]'</span>).<span class="fn">first</span>();
+  }
+
+  <span class="cm">// Actions — לוגיקה של פעולות המשתמש</span>
+  <span class="fn">openSearchBar</span>(): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">searchToggleBtn</span>.<span class="fn">click</span>();
+    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>);
+  }
+
+  <span class="fn">searchFor</span>(<span class="prop">term</span>: <span class="str">string</span>): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">openSearchBar</span>();
+    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">clear</span>().<span class="fn">type</span>(<span class="prop">term</span>);
+    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">type</span>(<span class="str">'{enter}'</span>);
+  }
+}
+
+<span class="kw">export default new</span> <span class="fn">SearchPage</span>();</code></pre>
+            <div class="note">
+                <strong>עיקרון חשוב:</strong> ה-Page Object <strong>לא מכיל assertions</strong> (כגון <code>.should()</code> על תוצאות).
+                Assertions שייכות לבדיקות בלבד. ה-POM אחראי רק על <em>איך</em> לבצע פעולה, לא על <em>מה לאמת</em>.
+            </div>
+        </div>
+
+        <!-- Fixtures -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">5</div>
+                <h2>Fixtures — הפרדת נתונים מקוד</h2>
+            </div>
+            <p>קובץ JSON שמכיל את <strong>נתוני הבדיקה</strong> בלבד. הבדיקות טוענות אותו עם <code>cy.fixture()</code>.</p>
+            <pre><code>{
+  <span class="prop">"validSearch"</span>: {
+    <span class="prop">"term"</span>: <span class="str">"passport"</span>,
+    <span class="prop">"expectedMinResults"</span>: <span class="num">1</span>,
+    <span class="prop">"expectedUrlSegment"</span>: <span class="str">"search"</span>
+  },
+  <span class="prop">"shortSearch"</span>: {
+    <span class="prop">"term"</span>: <span class="str">"pa"</span>,
+    <span class="prop">"description"</span>: <span class="str">"partial term to trigger autocomplete"</span>
+  }
+}</code></pre>
+            <div class="success-box">
+                <strong>למה Fixtures?</strong><br>
+                אם רוצים לשנות את מילת החיפוש — משנים <strong>רק בקובץ JSON</strong>, לא מחפשים בקוד.
+                ניתן להריץ את אותן הבדיקות עם נתונים שונים (Data Driven Testing).
+            </div>
+        </div>
+
+        <!-- Tests -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">6</div>
+                <h2>search.cy.ts — 5 בדיקות אוטומטיות</h2>
+            </div>
+            <pre><code><span class="kw">import</span> searchPage <span class="kw">from</span> <span class="str">'../pages/SearchPage'</span>;
+
+<span class="fn">describe</span>(<span class="str">'Gov.il | Header Search Component'</span>, () => {
+
+  <span class="kw">let</span> <span class="prop">searchData</span>: <span class="str">SearchData</span>;
+
+  <span class="fn">before</span>(() => {
+    <span class="prop">cy</span>.<span class="fn">fixture</span>(<span class="str">'search/searchData'</span>).<span class="fn">then</span>((<span class="prop">data</span>) => { <span class="prop">searchData</span> = <span class="prop">data</span>; });
+  });
+
+  <span class="fn">beforeEach</span>(() => {
+    searchPage.<span class="fn">visitHomePage</span>();
+    <span class="prop">cy</span>.<span class="fn">dismissCookieBanner</span>();
+  });
+
+  <span class="fn">it</span>(<span class="str">'should display the search toggle button in the header'</span>, () => {
+    searchPage.<span class="fn">searchToggleBtn</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>);
+  });
+
+  <span class="fn">it</span>(<span class="str">'should open the search input when the button is clicked'</span>, () => {
+    searchPage.<span class="fn">searchToggleBtn</span>.<span class="fn">click</span>();
+    searchPage.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>).<span class="fn">and</span>(<span class="str">'be.enabled'</span>);
+  });
+
+  <span class="fn">it</span>(<span class="str">'should allow the user to type a search term'</span>, () => {
+    searchPage.<span class="fn">openSearchBar</span>();
+    searchPage.<span class="fn">typeSearchTerm</span>(<span class="prop">searchData</span>.validSearch.term);
+    searchPage.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'have.value'</span>, <span class="prop">searchData</span>.validSearch.term);
+  });
+
+  <span class="fn">it</span>(<span class="str">'should navigate to results page after submitting'</span>, () => {
+    searchPage.<span class="fn">searchFor</span>(<span class="prop">searchData</span>.validSearch.term);
+    <span class="prop">cy</span>.<span class="fn">url</span>().<span class="fn">should</span>(<span class="str">'include'</span>, <span class="prop">searchData</span>.validSearch.expectedUrlSegment);
+  });
+
+  <span class="fn">it</span>(<span class="str">'should clear the search input when cleared'</span>, () => {
+    searchPage.<span class="fn">openSearchBar</span>();
+    searchPage.<span class="fn">typeSearchTerm</span>(<span class="prop">searchData</span>.validSearch.term);
+    searchPage.<span class="fn">clearSearchInput</span>();
+    searchPage.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'have.value'</span>, <span class="str">''</span>);
+  });
+
+});</code></pre>
+            <div class="trace-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>שם הבדיקה</th>
+                            <th>מה היא בודקת</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>1</code></td>
+                            <td>Search toggle is visible</td>
+                            <td>כפתור החיפוש ב-Header מוצג למשתמש</td>
+                        </tr>
+                        <tr>
+                            <td><code>2</code></td>
+                            <td>Search input opens on click</td>
+                            <td>לאחר לחיצה — שדה הקלט מופיע ומאופשר</td>
+                        </tr>
+                        <tr>
+                            <td><code>3</code></td>
+                            <td>User can type a term</td>
+                            <td>הקלדה בשדה — הערך נשמר בשדה הקלט</td>
+                        </tr>
+                        <tr>
+                            <td><code>4</code></td>
+                            <td>Submit navigates to results</td>
+                            <td>לאחר Enter — ה-URL מכיל <code>/search</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>5</code></td>
+                            <td>Clear empties the input</td>
+                            <td>לאחר <code>clear()</code> — השדה ריק</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-card">
+            <h2>סיכום — Part II שאלה 2</h2>
+            <p>
+                המבנה מיישם את דפוס <strong>Page Object Model (POM)</strong> בשילוב <strong>TypeScript</strong>.
+                ה-POM מפריד בין <em>מה</em> לבדוק (Tests) ל-<em>איך</em> לבצע (Pages), ו-Fixtures מפרידים את <em>הנתונים</em> מהקוד.
+                שינוי בסלקטור מצריך עדכון במקום אחד בלבד.
+            </p>
+            <div class="tags">
+                <span class="tag">Cypress</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Page Object Model</span>
+                <span class="tag">Fixtures</span>
+                <span class="tag">OOP</span>
+                <span class="tag">gov.il demo</span>
+                <span class="tag">Security block workaround</span>
+            </div>
+        </div>
+
     </main>
 </body>
 </html>
