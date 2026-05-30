@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>הסבר שאלה 1 — בדיקת API</title>
+    <title>הסברים לשאלות המבחן — בדיקות אוטומציה gov.il</title>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -12,13 +12,120 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Heebo', Arial, sans-serif;
             line-height: 1.8;
             color: #2d3748;
             background: linear-gradient(135deg, #f0f4ff 0%, #fafafa 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 0 20px 40px;
+        }
+
+        /* ─── Top Navigation Bar ──────────────────────────────── */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(90deg, #0b4f8a 0%, #1a73c8 100%);
+            box-shadow: 0 2px 12px rgba(11,79,138,0.35);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 54px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .top-nav .nav-brand {
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            padding: 14px 0;
+            text-decoration: none;
+        }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .top-nav .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            transition: background 0.15s, color 0.15s;
+            white-space: nowrap;
+        }
+
+        .top-nav .nav-links a:hover {
+            background: rgba(255,255,255,0.18);
+            color: white;
+            border-color: rgba(255,255,255,0.25);
+        }
+
+        .top-nav .nav-links a.active {
+            background: rgba(255,255,255,0.22);
+            color: white;
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* ─── Header anchor tags (white on dark bg) ──────────── */
+        .header-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.18);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.45);
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.15s;
+            letter-spacing: 0.2px;
+        }
+
+        .header-tag:hover {
+            background: rgba(255,255,255,0.32);
+            color: white;
+        }
+
+        /* ─── Back to top button ──────────────────────────────── */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            background: #0b4f8a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s, transform 0.15s;
+            z-index: 99;
+        }
+
+        .back-to-top:hover {
+            background: #1a73c8;
+            transform: translateY(-3px);
         }
 
         main {
@@ -201,7 +308,7 @@
         .kw { color: #c792ea; }
         .fn { color: #82aaff; }
         .str { color: #c3e88d; }
-        .cm { color: #546e7a; font-style: italic; }
+        .cm { color: #6A9955; font-style: italic; }
         .num { color: #f78c6c; }
         .prop { color: #ffcb6b; }
 
@@ -629,13 +736,43 @@
     </style>
 </head>
 <body>
+
+    <!-- ─── Top Navigation Bar ──────────────────────────────── -->
+    <nav class="top-nav">
+        <a href="#top" class="nav-brand">📋 הסברים לשאלות המבחן</a>
+        <div class="nav-links">
+            <a href="#part1">Part I — שאלה 1</a>
+            <a href="#part2">Part II — שאלה 2</a>
+            <a href="#part2-q3">Part II — שאלה 3</a>
+            <a href="#part3-q1">Part III — שאלה 1</a>
+            <a href="#part3-q2">Part III — שאלה 2</a>
+        </div>
+    </nav>
+
+    <!-- ─── Back to Top ─────────────────────────────────────── -->
+    <a href="#top" class="back-to-top" title="חזרה למעלה">↑</a>
+
     <main>
 
-        <header class="page-header">
-            <div class="badge">Part I | API Testing</div>
-            <h1>הסבר שאלה 1</h1>
-            <p>בדיקת API לאתר gov.il — אימות שפת עמוד</p>
+        <header class="page-header" id="top">
+            <div class="badge">בחינה: בודק תוכנה — מערכות ממשלתיות</div>
+            <h1>הסברים לשאלות המבחן</h1>
+            <p>National Digital Agency | Gov.il — בדיקות אוטומציה</p>
+            <div class="tags" style="margin-top:20px;">
+                <a href="#part1"    class="header-tag">Part I &middot; שאלה 1 — בדיקת API</a>
+                <a href="#part2"    class="header-tag">Part II &middot; שאלה 2 — Cypress</a>
+                <a href="#part2-q3" class="header-tag">Part II &middot; שאלה 3 — cy.intercept</a>
+                <a href="#part2-q4" class="header-tag">Part II &middot; שאלה 4 — שינוי תגובה</a>
+                <a href="#part3-q1" class="header-tag">Part III &middot; שאלה 1 — כשל בקוד</a>
+                <a href="#part3-q2" class="header-tag">Part III &middot; שאלה 2 — Java</a>
+            </div>
         </header>
+
+        <!-- Part I separator -->
+        <div class="part-separator" id="part1">
+            <span class="part-num">Part I | API Testing</span>
+            <h2>שאלה 1 — בדיקת API לאתר gov.il — אימות שפת עמוד</h2>
+        </div>
 
         <!-- Request -->
         <div class="card">
@@ -900,8 +1037,879 @@
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             PART II | CYPRESS
+        ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator" id="part2">
+            <span class="part-num">Part II | Cypress</span>
+            <h2>שאלה 2 — בדיקות אוטומטיות לרכיב החיפוש באתר Gov.il</h2>
+        </div>
+
+        <!-- מה נדרש -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>מה נדרש בשאלה</h2>
+            </div>
+            <p>
+                בקרו באתר <code>gov.il</code> וכתבו לפחות <strong>3 בדיקות אוטומטיות</strong> לרכיב החיפוש שב-Header.<br>
+                סדרו את הקוד במבנה <strong>Object Oriented</strong>.
+            </p>
+            <div class="concept-box">
+                <strong>הגישה שנבחרה: Page Object Model (POM) + TypeScript</strong><br>
+                POM הוא דפוס עיצוב שבו כל דף (או רכיב) מיוצג על ידי <strong>מחלקה (class)</strong> אחת.
+                המחלקה מכילה את ה-Selectors ואת הפעולות על הדף — הבדיקות עצמן לא מכירות את ה-HTML, רק קוראות למתודות.
+            </div>
+        </div>
+
+        <!-- מבנה הקבצים -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>מבנה הפרויקט</h2>
+            </div>
+            <pre class="url-block"><code>cypress/
+├── e2e/
+│   └── search.cy.ts        ← קבצי הבדיקות
+├── pages/
+│   ├── BasePage.ts          ← POM — מחלקת אב משותפת
+│   └── SearchPage.ts        ← POM — רכיב החיפוש
+├── fixtures/
+│   ├── gov-demo/
+│   │   └── search.html      ← אתר דמו מקומי במקום gov.il החסום
+│   └── search/
+│       └── searchData.json  ← נתוני הבדיקה
+└── support/
+    ├── index.d.ts           ← הגדרות טיפוסים ל-Custom Commands
+    ├── commands.ts          ← פקודות מותאמות אישית
+    ├── commands.js          ← טעינה בטוחה של Custom Commands
+    └── e2e.ts               ← קובץ אתחול גלובלי
+cypress.config.js
+tsconfig.json</code></pre>
+            <div class="info">
+                <strong>למה 3 שכבות?</strong><br>
+                <strong>POM</strong> — מנהל את ה-UI (selectors + actions)<br>
+                <strong>Tests</strong> — מכיל את ה-assertions בלבד, לא מכיר HTML<br>
+                <strong>Fixtures</strong> — נתוני הבדיקה מופרדים מהקוד, קל לשנות ערכים
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">!</div>
+                <h2>עדכון חשוב — למה עברנו לאתר דמו?</h2>
+            </div>
+            <p>
+                במהלך ההרצה מול האתר האמיתי <code>https://www.gov.il/he</code> התקבלה חסימת אבטחה של האתר:
+                <code>403 Forbidden</code> ובהמשך מסך <code>Sorry, you have been blocked</code>.
+                זו אינה שגיאת קוד בבדיקות, אלא מנגנון הגנה של האתר הממשלתי שמזהה וחוסם תעבורת אוטומציה.
+            </p>
+            <div class="note">
+                <strong>החלטת התיקון:</strong>
+                לא עוקפים את מנגנון האבטחה של אתר ממשלתי. במקום זאת יצרנו עמוד דמו מקומי בתוך הפרויקט:
+                <code>cypress/fixtures/gov-demo/search.html</code>.
+                העמוד מדמה Header עם רכיב חיפוש, תיבת חיפוש, תוצאות חיפוש ובאנר Cookies, כך שהבדיקות ממשיכות לתרגל Cypress,
+                Page Object Model ו-Fixtures בצורה יציבה ובטוחה.
+            </div>
+            <p>
+                בנוסף תוקנו בעיות סביבתיות שעלו בדרך: הגדרת <code>ignoreDeprecations</code> ב-<code>tsconfig.json</code>
+                עבור TypeScript 6, והוספת הפקודה <code>cy.dismissCookieBanner()</code> גם ל-<code>commands.js</code>
+                כדי ש-Cypress יטען אותה בוודאות.
+            </p>
+        </div>
+
+        <!-- BasePage -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>BasePage.ts — מחלקת אב</h2>
+            </div>
+            <p>
+                מחלקת בסיס שמכילה פעולות <strong>משותפות לכל הדפים</strong>.
+                כל Page Object יורש ממנה עם <code>extends</code>.
+            </p>
+            <pre><code><span class="cm">// מחלקת האב — כל Page Object יורש ממנה</span>
+<span class="kw">export default class</span> <span class="fn">BasePage</span> {
+
+  <span class="cm">// visit() — פותח את הדף בדפדפן</span>
+  <span class="cm">// path — כתובת הדף; אם לא מעבירים, נפתח עמוד הדמו המקומי</span>
+  <span class="fn">visit</span>(<span class="prop">path</span>: <span class="str">string</span> = <span class="str">'cypress/fixtures/gov-demo/search.html'</span>): <span class="str">void</span> {
+    <span class="prop">cy</span>.<span class="fn">visit</span>(<span class="prop">path</span>);          <span class="cm">// מנווט לכתובת</span>
+    <span class="kw">this</span>.<span class="fn">waitForPageLoad</span>();   <span class="cm">// ממתין שהדף יסיים להיטען</span>
+  }
+
+  <span class="cm">// waitForPageLoad() — מאמת שהדף נטען במלואו לפני שנמשיך</span>
+  <span class="cm">// readyState === 'complete' פירושו: כל המשאבים (תמונות, סקריפטים) נטענו</span>
+  <span class="kw">protected</span> <span class="fn">waitForPageLoad</span>(): <span class="str">void</span> {
+    <span class="prop">cy</span>.<span class="fn">document</span>().<span class="fn">its</span>(<span class="str">'readyState'</span>).<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="str">'complete'</span>);
+  }
+
+  <span class="cm">// getByTestId() — מוצא אלמנט לפי מאפיין data-testid</span>
+  <span class="cm">// data-testid הוא מאפיין HTML שמוסיפים רק לצורך בדיקות — לא נראה למשתמש</span>
+  <span class="kw">protected</span> <span class="fn">getByTestId</span>(<span class="prop">testId</span>: <span class="str">string</span>): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">`[data-testid="${</span><span class="prop">testId</span><span class="str">}"]`</span>);
+  }
+
+  <span class="cm">// getByAriaLabel() — מוצא אלמנט לפי תווית נגישות aria-label</span>
+  <span class="cm">// aria-label עוזר לקוראי מסך — ניתן להשתמש בו גם כ-Selector יציב</span>
+  <span class="kw">protected</span> <span class="fn">getByAriaLabel</span>(<span class="prop">label</span>: <span class="str">string</span>): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">`[aria-label="${</span><span class="prop">label</span><span class="str">}"]`</span>);
+  }
+}</code></pre>
+            <table class="general-table">
+                <thead><tr><th>מילת מפתח / מתודה</th><th>משמעות</th></tr></thead>
+                <tbody>
+                    <tr><td><code>export default class</code></td><td>מגדיר מחלקה שניתן לייבא בקבצים אחרים</td></tr>
+                    <tr><td><code>protected</code></td><td>המתודה נגישה רק למחלקה עצמה ולילדיה — לא מחוץ למחלקה</td></tr>
+                    <tr><td><code>: void</code></td><td>TypeScript — המתודה לא מחזירה ערך</td></tr>
+                    <tr><td><code>getByTestId()</code></td><td>מחפש אלמנט לפי <code>data-testid</code> — Selector יציב שלא משתנה עם עיצוב</td></tr>
+                    <tr><td><code>getByAriaLabel()</code></td><td>מחפש אלמנט לפי <code>aria-label</code> — תווית נגישות המשמשת גם ל-Selectors</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SearchPage -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">4</div>
+                <h2>SearchPage.ts — Page Object לרכיב החיפוש</h2>
+            </div>
+            <p>יורש מ-<code>BasePage</code> ומכיל את כל ה-Selectors והפעולות הקשורות לחיפוש.</p>
+            <pre><code><span class="cm">// מייבאים את מחלקת האב — SearchPage תירש את כל המתודות שלה</span>
+<span class="kw">import</span> BasePage <span class="kw">from</span> <span class="str">'./BasePage'</span>;
+
+<span class="kw">class</span> <span class="fn">SearchPage</span> <span class="kw">extends</span> <span class="fn">BasePage</span> {
+
+  <span class="cm">// ─── Selectors ────────────────────────────────────────────────</span>
+  <span class="cm">// כל Selector מוגדר פעם אחת כאן. אם ה-HTML ישתנה — מתקנים רק כאן.</span>
+  <span class="cm">// שימוש ב-get (TypeScript) מחזיר את האלמנט בכל קריאה מחדש — לא נשמר בזיכרון</span>
+
+  <span class="cm">// כפתור פתיחת תיבת החיפוש שנמצא ב-Header של האתר</span>
+  <span class="cm">// מחפש לפי class, לפי aria-label שמכיל "חיפוש", או לפי class נוסף</span>
+  <span class="kw">get</span> <span class="fn">searchToggleBtn</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.search-toggle, [aria-label*="חיפוש"], button.search-btn'</span>).<span class="fn">first</span>();
+  }
+
+  <span class="cm">// שדה הקלט שבו המשתמש מקליד את מונח החיפוש</span>
+  <span class="cm">// מחפש לפי סוג הקלט (search), לפי placeholder, או לפי class מקונן</span>
+  <span class="kw">get</span> <span class="fn">searchInput</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'input[type="search"], input[placeholder*="חיפוש"], .search-input input'</span>).<span class="fn">first</span>();
+  }
+
+  <span class="cm">// כפתור השליחה (submit) של טופס החיפוש</span>
+  <span class="kw">get</span> <span class="fn">searchSubmitBtn</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'button[type="submit"], .search-submit'</span>).<span class="fn">first</span>();
+  }
+
+  <span class="cm">// הצעות ה-Autocomplete שמופיעות בזמן הקלדה</span>
+  <span class="kw">get</span> <span class="fn">searchSuggestions</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.autocomplete-suggestions, .search-dropdown, [class*="suggestion"]'</span>);
+  }
+
+  <span class="cm">// המיכל שמכיל את תוצאות החיפוש לאחר שליחת הטופס</span>
+  <span class="kw">get</span> <span class="fn">resultsContainer</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.search-results, [class*="search-result"], .results-list'</span>);
+  }
+
+  <span class="cm">// הודעה שמוצגת כאשר אין תוצאות חיפוש</span>
+  <span class="kw">get</span> <span class="fn">noResultsMessage</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.no-results, [class*="no-result"]'</span>);
+  }
+
+  <span class="cm">// ─── Actions ──────────────────────────────────────────────────</span>
+  <span class="cm">// מתודות שמבצעות פעולות — הבדיקות קוראות להן ולא עובדות ישירות עם HTML</span>
+
+  <span class="cm">// מנווט לעמוד הדמו המקומי (במקום gov.il האמיתי שחסום)</span>
+  <span class="fn">visitHomePage</span>(): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">visit</span>(<span class="str">'cypress/fixtures/gov-demo/search.html'</span>);
+  }
+
+  <span class="cm">// לוחץ על כפתור החיפוש ומאמת שתיבת החיפוש נפתחה ונראית</span>
+  <span class="fn">openSearchBar</span>(): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">searchToggleBtn</span>.<span class="fn">click</span>();               <span class="cm">// לוחץ על הכפתור</span>
+    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>);     <span class="cm">// מחכה שהשדה יופיע</span>
+  }
+
+  <span class="cm">// מוחק תוכן קיים בשדה ומקליד מונח חיפוש חדש</span>
+  <span class="fn">typeSearchTerm</span>(<span class="prop">term</span>: <span class="str">string</span>): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">clear</span>().<span class="fn">type</span>(<span class="prop">term</span>);  <span class="cm">// clear() — מנקה; type() — מקליד</span>
+  }
+
+  <span class="cm">// שולח את הטופס בלחיצת Enter ('{enter}' הוא קוד מיוחד של Cypress)</span>
+  <span class="fn">submitSearchByEnter</span>(): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">type</span>(<span class="str">'{enter}'</span>);
+  }
+
+  <span class="cm">// מנקה את שדה החיפוש — הערך חוזר לריק</span>
+  <span class="fn">clearSearchInput</span>(): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">clear</span>();
+  }
+
+  <span class="cm">// מאחד את כל שלבי חיפוש מלא לפעולה אחת:</span>
+  <span class="cm">// פתיחת השורה → הקלדה → שליחה</span>
+  <span class="fn">searchFor</span>(<span class="prop">term</span>: <span class="str">string</span>): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">openSearchBar</span>();           <span class="cm">// שלב 1: פותח את תיבת החיפוש</span>
+    <span class="kw">this</span>.<span class="fn">typeSearchTerm</span>(<span class="prop">term</span>);      <span class="cm">// שלב 2: מקליד את מונח החיפוש</span>
+    <span class="kw">this</span>.<span class="fn">submitSearchByEnter</span>();      <span class="cm">// שלב 3: שולח עם Enter</span>
+  }
+}
+
+<span class="cm">// מייצאים מופע אחד בלבד (Singleton Pattern)</span>
+<span class="cm">// כך כל הבדיקות משתמשות באותו אובייקט — לא יוצרים אחד חדש בכל בדיקה</span>
+<span class="kw">export default new</span> <span class="fn">SearchPage</span>();</code></pre>
+            <div class="note">
+                <strong>עיקרון חשוב:</strong> ה-Page Object <strong>לא מכיל assertions</strong> (כגון <code>.should()</code> על תוצאות).
+                Assertions שייכות לבדיקות בלבד. ה-POM אחראי רק על <em>איך</em> לבצע פעולה, לא על <em>מה לאמת</em>.
+            </div>
+        </div>
+
+        <!-- Fixtures -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">5</div>
+                <h2>Fixtures — הפרדת נתונים מקוד</h2>
+            </div>
+            <p>קובץ JSON שמכיל את <strong>נתוני הבדיקה</strong> בלבד. הבדיקות טוענות אותו עם <code>cy.fixture()</code>.</p>
+            <pre><code>{
+  <span class="cm">// validSearch — נתוני בדיקה תקינה רגילה</span>
+  <span class="prop">"validSearch"</span>: {
+    <span class="prop">"term"</span>: <span class="str">"passport"</span>,              <span class="cm">// מונח החיפוש שיוקלד בשדה</span>
+    <span class="prop">"expectedMinResults"</span>: <span class="num">1</span>,        <span class="cm">// מספר תוצאות מינימלי שצפויות</span>
+    <span class="prop">"expectedUrlSegment"</span>: <span class="str">"search"</span>  <span class="cm">// מה שצריך להיות ב-URL לאחר חיפוש</span>
+  },
+
+  <span class="cm">// anotherValidSearch — בדיקה תקינה נוספת עם מונח שונה</span>
+  <span class="prop">"anotherValidSearch"</span>: {
+    <span class="prop">"term"</span>: <span class="str">"health"</span>,               <span class="cm">// מונח חיפוש שני לגיוון הבדיקות</span>
+    <span class="prop">"expectedMinResults"</span>: <span class="num">1</span>         <span class="cm">// גם כאן מצפים לתוצאה אחת לפחות</span>
+  },
+
+  <span class="cm">// shortSearch — קלט קצר לבדיקת הצעות Autocomplete</span>
+  <span class="prop">"shortSearch"</span>: {
+    <span class="prop">"term"</span>: <span class="str">"pa"</span>,                   <span class="cm">// 2 תווים בלבד — אמורים להפעיל הצעות</span>
+    <span class="prop">"description"</span>: <span class="str">"partial term to trigger autocomplete suggestions"</span>
+  },
+
+  <span class="cm">// specialCharSearch — Edge Case: תווים מיוחדים שלא אמורים לשבור את הדף</span>
+  <span class="prop">"specialCharSearch"</span>: {
+    <span class="prop">"term"</span>: <span class="str">"!@#$%"</span>,                <span class="cm">// קלט חריג — בודק גבולות של המערכת</span>
+    <span class="prop">"description"</span>: <span class="str">"should not crash the page"</span>
+  }
+}</code></pre>
+            <div class="success-box">
+                <strong>למה Fixtures?</strong><br>
+                אם רוצים לשנות את מילת החיפוש — משנים <strong>רק בקובץ JSON</strong>, לא מחפשים בקוד.
+                ניתן להריץ את אותן הבדיקות עם נתונים שונים (Data Driven Testing).
+            </div>
+        </div>
+
+        <!-- Tests -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">6</div>
+                <h2>search.cy.ts — 5 בדיקות אוטומטיות</h2>
+            </div>
+            <pre><code><span class="cm">// מייבאים את ה-Page Object — הבדיקות לא יגעו ישירות ב-HTML</span>
+<span class="kw">import</span> searchPage <span class="kw">from</span> <span class="str">'../pages/SearchPage'</span>;
+
+<span class="cm">// מגדירים את מבנה הנתונים שנטען מקובץ ה-Fixture (JSON)</span>
+<span class="cm">// TypeScript דורש שנגדיר את הצורה של האובייקט מראש</span>
+<span class="kw">interface</span> <span class="fn">SearchData</span> {
+  validSearch:        { <span class="prop">term</span>: <span class="str">string</span>; <span class="prop">expectedMinResults</span>: <span class="str">number</span>; <span class="prop">expectedUrlSegment</span>: <span class="str">string</span> };
+  anotherValidSearch: { <span class="prop">term</span>: <span class="str">string</span>; <span class="prop">expectedMinResults</span>: <span class="str">number</span> };
+  shortSearch:        { <span class="prop">term</span>: <span class="str">string</span>; <span class="prop">description</span>: <span class="str">string</span> };
+  specialCharSearch:  { <span class="prop">term</span>: <span class="str">string</span>; <span class="prop">description</span>: <span class="str">string</span> };
+}
+
+<span class="cm">// describe — מגדיר קבוצת בדיקות עם שם תיאורי</span>
+<span class="fn">describe</span>(<span class="str">'Gov.il | Header Search Component'</span>, () => {
+
+  <span class="cm">// משתנה שיקבל את הנתונים מה-Fixture לאחר טעינתו</span>
+  <span class="kw">let</span> <span class="prop">searchData</span>: <span class="fn">SearchData</span>;
+
+  <span class="cm">// before() — רץ פעם אחת לפני כל הבדיקות בקבוצה</span>
+  <span class="cm">// טוען את ה-JSON מ-cypress/fixtures/search/searchData.json</span>
+  <span class="fn">before</span>(() => {
+    <span class="prop">cy</span>.<span class="fn">fixture</span>&lt;<span class="fn">SearchData</span>&gt;(<span class="str">'search/searchData'</span>).<span class="fn">then</span>((<span class="prop">data</span>) => {
+      <span class="prop">searchData</span> = <span class="prop">data</span>;  <span class="cm">// שומרים את הנתונים בתוך המשתנה החיצוני</span>
+    });
+  });
+
+  <span class="cm">// beforeEach() — רץ לפני כל בדיקה בנפרד</span>
+  <span class="cm">// מבטיח שכל בדיקה מתחילה ממצב נקי: דף טרי + ללא כרזת עוגיות</span>
+  <span class="fn">beforeEach</span>(() => {
+    searchPage.<span class="fn">visitHomePage</span>();    <span class="cm">// פותח את עמוד הדמו</span>
+    <span class="prop">cy</span>.<span class="fn">dismissCookieBanner</span>();      <span class="cm">// סוגר כרזת עוגיות אם קיימת</span>
+  });
+
+  <span class="cm">// ─── בדיקה 1 ─────────────────────────────────────────────────</span>
+  <span class="cm">// בודקת שכפתור החיפוש מוצג למשתמש ב-Header</span>
+  <span class="fn">it</span>(<span class="str">'should display the search toggle button in the header'</span>, () => {
+    searchPage.<span class="fn">searchToggleBtn</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>);
+    <span class="cm">// should('be.visible') — מאמת שהאלמנט נראה על המסך (לא מוסתר ב-CSS)</span>
+  });
+
+  <span class="cm">// ─── בדיקה 2 ─────────────────────────────────────────────────</span>
+  <span class="cm">// בודקת שלאחר לחיצה על הכפתור, שדה החיפוש מופיע ומאופשר</span>
+  <span class="fn">it</span>(<span class="str">'should open the search input when the search button is clicked'</span>, () => {
+    searchPage.<span class="fn">searchToggleBtn</span>.<span class="fn">click</span>();          <span class="cm">// לוחצים על כפתור החיפוש</span>
+    searchPage.<span class="fn">searchInput</span>
+      .<span class="fn">should</span>(<span class="str">'be.visible'</span>)   <span class="cm">// מאמת שהשדה מוצג</span>
+      .<span class="fn">and</span>(<span class="str">'be.enabled'</span>);    <span class="cm">// מאמת שהשדה לא disabled</span>
+  });
+
+  <span class="cm">// ─── בדיקה 3 ─────────────────────────────────────────────────</span>
+  <span class="cm">// בודקת שהמשתמש יכול להקליד בשדה ושהערך נשמר נכון</span>
+  <span class="fn">it</span>(<span class="str">'should allow the user to type a search term'</span>, () => {
+    searchPage.<span class="fn">openSearchBar</span>();                          <span class="cm">// פותחים את תיבת החיפוש</span>
+    searchPage.<span class="fn">typeSearchTerm</span>(<span class="prop">searchData</span>.validSearch.term); <span class="cm">// מקלידים "passport"</span>
+    searchPage.<span class="fn">searchInput</span>
+      .<span class="fn">should</span>(<span class="str">'have.value'</span>, <span class="prop">searchData</span>.validSearch.term);
+      <span class="cm">// have.value — מאמת שהשדה מכיל בדיוק את מה שהקלדנו</span>
+  });
+
+  <span class="cm">// ─── בדיקה 4 ─────────────────────────────────────────────────</span>
+  <span class="cm">// בודקת שלאחר שליחת חיפוש, ה-URL משתנה ומכיל "search",</span>
+  <span class="cm">// ושמיכל התוצאות מופיע בדף</span>
+  <span class="fn">it</span>(<span class="str">'should navigate to the search results page after submitting'</span>, () => {
+    searchPage.<span class="fn">searchFor</span>(<span class="prop">searchData</span>.validSearch.term);  <span class="cm">// חיפוש מלא</span>
+    <span class="prop">cy</span>.<span class="fn">url</span>().<span class="fn">should</span>(<span class="str">'include'</span>, <span class="prop">searchData</span>.validSearch.expectedUrlSegment);
+    <span class="cm">// בודקים שה-URL מכיל "search" — סימן שניווטנו לדף תוצאות</span>
+    searchPage.<span class="fn">resultsContainer</span>.<span class="fn">should</span>(<span class="str">'exist'</span>);
+    <span class="cm">// exist — מאמת שמיכל התוצאות קיים ב-DOM (גם אם לא נראה)</span>
+  });
+
+  <span class="cm">// ─── בדיקה 5 ─────────────────────────────────────────────────</span>
+  <span class="cm">// בודקת שפעולת clear() מרוקנת את שדה החיפוש</span>
+  <span class="fn">it</span>(<span class="str">'should clear the search input when cleared'</span>, () => {
+    searchPage.<span class="fn">openSearchBar</span>();                           <span class="cm">// פותחים את תיבת החיפוש</span>
+    searchPage.<span class="fn">typeSearchTerm</span>(<span class="prop">searchData</span>.validSearch.term);  <span class="cm">// מקלידים ערך</span>
+    searchPage.<span class="fn">clearSearchInput</span>();                         <span class="cm">// מנקים את השדה</span>
+    searchPage.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'have.value'</span>, <span class="str">''</span>);
+    <span class="cm">// מאמתים שהשדה ריק — have.value עם מחרוזת ריקה ''</span>
+  });
+
+});</code></pre>
+            <div class="trace-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>שם הבדיקה</th>
+                            <th>מה היא בודקת</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>1</code></td>
+                            <td>should display the search toggle button in the header</td>
+                            <td>כפתור החיפוש ב-Header מוצג למשתמש (<code>be.visible</code>)</td>
+                        </tr>
+                        <tr>
+                            <td><code>2</code></td>
+                            <td>should open the search input when the search button is clicked</td>
+                            <td>לאחר לחיצה — שדה הקלט מופיע (<code>be.visible</code>) ומאופשר (<code>be.enabled</code>)</td>
+                        </tr>
+                        <tr>
+                            <td><code>3</code></td>
+                            <td>should allow the user to type a search term</td>
+                            <td>הקלדה בשדה — מאמתים שהערך שהוקלד נשמר בשדה (<code>have.value</code>)</td>
+                        </tr>
+                        <tr>
+                            <td><code>4</code></td>
+                            <td>should navigate to the search results page after submitting</td>
+                            <td>לאחר Enter — ה-URL מכיל <code>"search"</code> ומיכל התוצאות קיים בדף</td>
+                        </tr>
+                        <tr>
+                            <td><code>5</code></td>
+                            <td>should clear the search input when cleared</td>
+                            <td>לאחר <code>clear()</code> — השדה ריק לחלוטין (<code>have.value ''</code>)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Custom Commands -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">7</div>
+                <h2>commands.ts — פקודות מותאמות אישית (Custom Commands)</h2>
+            </div>
+
+            <p>
+                <strong>Custom Command</strong> היא פקודה שאנחנו כותבים בעצמנו ומוסיפים לרשימת הפקודות של Cypress.
+                לאחר ההוספה, ניתן לקרוא לה בכל בדיקה בדיוק כמו פקודת Cypress רגילה — עם <code>cy.</code> לפניה.
+            </p>
+
+            <div class="concept-box">
+                <strong>למה Custom Command?</strong><br>
+                הסגירה של כרזת העוגיות חוזרת ב-<code>beforeEach</code> של כל בדיקה.
+                במקום להעתיק את הלוגיקה הזו בכל מקום — מגדירים אותה <strong>פעם אחת</strong> כ-Custom Command
+                ומשתמשים בה בפשטות עם <code>cy.dismissCookieBanner()</code>.
+            </div>
+
+            <pre><code><span class="cm">// Cypress.Commands.add() — כך מגדירים פקודה מותאמת אישית</span>
+<span class="cm">// הפרמטר הראשון הוא שם הפקודה כמחרוזת</span>
+<span class="cm">// הפרמטר השני הוא הפונקציה שתרוץ כשנקרא לפקודה</span>
+<span class="prop">Cypress</span>.<span class="fn">Commands</span>.<span class="fn">add</span>(<span class="str">'dismissCookieBanner'</span>, () => {
+
+  <span class="cm">// cy.get('body') — מקבלים את כל גוף הדף</span>
+  <span class="cm">// .then($body => ...) — מריצים קוד jQuery רגיל בתוך הפונקציה</span>
+  <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'body'</span>).<span class="fn">then</span>((<span class="prop">$body</span>) => {
+
+    <span class="cm">// $body.find() — מחפש בתוך גוף הדף אלמנטים שתואמים אחד מה-Selectors האלה:</span>
+    <span class="cm">// .cookie-banner — class רגיל של כרזת עוגיות</span>
+    <span class="cm">// #onetrust-accept-btn-handler — כפתור "קבל הכל" של ספריית OneTrust</span>
+    <span class="cm">// [class*="cookie"] button — כפתור בתוך אלמנט שמכיל "cookie" ב-class שלו</span>
+    <span class="kw">const</span> <span class="prop">banner</span> = <span class="prop">$body</span>.<span class="fn">find</span>(
+      <span class="str">'.cookie-banner, #onetrust-accept-btn-handler, [class*="cookie"] button'</span>
+    );
+
+    <span class="cm">// בודקים אם נמצא כרזה — אם הדף לא מציג כרזה, לא עושים כלום</span>
+    <span class="cm">// banner.length > 0 אומר: "נמצאו אלמנטים שתואמים"</span>
+    <span class="kw">if</span> (<span class="prop">banner</span>.length > <span class="num">0</span>) {
+      <span class="cm">// cy.wrap() — עוטף אובייקט jQuery חזרה לאובייקט Cypress</span>
+      <span class="cm">// { force: true } — לוחץ גם אם האלמנט מוסתר חלקית או לא אינטראקטיבי</span>
+      <span class="prop">cy</span>.<span class="fn">wrap</span>(<span class="prop">banner</span>.<span class="fn">first</span>()).<span class="fn">click</span>({ <span class="prop">force</span>: <span class="kw">true</span> });
+    }
+  });
+});</code></pre>
+
+            <div class="note">
+                <strong>איפה ה-Custom Command מוכרז?</strong><br>
+                הקובץ <code>commands.ts</code> מיובא בתוך <code>cypress/support/e2e.ts</code> שנטען אוטומטית לפני כל בדיקה.
+                כך הפקודה <code>cy.dismissCookieBanner()</code> זמינה בכל קובץ בדיקה ללא import נוסף.
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-card">
+            <h2>סיכום — Part II שאלה 2</h2>
+            <p>
+                המבנה מיישם את דפוס <strong>Page Object Model (POM)</strong> בשילוב <strong>TypeScript</strong>.
+                ה-POM מפריד בין <em>מה</em> לבדוק (Tests) ל-<em>איך</em> לבצע (Pages), ו-Fixtures מפרידים את <em>הנתונים</em> מהקוד.
+                שינוי בסלקטור מצריך עדכון במקום אחד בלבד.
+            </p>
+            <div class="tags">
+                <span class="tag">Cypress</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Page Object Model</span>
+                <span class="tag">Fixtures</span>
+                <span class="tag">OOP</span>
+                <span class="tag">gov.il demo</span>
+                <span class="tag">Security block workaround</span>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PART II | CYPRESS — שאלה 3
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator" id="part2-q3">
+            <span class="part-num">Part II | Cypress</span>
+            <h2>שאלה 3 — יירוט בקשות רשת עם cy.intercept()</h2>
+        </div>
+
+        <!-- ─── Card 1: מה נדרש ──────────────────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>מה מבקשת השאלה?</h2>
+            </div>
+
+            <div class="question-quote" style="font-size:1rem; line-height:1.8;">
+                <strong>Visit page — Write a test that intercept to these requests and check status code:</strong><br>
+                <div style="margin-top:10px; display:inline-flex; flex-direction:column; gap:6px; text-align:right; background:#1a2035; padding:12px 20px; border-radius:6px; min-width:220px;">
+                    <label style="display:flex; align-items:center; gap:8px; color:#e2e8f0;">
+                        <input type="checkbox" checked disabled style="accent-color:#3b82f6;" /> cities
+                    </label>
+                    <label style="display:flex; align-items:center; gap:8px; color:#e2e8f0;">
+                        <input type="checkbox" disabled style="accent-color:#3b82f6;" /> categories
+                    </label>
+                    <label style="display:flex; align-items:center; gap:8px; color:#e2e8f0;">
+                        <input type="checkbox" disabled style="accent-color:#3b82f6;" /> accessibilitytype
+                    </label>
+                </div>
+            </div>
+
+            <p>
+                הדף המקורי הוא <strong>קבלת קהל ועמדות שירותים</strong> של gov.il.<br>
+                כשלוחצים על כפתור הפילטר (≡) ובוחרים cities / categories / accessibilitytype —
+                הדף שולח בקשות API לשרת כדי לטעון את נתוני הסינון.<br>
+                המטרה: ליירט את הבקשות האלה ולאמת שקוד הסטטוס שלהן הוא <strong>200 OK</strong>.
+            </p>
+
+            <div class="concept-box" style="background:#f0fdf4; border-color:#86efac;">
+                <strong>למה עמוד דמו?</strong><br>
+                כמו בשאלה 2, גם כאן gov.il חוסם גישת אוטומציה (403 Forbidden).<br>
+                נוצר עמוד דמו מקומי: <code>cypress/fixtures/gov-demo/filters.html</code><br>
+                הדמו מכיל את אותם תיבות סימון (cities / categories / accessibilitytype) וכל לחיצה
+                שולחת <code>fetch()</code> לנתיבי API זהים — Cypress מיירט אותם בדיוק כמו על האתר האמיתי.
+            </div>
+
+            <div class="tags">
+                <span class="tag">cy.intercept()</span>
+                <span class="tag">Network Stubbing</span>
+                <span class="tag">Status Code</span>
+                <span class="tag">cy.wait()</span>
+                <span class="tag">Alias</span>
+            </div>
+        </div>
+
+        <!-- ─── Card 2: מהו cy.intercept() ──────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>מושג מרכזי: cy.intercept()</h2>
+            </div>
+
+            <div class="concept-box">
+                <strong>cy.intercept() — יירוט בקשות רשת</strong><br>
+                פקודה שמאפשרת ל-Cypress "לתפוס" בקשות HTTP (XHR / Fetch) לפני שהן יוצאות לשרת.
+                ניתן לעשות שתי פעולות שונות:
+            </div>
+
+            <table class="general-table">
+                <thead>
+                    <tr>
+                        <th>מצב</th>
+                        <th>שם</th>
+                        <th>מה עושים</th>
+                        <th>מתי משתמשים</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Spy (ריגול)</strong></td>
+                        <td>Monitoring</td>
+                        <td>מיירטים ומסתכלים — הבקשה ממשיכה לשרת האמיתי</td>
+                        <td>כאשר רוצים לבדוק בקשות מול שרת אמיתי</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stub (דמוי)</strong></td>
+                        <td>Mocking</td>
+                        <td>מיירטים ומחזירים תגובה מדומה — הבקשה לא יוצאת לשרת</td>
+                        <td>כאשר אין שרת, או כשרוצים לשלוט בתגובה</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>בשאלה זו משתמשים ב-<strong>Stub</strong> — מחזירים תגובה מדומה עם <code>statusCode: 200</code> ו-body מוגדר מראש מה-fixture. כך הבדיקות עובדות ללא שרת אמיתי.</p>
+
+            <pre><code><span class="cm">// תחביר בסיסי:</span>
+<span class="prop">cy</span>.<span class="fn">intercept</span>(<span class="str">'GET'</span>, <span class="str">'/api/cities'</span>, {
+  <span class="prop">statusCode</span>: <span class="num">200</span>,
+  <span class="prop">body</span>: { <span class="prop">cities</span>: [<span class="str">'Tel Aviv'</span>, <span class="str">'Jerusalem'</span>] }
+}).<span class="fn">as</span>(<span class="str">'getCities'</span>);
+<span class="cm">//  ↑ method   ↑ URL pattern   ↑ תגובה מדומה (stub)   ↑ alias</span></code></pre>
+
+            <div class="success-box">
+                <strong>כלל זהב: cy.intercept() חייב לרוץ לפני הפעולה שמפעילה את הבקשה!</strong><br>
+                אם ה-intercept נרשם אחרי שהבקשה כבר יצאה — Cypress לא יתפוס אותה.
+            </div>
+        </div>
+
+        <!-- ─── Card 3: Alias ו-cy.wait() ──────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>Alias ו-cy.wait('@alias')</h2>
+            </div>
+
+            <p>
+                <code>.as('getCities')</code> — נותן שם (alias) לבקשה המיורטת.<br>
+                <code>cy.wait('@getCities')</code> — מפסיק את הריצה עד שהבקשה שתויגה בשם זה תתבצע.
+                לאחר ה-wait, ניתן לשרשר <code>.its('response.statusCode')</code> כדי לשלוף את קוד הסטטוס.
+            </p>
+
+            <div class="diagram">
+<span class="ok">1.</span> <code>cy.intercept('GET', '/api/cities', stubResponse).as('getCities')</code>
+   <span class="arrow">→</span> <span class="neutral">רישום יירוט + שם "getCities"</span>
+
+<span class="ok">2.</span> <code>filterPage.selectFilter('cities')</code>
+   <span class="arrow">→</span> <span class="neutral">לחיצה על checkbox → הדף קורא fetch('/api/cities')</span>
+   <span class="arrow">→</span> <span class="ok">Cypress יורט את הבקשה ומחזיר את stubResponse</span>
+
+<span class="ok">3.</span> <code>cy.wait('@getCities')</code>
+   <span class="arrow">→</span> <span class="neutral">ממתין עד שהבקשה "@getCities" תושלם</span>
+   <span class="arrow">→</span> <span class="neutral">מחזיר את אובייקט ה-interception (כולל request ו-response)</span>
+
+<span class="ok">4.</span> <code>.its('response.statusCode').should('eq', 200)</code>
+   <span class="arrow">→</span> <span class="ok">✓ שולף את statusCode ומאמת שהוא 200</span>
+            </div>
+
+            <pre><code><span class="cm">// השרשרת המלאה:</span>
+<span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getCities'</span>)
+  .<span class="fn">its</span>(<span class="str">'response.statusCode'</span>)   <span class="cm">// שולף את קוד הסטטוס</span>
+  .<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="num">200</span>);           <span class="cm">// מאמת שהוא 200</span></code></pre>
+        </div>
+
+        <!-- ─── Card 4: עמוד הדמו ──────────────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">4</div>
+                <h2>עמוד הדמו — filters.html</h2>
+            </div>
+
+            <p>
+                הקובץ <code>cypress/fixtures/gov-demo/filters.html</code> מדמה את עמוד הפילטרים של gov.il.<br>
+                כל checkbox נושא <code>data-api</code> עם ה-URL <strong>האמיתי</strong> של gov.il BureausWebApi —
+                בדיוק כמו שנמצא בכלי המפתחים (DevTools → Network → Fetch/XHR).
+            </p>
+
+            <table class="general-table">
+                <thead>
+                    <tr><th>פילטר</th><th>Endpoint אמיתי (BureausWebApi)</th><th>סטטוס</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>cities</td>
+                        <td><code>GetAggregationCities</code></td>
+                        <td><span style="color:#16a34a; font-weight:600;">200 OK ✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>categories</td>
+                        <td><code>GetAggregationCategories</code></td>
+                        <td><span style="color:#16a34a; font-weight:600;">200 OK ✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>accessibilitytype</td>
+                        <td><code>POST BureausWebApi/Bureaus</code> + body: <code>{accessibility: true}</code></td>
+                        <td><span style="color:#16a34a; font-weight:600;">200 OK ✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pre><code><span class="cm">&lt;!-- כל checkbox שולח fetch() ל-endpoint האמיתי של gov.il --&gt;</span>
+&lt;<span class="kw">input</span> <span class="prop">type</span>=<span class="str">"checkbox"</span> <span class="prop">name</span>=<span class="str">"cities"</span>
+  <span class="prop">data-api</span>=<span class="str">"https://www.gov.il/he/BureausWebApi/bureaus/GetAggregationCities"</span> /&gt;
+
+&lt;<span class="kw">input</span> <span class="prop">type</span>=<span class="str">"checkbox"</span> <span class="prop">name</span>=<span class="str">"categories"</span>
+  <span class="prop">data-api</span>=<span class="str">"https://www.gov.il/he/BureausWebApi/bureaus/GetAggregationCategories"</span> /&gt;
+
+&lt;<span class="cm">!-- accessibilitytype שונה! — POST עם accessibility:true בגוף הבקשה --&gt;</span>
+&lt;<span class="kw">input</span> <span class="prop">type</span>=<span class="str">"checkbox"</span> <span class="prop">name</span>=<span class="str">"accessibilitytype"</span>
+  <span class="prop">data-api</span>=<span class="str">"https://www.gov.il/he/BureausWebApi/Bureaus"</span>
+  <span class="prop">data-method</span>=<span class="str">"POST"</span> /&gt;</code></pre>
+
+            <pre><code><span class="cm">// fetch() ל-URL האמיתי — Cypress יורט אותו עם cy.intercept()</span>
+<span class="fn">fetch</span>(<span class="prop">apiUrl</span>)  <span class="cm">// apiUrl = https://www.gov.il/he/BureausWebApi/bureaus/GetAggregationCities</span>
+  .<span class="fn">then</span>(<span class="kw">function</span>(<span class="prop">response</span>) {
+    <span class="cm">// cy.intercept() יורט לפני שהבקשה מגיעה לרשת ומחזיר { statusCode: 200, body: stubBody }</span>
+    <span class="cm">// response.status יהיה 200 מהתגובה המדומה</span>
+    <span class="kw">return</span> <span class="prop">response</span>.<span class="fn">json</span>();
+  });</code></pre>
+
+            <div class="concept-box" style="background:#eff6ff; border-color:#93c5fd;">
+                <strong>pattern ה-cy.intercept() להתאמה לעולם האמיתי:</strong><br>
+                <code>cy.intercept('GET',  '**/GetAggregationCities**')</code> — GET לערים<br>
+                <code>cy.intercept('GET',  '**/GetAggregationCategories**')</code> — GET לקטגוריות<br>
+                <code>cy.intercept('POST', '**/BureausWebApi/Bureaus**')</code> — <strong>POST</strong> לנגישות! שונה מהשניים הקודמים
+            </div>
+            <div class="concept-box" style="background:#fff7ed; border-color:#fdba74; margin-top:12px;">
+                <strong>תגלית מ-DevTools: נגישות שולחת POST, לא GET!</strong><br>
+                בניגוד ל-cities ו-categories שמשתמשים ב-GET (טעינת רשימות),
+                פילטר הנגישות שולח POST ל-<code>BureausWebApi/Bureaus</code> עם גוף:<br>
+                <code>&#123; accessibility: true, limit: "10", skip: "0" &#125;</code><br>
+                זו בקשה לטעינת <strong>תוצאות</strong> מסוננות — לא רשימת אפשרויות.
+            </div>
+        </div>
+
+        <!-- ─── Card 5: FilterPage.ts ─────────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">5</div>
+                <h2>FilterPage.ts — מחלקת Page Object</h2>
+            </div>
+
+            <p>
+                מחלקה חדשה <code>FilterPage</code> יורשת מ-<code>BasePage</code> — בדיוק כמו <code>SearchPage</code>.
+                מכילה selectors ומתודות; <strong>אין</strong> אסרציות בפנים.
+            </p>
+
+            <pre><code><span class="kw">import</span> <span class="prop">BasePage</span> <span class="kw">from</span> <span class="str">'./BasePage'</span>;
+
+<span class="cm">// טיפוס מותאם — השמות האפשריים לפילטרים</span>
+<span class="kw">type</span> <span class="prop">FilterName</span> = <span class="str">'cities'</span> | <span class="str">'categories'</span> | <span class="str">'accessibilitytype'</span>;
+
+<span class="kw">class</span> <span class="prop">FilterPage</span> <span class="kw">extends</span> <span class="prop">BasePage</span> {
+
+  <span class="cm">// ─── Selectors ──────────────────────────────────────────</span>
+
+  <span class="cm">// כפתור פתיחת לוח הפילטרים (≡)</span>
+  <span class="kw">get</span> <span class="fn">filterToggleBtn</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.filter-toggle'</span>);
+  }
+
+  <span class="cm">// לוח הפילטרים — מכיל את שלוש תיבות הסימון</span>
+  <span class="kw">get</span> <span class="fn">filterPanel</span>(): <span class="str">Cypress.Chainable&lt;JQuery&lt;HTMLElement&gt;&gt;</span> {
+    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.filter-panel'</span>);
+  }
+
+  <span class="cm">// ─── Actions ────────────────────────────────────────────</span>
+
+  <span class="cm">// פותח את עמוד הדמו המקומי</span>
+  <span class="fn">visitFilterPage</span>(): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="fn">visit</span>(<span class="str">'cypress/fixtures/gov-demo/filters.html'</span>);
+  }
+
+  <span class="cm">// לוחץ על ≡ ומחכה שהפאנל ייפתח</span>
+  <span class="fn">openFilterPanel</span>(): <span class="str">void</span> {
+    <span class="kw">this</span>.<span class="prop">filterToggleBtn</span>.<span class="fn">click</span>();
+    <span class="kw">this</span>.<span class="prop">filterPanel</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>);
+  }
+
+  <span class="cm">// מסמן checkbox לפי שם הפילטר → מפעיל fetch() → Cypress מיירט</span>
+  <span class="fn">selectFilter</span>(<span class="prop">name</span>: <span class="prop">FilterName</span>): <span class="str">void</span> {
+    <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">`input[name="${</span><span class="prop">name</span><span class="str">}"]`</span>).<span class="fn">check</span>();
+  }
+
+  <span class="cm">// מבטל סימון checkbox</span>
+  <span class="fn">deselectFilter</span>(<span class="prop">name</span>: <span class="prop">FilterName</span>): <span class="str">void</span> {
+    <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">`input[name="${</span><span class="prop">name</span><span class="str">}"]`</span>).<span class="fn">uncheck</span>();
+  }
+}
+
+<span class="kw">export default new</span> <span class="fn">FilterPage</span>();  <span class="cm">// Singleton — מופע יחיד</span></code></pre>
+        </div>
+
+        <!-- ─── Card 6: filter.cy.ts ──────────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">6</div>
+                <h2>filter.cy.ts — קובץ הבדיקות</h2>
+            </div>
+
+            <p>
+                ארבע בדיקות — שלוש לפילטרים נפרדים ואחת שבוחנת את כולם יחד.
+                בכל בדיקה: <strong>intercept → selectFilter → wait → assert status</strong>.
+            </p>
+
+            <pre><code><span class="kw">import</span> <span class="prop">filterPage</span> <span class="kw">from</span> <span class="str">'../pages/FilterPage'</span>;
+
+<span class="fn">describe</span>(<span class="str">'Gov.il | Filter Component — Network Intercept'</span>, () => {
+
+  <span class="kw">let</span> <span class="prop">filterData</span>: <span class="prop">FilterData</span>;
+
+  <span class="fn">before</span>(() => {
+    <span class="cm">// טוען את נתוני הבדיקה מ-cypress/fixtures/filters/filterData.json</span>
+    <span class="prop">cy</span>.<span class="fn">fixture</span>&lt;<span class="prop">FilterData</span>&gt;(<span class="str">'filters/filterData'</span>).<span class="fn">then</span>((<span class="prop">data</span>) => { <span class="prop">filterData</span> = <span class="prop">data</span>; });
+  });
+
+  <span class="fn">beforeEach</span>(() => {
+    <span class="prop">filterPage</span>.<span class="fn">visitFilterPage</span>();   <span class="cm">// פותח את עמוד הדמו</span>
+    <span class="prop">filterPage</span>.<span class="fn">openFilterPanel</span>();   <span class="cm">// לוחץ על ≡ כדי לפתוח פאנל</span>
+  });
+
+  <span class="cm">// ── בדיקה 1: cities ──────────────────────────────────────</span>
+  <span class="fn">it</span>(<span class="str">'should intercept the cities API request and verify status 200'</span>, () => {
+    <span class="cm">// 1. רישום intercept — לפני הפעולה שמפעילה את הבקשה!</span>
+    <span class="prop">cy</span>.<span class="fn">intercept</span>(<span class="str">'GET'</span>, <span class="str">'/api/cities'</span>, {
+      <span class="prop">statusCode</span>: <span class="prop">filterData</span>.<span class="prop">cities</span>.<span class="prop">expectedStatus</span>,
+      <span class="prop">body</span>: <span class="prop">filterData</span>.<span class="prop">cities</span>.<span class="prop">stubBody</span>
+    }).<span class="fn">as</span>(<span class="str">'getCities'</span>);
+
+    <span class="cm">// 2. לחיצה על checkbox → הדף שולח fetch('/api/cities')</span>
+    <span class="prop">filterPage</span>.<span class="fn">selectFilter</span>(<span class="str">'cities'</span>);
+
+    <span class="cm">// 3. המתנה + אימות סטטוס</span>
+    <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getCities'</span>)
+      .<span class="fn">its</span>(<span class="str">'response.statusCode'</span>)
+      .<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="num">200</span>);
+  });
+
+  <span class="cm">// ── בדיקה 2: categories ──────────────────────────────────</span>
+  <span class="fn">it</span>(<span class="str">'should intercept the categories API request and verify status 200'</span>, () => {
+    <span class="prop">cy</span>.<span class="fn">intercept</span>(<span class="str">'GET'</span>, <span class="str">'/api/categories'</span>, {
+      <span class="prop">statusCode</span>: <span class="prop">filterData</span>.<span class="prop">categories</span>.<span class="prop">expectedStatus</span>,
+      <span class="prop">body</span>: <span class="prop">filterData</span>.<span class="prop">categories</span>.<span class="prop">stubBody</span>
+    }).<span class="fn">as</span>(<span class="str">'getCategories'</span>);
+
+    <span class="prop">filterPage</span>.<span class="fn">selectFilter</span>(<span class="str">'categories'</span>);
+
+    <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getCategories'</span>)
+      .<span class="fn">its</span>(<span class="str">'response.statusCode'</span>)
+      .<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="num">200</span>);
+  });
+
+  <span class="cm">// ── בדיקה 3: accessibilitytype ──────────────────────────</span>
+  <span class="fn">it</span>(<span class="str">'should intercept the accessibilitytype API request and verify status 200'</span>, () => {
+    <span class="prop">cy</span>.<span class="fn">intercept</span>(<span class="str">'GET'</span>, <span class="str">'/api/accessibilitytype'</span>, {
+      <span class="prop">statusCode</span>: <span class="prop">filterData</span>.<span class="prop">accessibilitytype</span>.<span class="prop">expectedStatus</span>,
+      <span class="prop">body</span>: <span class="prop">filterData</span>.<span class="prop">accessibilitytype</span>.<span class="prop">stubBody</span>
+    }).<span class="fn">as</span>(<span class="str">'getAccessibility'</span>);
+
+    <span class="prop">filterPage</span>.<span class="fn">selectFilter</span>(<span class="str">'accessibilitytype'</span>);
+
+    <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getAccessibility'</span>)
+      .<span class="fn">its</span>(<span class="str">'response.statusCode'</span>)
+      .<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="num">200</span>);
+  });
+
+  <span class="cm">// ── בדיקה 4: כל שלושת הפילטרים יחד ──────────────────────</span>
+  <span class="fn">it</span>(<span class="str">'should intercept all three filter API requests and verify all return status 200'</span>, () => {
+    <span class="cm">// רישום שלושת ה-intercepts לפני כל פעולה</span>
+    <span class="prop">cy</span>.<span class="fn">intercept</span>(<span class="str">'GET'</span>, <span class="str">'/api/cities'</span>,            { <span class="prop">statusCode</span>: <span class="num">200</span>, <span class="prop">body</span>: <span class="prop">filterData</span>.<span class="prop">cities</span>.<span class="prop">stubBody</span> }).<span class="fn">as</span>(<span class="str">'getCities'</span>);
+    <span class="prop">cy</span>.<span class="fn">intercept</span>(<span class="str">'GET'</span>, <span class="str">'/api/categories'</span>,        { <span class="prop">statusCode</span>: <span class="num">200</span>, <span class="prop">body</span>: <span class="prop">filterData</span>.<span class="prop">categories</span>.<span class="prop">stubBody</span> }).<span class="fn">as</span>(<span class="str">'getCategories'</span>);
+    <span class="prop">cy</span>.<span class="fn">intercept</span>(<span class="str">'GET'</span>, <span class="str">'/api/accessibilitytype'</span>, { <span class="prop">statusCode</span>: <span class="num">200</span>, <span class="prop">body</span>: <span class="prop">filterData</span>.<span class="prop">accessibilitytype</span>.<span class="prop">stubBody</span> }).<span class="fn">as</span>(<span class="str">'getAccessibility'</span>);
+
+    <span class="prop">filterPage</span>.<span class="fn">selectFilter</span>(<span class="str">'cities'</span>);
+    <span class="prop">filterPage</span>.<span class="fn">selectFilter</span>(<span class="str">'categories'</span>);
+    <span class="prop">filterPage</span>.<span class="fn">selectFilter</span>(<span class="str">'accessibilitytype'</span>);
+
+    <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getCities'</span>)       .<span class="fn">its</span>(<span class="str">'response.statusCode'</span>).<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="num">200</span>);
+    <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getCategories'</span>)   .<span class="fn">its</span>(<span class="str">'response.statusCode'</span>).<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="num">200</span>);
+    <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getAccessibility'</span>).<span class="fn">its</span>(<span class="str">'response.statusCode'</span>).<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="num">200</span>);
+  });
+
+});</code></pre>
+        </div>
+
+        <!-- ─── Card 7: מבנה הפרויקט ─────────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">7</div>
+                <h2>מבנה הפרויקט לאחר שאלה 3</h2>
+            </div>
+
+            <pre class="url-block"><code>cypress/
+├── e2e/
+│   ├── search.cy.ts          ← שאלה 2 — בדיקות חיפוש
+│   └── filter.cy.ts          ← שאלה 3 — בדיקות intercept (חדש)
+├── fixtures/
+│   ├── gov-demo/
+│   │   ├── search.html       ← דמו חיפוש (שאלה 2)
+│   │   └── filters.html      ← דמו פילטרים (שאלה 3, חדש)
+│   ├── search/
+│   │   └── searchData.json   ← נתוני חיפוש
+│   └── filters/
+│       └── filterData.json   ← נתוני פילטרים (חדש)
+└── pages/
+    ├── BasePage.ts            ← מחלקת אב
+    ├── SearchPage.ts          ← שאלה 2
+    └── FilterPage.ts          ← שאלה 3 (חדש)</code></pre>
+
+            <div class="success-box">
+                <strong>4 בדיקות עוברות בהצלחה:</strong><br>
+                ✓ should intercept the cities API request and verify status 200<br>
+                ✓ should intercept the categories API request and verify status 200<br>
+                ✓ should intercept the accessibilitytype API request and verify status 200<br>
+                ✓ should intercept all three filter API requests and verify all return status 200
+            </div>
+
+            <div class="tags">
+                <span class="tag">Cypress</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">cy.intercept()</span>
+                <span class="tag">Network Stubbing</span>
+                <span class="tag">Page Object Model</span>
+                <span class="tag">OOP</span>
+                <span class="tag">gov.il demo</span>
+            </div>
+        </div>
+
         <!-- Part III Q1 separator -->
-        <div class="part-separator">
+        <div class="part-separator" id="part3-q1">
             <span class="part-num">Part III | General Questions</span>
             <h2>שאלה 1 — מדוע הקוד נכשל?</h2>
         </div>
@@ -991,7 +1999,7 @@
         </div>
 
         <!-- Part III Q2 separator -->
-        <div class="part-separator">
+        <div class="part-separator" id="part3-q2">
             <span class="part-num">Part III | General Questions</span>
             <h2>שאלה 2 — מה יודפס בסוף ריצת הקוד?</h2>
         </div>
@@ -1176,288 +2184,233 @@
             </div>
         </div>
 
+
         <!-- ═══════════════════════════════════════════════════════════
-             PART II | CYPRESS
-        ═══════════════════════════════════════════════════════════ -->
-        <div class="part-separator">
+             Part II | שאלה 4 — שינוי שדה בתגובת API עם cy.intercept
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator" id="part2-q4">
             <span class="part-num">Part II | Cypress</span>
-            <h2>שאלה 2 — בדיקות אוטומטיות לרכיב החיפוש באתר Gov.il</h2>
+            <h2>שאלה 4 — שינוי ערך שדה בתגובה עם cy.intercept()</h2>
         </div>
 
-        <!-- מה נדרש -->
+        <!-- ─── כרטיס 1: מה מבקשת השאלה ──────────────────────────── -->
         <div class="card">
             <div class="card-header">
                 <div class="step-badge">1</div>
-                <h2>מה נדרש בשאלה</h2>
+                <h2>מה מבקשת השאלה?</h2>
             </div>
-            <p>
-                בקרו באתר <code>gov.il</code> וכתבו לפחות <strong>3 בדיקות אוטומטיות</strong> לרכיב החיפוש שב-Header.<br>
-                סדרו את הקוד במבנה <strong>Object Oriented</strong>.
+
+            <div class="question-quote" style="font-size:1rem; line-height:1.8;">
+                <strong>Visit page — Use cy.intercept to change value of prop:</strong><br>
+                <div style="margin-top:10px; background:#1a2035; padding:16px 24px; border-radius:6px; display:inline-block; min-width:300px;">
+                    <div style="color:#f87171; font-family:monospace; margin-bottom:8px;">
+                        &quot;title&quot;: &quot;משרד ראש הממשלה&quot;
+                    </div>
+                    <div style="color:#94a3b8; font-size:0.85rem; margin-bottom:8px;">↓ שנה ל:</div>
+                    <div style="color:#4ade80; font-family:monospace;">
+                        &quot;title&quot;: &quot;office&quot;
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top:16px;">
+                הבקשה נמצאה ב-DevTools תחת Fetch/XHR בשם <code>prime_ministers_office</code> —
+                בקשת GET שמחזירה JSON עם שדה <code>title</code>.
             </p>
-            <div class="concept-box">
-                <strong>הגישה שנבחרה: Page Object Model (POM) + TypeScript</strong><br>
-                POM הוא דפוס עיצוב שבו כל דף (או רכיב) מיוצג על ידי <strong>מחלקה (class)</strong> אחת.
-                המחלקה מכילה את ה-Selectors ואת הפעולות על הדף — הבדיקות עצמן לא מכירות את ה-HTML, רק קוראות למתודות.
+
+            <div class="tags">
+                <span class="tag">cy.intercept()</span>
+                <span class="tag">req.reply()</span>
+                <span class="tag">title modification</span>
+                <span class="tag">JSON stub</span>
             </div>
         </div>
 
-        <!-- מבנה הקבצים -->
+        <!-- ─── כרטיס 2: ההבדל בין stub מלא לשינוי שדה ──────────── -->
         <div class="card">
             <div class="card-header">
                 <div class="step-badge">2</div>
-                <h2>מבנה הפרויקט</h2>
+                <h2>שלוש דרכים לעבוד עם cy.intercept()</h2>
             </div>
-            <pre class="url-block"><code>cypress/
-├── e2e/
-│   └── search.cy.ts        ← קבצי הבדיקות
-├── pages/
-│   ├── BasePage.ts          ← POM — מחלקת אב משותפת
-│   └── SearchPage.ts        ← POM — רכיב החיפוש
-├── fixtures/
-│   ├── gov-demo/
-│   │   └── search.html      ← אתר דמו מקומי במקום gov.il החסום
-│   └── search/
-│       └── searchData.json  ← נתוני הבדיקה
-└── support/
-    ├── index.d.ts           ← הגדרות טיפוסים ל-Custom Commands
-    ├── commands.ts          ← פקודות מותאמות אישית
-    ├── commands.js          ← טעינה בטוחה של Custom Commands
-    └── e2e.ts               ← קובץ אתחול גלובלי
-cypress.config.js
-tsconfig.json</code></pre>
-            <div class="info">
-                <strong>למה 3 שכבות?</strong><br>
-                <strong>POM</strong> — מנהל את ה-UI (selectors + actions)<br>
-                <strong>Tests</strong> — מכיל את ה-assertions בלבד, לא מכיר HTML<br>
-                <strong>Fixtures</strong> — נתוני הבדיקה מופרדים מהקוד, קל לשנות ערכים
+
+            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; margin-bottom:20px;">
+                <thead>
+                    <tr style="background:#1e293b; color:#e2e8f0;">
+                        <th style="padding:10px 14px; text-align:right; border-radius:6px 0 0 0;">שיטה</th>
+                        <th style="padding:10px 14px; text-align:right;">מה היא עושה</th>
+                        <th style="padding:10px 14px; text-align:right; border-radius:0 6px 0 0;">מתי להשתמש</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><code>{ body: stub }</code></td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">מחליף את כל ה-body בנתונים קבועים</td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">שאלה 3 — בדיקת status code עם נתוני דמו</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><code>req.reply()</code></td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">stub מלא — Cypress עונה, לא פונה לשרת</td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><strong>שאלה 4</strong> — כשהשרת חסום (Cloudflare)</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 14px;"><code>req.continue(res)</code></td>
+                        <td style="padding:10px 14px;">מקבל תגובה אמיתית ואז משנה שדה ספציפי</td>
+                        <td style="padding:10px 14px;">כשהשרת נגיש ומחזיר JSON תקין</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box" style="background:#fef9c3; border-color:#fbbf24;">
+                <strong>למה לא משתמשים ב-req.continue() על gov.il?</strong><br>
+                gov.il מוגן ב-Cloudflare. בקשות אוטומטיות (Cypress, CI) מקבלות דף HTML של חסימה במקום JSON.
+                <code>req.continue()</code> יחכה לתגובה אמיתית — ויקבל HTML, לא JSON — ואז <code>res.body.title</code> יכשל.
+                לכן משתמשים ב-<code>req.reply()</code> עם דמו מקומי.
+            </div>
+
+            <div class="diagram" style="margin-top:20px;">
+<span class="ok">זרימה עם cy.intercept + req.reply():</span>
+
+<span class="neutral">דמו HTML</span>  →  <span class="neutral">fetch('/api/.../prime_ministers_office')</span>
+                        ↓
+             <span class="ok">cy.intercept תופס את הבקשה</span>
+                        ↓
+        <span class="ok">req.reply({ body: { title: 'office' } })</span>  ← לא פונה לשרת האמיתי
+                        ↓
+           <span class="neutral">הדמו מציג "office" ב-&lt;h1&gt;</span>
+                        ↓
+              <span class="ok">✓ cy.wait('@getPMOffice').its('response.body.title').should('eq', 'office')</span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <div class="step-badge">!</div>
-                <h2>עדכון חשוב — למה עברנו לאתר דמו?</h2>
-            </div>
-            <p>
-                במהלך ההרצה מול האתר האמיתי <code>https://www.gov.il/he</code> התקבלה חסימת אבטחה של האתר:
-                <code>403 Forbidden</code> ובהמשך מסך <code>Sorry, you have been blocked</code>.
-                זו אינה שגיאת קוד בבדיקות, אלא מנגנון הגנה של האתר הממשלתי שמזהה וחוסם תעבורת אוטומציה.
-            </p>
-            <div class="note">
-                <strong>החלטת התיקון:</strong>
-                לא עוקפים את מנגנון האבטחה של אתר ממשלתי. במקום זאת יצרנו עמוד דמו מקומי בתוך הפרויקט:
-                <code>cypress/fixtures/gov-demo/search.html</code>.
-                העמוד מדמה Header עם רכיב חיפוש, תיבת חיפוש, תוצאות חיפוש ובאנר Cookies, כך שהבדיקות ממשיכות לתרגל Cypress,
-                Page Object Model ו-Fixtures בצורה יציבה ובטוחה.
-            </div>
-            <p>
-                בנוסף תוקנו בעיות סביבתיות שעלו בדרך: הגדרת <code>ignoreDeprecations</code> ב-<code>tsconfig.json</code>
-                עבור TypeScript 6, והוספת הפקודה <code>cy.dismissCookieBanner()</code> גם ל-<code>commands.js</code>
-                כדי ש-Cypress יטען אותה בוודאות.
-            </p>
-        </div>
-
-        <!-- BasePage -->
+        <!-- ─── כרטיס 3: עמוד הדמו prime-ministers.html ───────────── -->
         <div class="card">
             <div class="card-header">
                 <div class="step-badge">3</div>
-                <h2>BasePage.ts — מחלקת אב</h2>
+                <h2>עמוד הדמו — prime-ministers.html</h2>
             </div>
+
             <p>
-                מחלקת בסיס שמכילה פעולות <strong>משותפות לכל הדפים</strong>.
-                כל Page Object יורש ממנה עם <code>extends</code>.
+                כמו בשאלות 2 ו-3, גם כאן נדרש <strong>דמו מקומי</strong> —
+                קובץ HTML שמדמה את עמוד gov.il ושולח <code>fetch()</code> לאותו URL שרשמנו ב-<code>cy.intercept</code>.
             </p>
-            <pre><code><span class="kw">export default class</span> <span class="fn">BasePage</span> {
 
-  <span class="fn">visit</span>(<span class="prop">path</span>: <span class="str">string</span> = <span class="str">'cypress/fixtures/gov-demo/search.html'</span>): <span class="str">void</span> {
-    <span class="prop">cy</span>.<span class="fn">visit</span>(<span class="prop">path</span>);
-    <span class="kw">this</span>.<span class="fn">waitForPageLoad</span>();
-  }
+            <pre><code><span class="cm">/* cypress/fixtures/gov-demo/prime-ministers.html */</span>
 
-  <span class="kw">protected</span> <span class="fn">waitForPageLoad</span>(): <span class="str">void</span> {
-    <span class="prop">cy</span>.<span class="fn">document</span>().<span class="fn">its</span>(<span class="str">'readyState'</span>).<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="str">'complete'</span>);
-  }
-}</code></pre>
-            <table class="general-table">
-                <thead><tr><th>מילת מפתח</th><th>משמעות</th></tr></thead>
-                <tbody>
-                    <tr><td><code>export default class</code></td><td>מגדיר מחלקה שניתן לייבא בקבצים אחרים</td></tr>
-                    <tr><td><code>protected</code></td><td>המתודה נגישה רק למחלקה עצמה ולילדיה — לא מחוץ למחלקה</td></tr>
-                    <tr><td><code>: void</code></td><td>TypeScript — המתודה לא מחזירה ערך</td></tr>
-                </tbody>
-            </table>
+<span class="cm">&lt;!-- כותרת המחלקה — מתמלאת מהAPI --&gt;</span>
+&lt;<span class="prop">h1</span> <span class="prop">data-testid</span>=<span class="str">"dept-title"</span>&gt;טוען...&lt;/<span class="prop">h1</span>&gt;
+
+&lt;<span class="prop">script</span>&gt;
+  <span class="cm">// הדמו שולח fetch לאותו URL שמרשמים ב-cy.intercept</span>
+  <span class="fn">fetch</span>(<span class="str">'https://www.gov.il/api/content/types/department/dcterms:identifier/prime_ministers_office'</span>)
+    .<span class="fn">then</span>(<span class="kw">function</span>(res) { <span class="kw">return</span> res.<span class="fn">json</span>(); })
+    .<span class="fn">then</span>(<span class="kw">function</span>(data) {
+      <span class="cm">// cy.intercept יירט את הבקשה ויחזיר { title: 'office' }</span>
+      <span class="cm">// אז data.title יהיה 'office' — לא "משרד ראש הממשלה"</span>
+      document.<span class="fn">querySelector</span>(<span class="str">'[data-testid="dept-title"]'</span>).textContent = data.title;
+    });
+&lt;/<span class="prop">script</span>&gt;</code></pre>
+
+            <div class="success-box">
+                <strong>הכלל:</strong> ה-URL בתוך <code>fetch()</code> בדמו חייב להתאים ל-URL pattern שרשמנו ב-<code>cy.intercept</code>.
+                Cypress יורט כל בקשה שה-URL שלה מתאים ל-<code>**/prime_ministers_office**</code>.
+            </div>
         </div>
 
-        <!-- SearchPage -->
+        <!-- ─── כרטיס 4: intercept.cy.ts ─────────────────────────── -->
         <div class="card">
             <div class="card-header">
                 <div class="step-badge">4</div>
-                <h2>SearchPage.ts — Page Object לרכיב החיפוש</h2>
+                <h2>intercept.cy.ts — קובץ הבדיקה</h2>
             </div>
-            <p>יורש מ-<code>BasePage</code> ומכיל את כל ה-Selectors והפעולות הקשורות לחיפוש.</p>
-            <pre><code><span class="kw">import</span> BasePage <span class="kw">from</span> <span class="str">'./BasePage'</span>;
 
-<span class="kw">class</span> <span class="fn">SearchPage</span> <span class="kw">extends</span> <span class="fn">BasePage</span> {
+            <p>סדר הפעולות בבדיקה — <strong>חשוב: intercept חייב לרוץ לפני visit!</strong></p>
 
-  <span class="cm">// Selectors — מוגדרים פעם אחת, שינוי כאן מתקן את כל הבדיקות</span>
-  <span class="kw">get</span> <span class="fn">searchToggleBtn</span>(): <span class="str">Cypress.Chainable</span> {
-    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'.search-toggle, [aria-label*="חיפוש"]'</span>).<span class="fn">first</span>();
-  }
+            <div class="diagram">
+<span class="ok">1.</span> <code>cy.intercept('GET', '**/prime_ministers_office**', req =&gt; req.reply({ body: { title: 'office' } }))</code>
+   <span class="arrow">→</span> <span class="neutral">רישום המארב — Cypress ממתין לבקשה תואמת</span>
 
-  <span class="kw">get</span> <span class="fn">searchInput</span>(): <span class="str">Cypress.Chainable</span> {
-    <span class="kw">return</span> <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'input[type="search"], input[placeholder*="חיפוש"]'</span>).<span class="fn">first</span>();
-  }
+<span class="ok">2.</span> <code>cy.visit('cypress/fixtures/gov-demo/prime-ministers.html')</code>
+   <span class="arrow">→</span> <span class="neutral">הדמו נפתח ושולח fetch()</span>
 
-  <span class="cm">// Actions — לוגיקה של פעולות המשתמש</span>
-  <span class="fn">openSearchBar</span>(): <span class="str">void</span> {
-    <span class="kw">this</span>.<span class="fn">searchToggleBtn</span>.<span class="fn">click</span>();
-    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>);
-  }
+<span class="ok">3.</span> <code>cy.wait('@getPMOffice')</code>
+   <span class="arrow">→</span> <span class="neutral">ממתין שה-intercept יתפוס את הבקשה</span>
 
-  <span class="fn">searchFor</span>(<span class="prop">term</span>: <span class="str">string</span>): <span class="str">void</span> {
-    <span class="kw">this</span>.<span class="fn">openSearchBar</span>();
-    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">clear</span>().<span class="fn">type</span>(<span class="prop">term</span>);
-    <span class="kw">this</span>.<span class="fn">searchInput</span>.<span class="fn">type</span>(<span class="str">'{enter}'</span>);
-  }
-}
+<span class="ok">4.</span> <code>.its('response.body.title').should('eq', 'office')</code>
+   <span class="arrow">→</span> <span class="ok">✓ מאמת שה-title בתגובה הוא 'office'</span>
 
-<span class="kw">export default new</span> <span class="fn">SearchPage</span>();</code></pre>
-            <div class="note">
-                <strong>עיקרון חשוב:</strong> ה-Page Object <strong>לא מכיל assertions</strong> (כגון <code>.should()</code> על תוצאות).
-                Assertions שייכות לבדיקות בלבד. ה-POM אחראי רק על <em>איך</em> לבצע פעולה, לא על <em>מה לאמת</em>.
+<span class="ok">5.</span> <code>cy.get('[data-testid="dept-title"]').should('have.text', 'office')</code>
+   <span class="arrow">→</span> <span class="ok">✓ מאמת שה-DOM התעדכן</span>
             </div>
+
+            <pre><code><span class="fn">it</span>(<span class="str">'should change the page title via cy.intercept from "משרד ראש הממשלה" to "office"'</span>, () =&gt; {
+
+  <span class="cm">// 1. רישום intercept — req.reply() = stub מלא, לא פונה לשרת</span>
+  <span class="prop">cy</span>.<span class="fn">intercept</span>(
+    <span class="str">'GET'</span>,
+    <span class="str">'**/prime_ministers_office**'</span>,
+    (req) =&gt; {
+      req.<span class="fn">reply</span>({
+        statusCode: <span class="num">200</span>,
+        body: {
+          title:       <span class="str">'office'</span>,   <span class="cm">// ← השינוי שהשאלה מבקשת</span>
+          description: <span class="str">''</span>,
+          urlName:     <span class="str">'prime_ministers_office'</span>
+        }
+      });
+    }
+  ).<span class="fn">as</span>(<span class="str">'getPMOffice'</span>);
+
+  <span class="cm">// 2. פותח את הדמו המקומי</span>
+  <span class="prop">cy</span>.<span class="fn">visit</span>(<span class="str">'cypress/fixtures/gov-demo/prime-ministers.html'</span>);
+
+  <span class="cm">// 3+4. ממתין לבקשה ומאמת שה-title הוא 'office'</span>
+  <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getPMOffice'</span>)
+    .<span class="fn">its</span>(<span class="str">'response.body.title'</span>)
+    .<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="str">'office'</span>);
+
+  <span class="cm">// 5. מאמת שה-DOM עודכן</span>
+  <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'[data-testid="dept-title"]'</span>)
+    .<span class="fn">should</span>(<span class="str">'have.text'</span>, <span class="str">'office'</span>);
+});</code></pre>
         </div>
 
-        <!-- Fixtures -->
+        <!-- ─── כרטיס 5: תוצאה ומבנה פרויקט ──────────────────────── -->
         <div class="card">
             <div class="card-header">
                 <div class="step-badge">5</div>
-                <h2>Fixtures — הפרדת נתונים מקוד</h2>
+                <h2>מבנה הפרויקט לאחר שאלה 4</h2>
             </div>
-            <p>קובץ JSON שמכיל את <strong>נתוני הבדיקה</strong> בלבד. הבדיקות טוענות אותו עם <code>cy.fixture()</code>.</p>
-            <pre><code>{
-  <span class="prop">"validSearch"</span>: {
-    <span class="prop">"term"</span>: <span class="str">"passport"</span>,
-    <span class="prop">"expectedMinResults"</span>: <span class="num">1</span>,
-    <span class="prop">"expectedUrlSegment"</span>: <span class="str">"search"</span>
-  },
-  <span class="prop">"shortSearch"</span>: {
-    <span class="prop">"term"</span>: <span class="str">"pa"</span>,
-    <span class="prop">"description"</span>: <span class="str">"partial term to trigger autocomplete"</span>
-  }
-}</code></pre>
+
             <div class="success-box">
-                <strong>למה Fixtures?</strong><br>
-                אם רוצים לשנות את מילת החיפוש — משנים <strong>רק בקובץ JSON</strong>, לא מחפשים בקוד.
-                ניתן להריץ את אותן הבדיקות עם נתונים שונים (Data Driven Testing).
+                <strong>הבדיקה עוברת בהצלחה:</strong><br>
+                ✓ should change the page title via cy.intercept from "משרד ראש הממשלה" to "office"
             </div>
-        </div>
 
-        <!-- Tests -->
-        <div class="card">
-            <div class="card-header">
-                <div class="step-badge">6</div>
-                <h2>search.cy.ts — 5 בדיקות אוטומטיות</h2>
-            </div>
-            <pre><code><span class="kw">import</span> searchPage <span class="kw">from</span> <span class="str">'../pages/SearchPage'</span>;
+            <pre class="url-block"><code>cypress/
+├── e2e/
+│   ├── search.cy.ts             ← שאלה 2 — בדיקות חיפוש
+│   ├── filter.cy.ts             ← שאלה 3 — בדיקות intercept (פילטרים)
+│   └── intercept.cy.ts          ← שאלה 4 — שינוי title (חדש)
+├── fixtures/
+│   ├── gov-demo/
+│   │   ├── search.html          ← דמו חיפוש (שאלה 2)
+│   │   ├── filters.html         ← דמו פילטרים (שאלה 3)
+│   │   └── prime-ministers.html ← דמו ראש הממשלה (שאלה 4, חדש)
+│   ├── search/searchData.json
+│   ├── filters/filterData.json
+│   └── primeMinistersOffice.json
+└── pages/
+    ├── BasePage.ts
+    ├── SearchPage.ts
+    └── FilterPage.ts</code></pre>
 
-<span class="fn">describe</span>(<span class="str">'Gov.il | Header Search Component'</span>, () => {
-
-  <span class="kw">let</span> <span class="prop">searchData</span>: <span class="str">SearchData</span>;
-
-  <span class="fn">before</span>(() => {
-    <span class="prop">cy</span>.<span class="fn">fixture</span>(<span class="str">'search/searchData'</span>).<span class="fn">then</span>((<span class="prop">data</span>) => { <span class="prop">searchData</span> = <span class="prop">data</span>; });
-  });
-
-  <span class="fn">beforeEach</span>(() => {
-    searchPage.<span class="fn">visitHomePage</span>();
-    <span class="prop">cy</span>.<span class="fn">dismissCookieBanner</span>();
-  });
-
-  <span class="fn">it</span>(<span class="str">'should display the search toggle button in the header'</span>, () => {
-    searchPage.<span class="fn">searchToggleBtn</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>);
-  });
-
-  <span class="fn">it</span>(<span class="str">'should open the search input when the button is clicked'</span>, () => {
-    searchPage.<span class="fn">searchToggleBtn</span>.<span class="fn">click</span>();
-    searchPage.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'be.visible'</span>).<span class="fn">and</span>(<span class="str">'be.enabled'</span>);
-  });
-
-  <span class="fn">it</span>(<span class="str">'should allow the user to type a search term'</span>, () => {
-    searchPage.<span class="fn">openSearchBar</span>();
-    searchPage.<span class="fn">typeSearchTerm</span>(<span class="prop">searchData</span>.validSearch.term);
-    searchPage.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'have.value'</span>, <span class="prop">searchData</span>.validSearch.term);
-  });
-
-  <span class="fn">it</span>(<span class="str">'should navigate to results page after submitting'</span>, () => {
-    searchPage.<span class="fn">searchFor</span>(<span class="prop">searchData</span>.validSearch.term);
-    <span class="prop">cy</span>.<span class="fn">url</span>().<span class="fn">should</span>(<span class="str">'include'</span>, <span class="prop">searchData</span>.validSearch.expectedUrlSegment);
-  });
-
-  <span class="fn">it</span>(<span class="str">'should clear the search input when cleared'</span>, () => {
-    searchPage.<span class="fn">openSearchBar</span>();
-    searchPage.<span class="fn">typeSearchTerm</span>(<span class="prop">searchData</span>.validSearch.term);
-    searchPage.<span class="fn">clearSearchInput</span>();
-    searchPage.<span class="fn">searchInput</span>.<span class="fn">should</span>(<span class="str">'have.value'</span>, <span class="str">''</span>);
-  });
-
-});</code></pre>
-            <div class="trace-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>שם הבדיקה</th>
-                            <th>מה היא בודקת</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>1</code></td>
-                            <td>Search toggle is visible</td>
-                            <td>כפתור החיפוש ב-Header מוצג למשתמש</td>
-                        </tr>
-                        <tr>
-                            <td><code>2</code></td>
-                            <td>Search input opens on click</td>
-                            <td>לאחר לחיצה — שדה הקלט מופיע ומאופשר</td>
-                        </tr>
-                        <tr>
-                            <td><code>3</code></td>
-                            <td>User can type a term</td>
-                            <td>הקלדה בשדה — הערך נשמר בשדה הקלט</td>
-                        </tr>
-                        <tr>
-                            <td><code>4</code></td>
-                            <td>Submit navigates to results</td>
-                            <td>לאחר Enter — ה-URL מכיל <code>/search</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>5</code></td>
-                            <td>Clear empties the input</td>
-                            <td>לאחר <code>clear()</code> — השדה ריק</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="summary-card">
-            <h2>סיכום — Part II שאלה 2</h2>
-            <p>
-                המבנה מיישם את דפוס <strong>Page Object Model (POM)</strong> בשילוב <strong>TypeScript</strong>.
-                ה-POM מפריד בין <em>מה</em> לבדוק (Tests) ל-<em>איך</em> לבצע (Pages), ו-Fixtures מפרידים את <em>הנתונים</em> מהקוד.
-                שינוי בסלקטור מצריך עדכון במקום אחד בלבד.
-            </p>
             <div class="tags">
                 <span class="tag">Cypress</span>
                 <span class="tag">TypeScript</span>
-                <span class="tag">Page Object Model</span>
-                <span class="tag">Fixtures</span>
-                <span class="tag">OOP</span>
-                <span class="tag">gov.il demo</span>
-                <span class="tag">Security block workaround</span>
+                <span class="tag">cy.intercept()</span>
+                <span class="tag">req.reply()</span>
+                <span class="tag">JSON Stub</span>
+                <span class="tag">Part II</span>
             </div>
         </div>
 
