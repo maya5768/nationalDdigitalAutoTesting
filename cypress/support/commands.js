@@ -27,7 +27,7 @@
 Cypress.Commands.add('dismissCookieBanner', () => {
   cy.get('body').then(($body) => {
     const banner = $body.find(
-      '.cookie-banner, #onetrust-accept-btn-handler, [class*="cookie"] button'
+      '.cookie-banner button, #onetrust-accept-btn-handler, [class*="cookie"] button'
     );
 
     if (banner.length > 0) {

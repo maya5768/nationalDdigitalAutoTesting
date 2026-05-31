@@ -808,14 +808,15 @@
         <div class="nav-links">
             <a href="#part1">Part I — שאלה 1</a>
             <a href="#part1-q2">Part I — שאלה 2</a>
+            <a href="#part2-q1">Part II — שאלה 1</a>
             <a href="#part2">Part II — שאלה 2</a>
             <a href="#part2-q3">Part II — שאלה 3</a>
             <a href="#part2-q4">Part II — שאלה 4</a>
+            <a href="#part2-q5">Part II — שאלה 5</a>
             <a href="#part3-q1">Part III — שאלה 1</a>
             <a href="#part3-q2">Part III — שאלה 2</a>
             <a href="#part4-q1">Part IV — שאלה 1</a>
             <a href="#part4-q2">Part IV — שאלה 2</a>
-            <a href="#part2-q5">Part II — שאלה 5</a>
         </div>
     </nav>
 
@@ -834,9 +835,11 @@
                     <a href="#part1-q2" class="header-tag">Part I &middot; שאלה 2 — חיפוש API</a>
                 </div>
                 <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
-                    <a href="#part2"    class="header-tag">Part II &middot; שאלה 2 — Cypress</a>
+                    <a href="#part2-q1" class="header-tag">Part II &middot; שאלה 1 — התקנת Cypress</a>
+                    <a href="#part2"    class="header-tag">Part II &middot; שאלה 2 — חיפוש</a>
                     <a href="#part2-q3" class="header-tag">Part II &middot; שאלה 3 — cy.intercept</a>
                     <a href="#part2-q4" class="header-tag">Part II &middot; שאלה 4 — שינוי תגובה</a>
+                    <a href="#part2-q5" class="header-tag">Part II &middot; שאלה 5 — my.gov לשוניות</a>
                 </div>
                 <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
                     <a href="#part3-q1" class="header-tag">Part III &middot; שאלה 1 — כשל בקוד</a>
@@ -845,7 +848,6 @@
                 <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
                     <a href="#part4-q1" class="header-tag">Part IV &middot; שאלה 1 — בדיקות ידניות</a>
                     <a href="#part4-q2" class="header-tag">Part IV &middot; שאלה 2 — שמירת נתונים</a>
-                    <a href="#part2-q5" class="header-tag">Part II &middot; שאלה 5 — my.gov לשוניות</a>
                 </div>
             </div>
         </header>
@@ -854,6 +856,20 @@
         <div class="part-separator" id="part1">
             <span class="part-num">Part I | API Testing</span>
             <h2>שאלה 1 — בדיקת API לאתר gov.il — אימות שפת עמוד</h2>
+        </div>
+
+        <!-- קובץ ה-Collection -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge" style="font-size:1rem;">&#128194;</div>
+                <h2>מיקום קובץ תוצאות הריצה — Postman Collection</h2>
+            </div>
+            <p>כל שלושת הבקשות של Part I (שאלות 1 ו-2) מיוצאות לקובץ ה-collection הבא:</p>
+            <div class="info">
+                <strong>מיקום הקובץ:</strong><br>
+                <code>results/postman/Gov.il API Tests.postman_collection.json</code>
+            </div>
+            <p>הקובץ כולל את הבקשות, ה-Pre-request scripts, ה-Tests, והתגובות השמורות לאחר ריצה מוצלחת.</p>
         </div>
 
         <!-- Request -->
@@ -1268,6 +1284,11 @@
         <div class="part-separator" id="part1-q2">
             <span class="part-num">Part I | API Testing</span>
             <h2>שאלה 2 — בדיקת רכיב החיפוש באתר Gov.il</h2>
+        </div>
+
+        <div class="info" style="margin: 0 0 20px;">
+            &#128194; הבדיקות מאוחסנות באותו קובץ Collection:
+            <code>results/postman/Gov.il API Tests.postman_collection.json</code>
         </div>
 
         <!-- כרטיס: כתובת הבקשה -->
@@ -1697,7 +1718,45 @@ console.<span class="fn">log</span>(<span class="str">"Pre-request validation pa
         <!-- ═══════════════════════════════════════════════════════════
              PART II | CYPRESS
         ═══════════════════════════════════════════════════════════ -->
-        <div class="part-separator" id="part2">
+        <div class="part-separator" id="part2-q1">
+            <span class="part-num">Part II | Cypress</span>
+            <h2>שאלה 1 — התקנת Cypress על VS Code</h2>
+        </div>
+
+        <!-- שאלה 1: התקנת Cypress -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>מה נדרש בשאלה</h2>
+            </div>
+            <p>התקנת Cypress ב-VS Code והגדרת הפרויקט לעבודה עם TypeScript.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>התקנה</h2>
+            </div>
+            <pre class="url-block"><code>npm install --save-dev cypress</code></pre>
+            <p style="margin-top:12px;">גרסה מותקנת: <code>cypress@13.17.0</code></p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>הפעלה</h2>
+            </div>
+            <pre class="url-block"><code>npm run cy:open   # Cypress Test Runner — ממשק גרפי
+npm run cy:run    # Cypress ב-CLI (headless)</code></pre>
+            <div class="concept-box" style="margin-top:16px;">
+                <strong>הגדרות נוספות שנוספו לפרויקט:</strong><br>
+                <code>tsconfig.json</code> — תמיכה ב-TypeScript עם <code>"types": ["cypress"]</code><br>
+                <code>cypress.config.js</code> — הגדרת <code>specPattern</code>, <code>viewportWidth</code>, timeout וכו'
+            </div>
+        </div>
+
+        <!-- separator לשאלה 2 -->
+        <div class="part-separator" id="part2" style="margin-top:32px;">
             <span class="part-num">Part II | Cypress</span>
             <h2>שאלה 2 — בדיקות אוטומטיות לרכיב החיפוש באתר Gov.il</h2>
         </div>
@@ -2871,7 +2930,7 @@ tsconfig.json</code></pre>
                 <h2>לשוניות התפריט שנמצאו בפורטל my.gov.il</h2>
             </div>
             <p>
-                לאחר התחברות לפורטל האישי <strong>my.gov.il</strong>, זוהו שתי קבוצות לשוניות בתפריט הצדדי:
+                לאחר התחברות לפורטל האישי <strong>my.gov.il</strong>, זוהו שלוש קבוצות לשוניות בתפריט הצדדי:
             </p>
             <pre class="url-block"><code>https://my.gov.il</code></pre>
 
@@ -2903,7 +2962,7 @@ tsconfig.json</code></pre>
                 📊 <code>docs/Azure_DevOps_TestPlan_myGov_Q5.xlsx</code> — 53 Test Cases ב-13 Test Suites<br><br>
                 <strong>בדיקות אוטומטיות (Cypress):</strong><br>
                 🌐 <code>cypress/fixtures/gov-demo/mygov-portal.html</code> — דמו מקומי עם 12 לשוניות<br>
-                🧪 <code>cypress/e2e/mygov-tabs.cy.ts</code> — 6 בדיקות ניווט בין לשוניות ה-Menu Tabs
+                🧪 <code>cypress/e2e/mygov-tabs.cy.ts</code> — 7 בדיקות ניווט בין לשוניות ה-Menu Tabs
             </div>
         </div>
 
