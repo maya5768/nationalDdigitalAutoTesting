@@ -815,6 +815,7 @@
             <a href="#part3-q2">Part III — שאלה 2</a>
             <a href="#part4-q1">Part IV — שאלה 1</a>
             <a href="#part4-q2">Part IV — שאלה 2</a>
+            <a href="#part2-q5">Part II — שאלה 5</a>
         </div>
     </nav>
 
@@ -844,6 +845,7 @@
                 <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
                     <a href="#part4-q1" class="header-tag">Part IV &middot; שאלה 1 — בדיקות ידניות</a>
                     <a href="#part4-q2" class="header-tag">Part IV &middot; שאלה 2 — שמירת נתונים</a>
+                    <a href="#part2-q5" class="header-tag">Part II &middot; שאלה 5 — my.gov לשוניות</a>
                 </div>
             </div>
         </header>
@@ -2850,6 +2852,166 @@ tsconfig.json</code></pre>
                 <span class="tag">cy.intercept()</span>
                 <span class="tag">req.reply()</span>
                 <span class="tag">JSON Stub</span>
+                <span class="tag">Part II</span>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PART II | שאלה 5 — my.gov Test Cases
+        ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator" id="part2-q5">
+            <span class="part-num">Part II | Manual Testing — Azure DevOps</span>
+            <h2>שאלה 5 — סידור Test Cases לעמוד my.gov.il — כל לשוניות התפריט</h2>
+        </div>
+
+        <!-- כרטיס: לשוניות שנמצאו -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>לשוניות התפריט שנמצאו בפורטל my.gov.il</h2>
+            </div>
+            <p>
+                לאחר התחברות לפורטל האישי <strong>my.gov.il</strong>, זוהו שתי קבוצות לשוניות בתפריט הצדדי:
+            </p>
+            <pre class="url-block"><code>https://my.gov.il</code></pre>
+
+            <table class="general-table">
+                <thead>
+                    <tr>
+                        <th>קבוצה</th>
+                        <th>לשוניות התפריט</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ניווט כללי</strong></td>
+                        <td>דף הבית · פרטים אישיים · מסמכים · היסטוריית פעילות · פעולות ושירותים · ניהול הרשאות</td>
+                    </tr>
+                    <tr>
+                        <td><strong>המידע שלי</strong></td>
+                        <td>נהיגה וכלי תחבורה · בריאות · כסף וביטוח · נכסים, בנייה ודיור · תעסוקה והשכלה</td>
+                    </tr>
+                    <tr>
+                        <td><strong>עסקים</strong></td>
+                        <td>חשבון העסק שלי</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box">
+                <strong>קובץ Test Plan המלא (ידני):</strong><br>
+                📊 <code>docs/Azure_DevOps_TestPlan_myGov_Q5.xlsx</code> — 53 Test Cases ב-13 Test Suites<br><br>
+                <strong>בדיקות אוטומטיות (Cypress):</strong><br>
+                🌐 <code>cypress/fixtures/gov-demo/mygov-portal.html</code> — דמו מקומי עם 12 לשוניות<br>
+                🧪 <code>cypress/e2e/mygov-tabs.cy.ts</code> — 6 בדיקות ניווט בין לשוניות ה-Menu Tabs
+            </div>
+        </div>
+
+        <!-- כרטיס: עקרון הסידור -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>עקרון הסידור: לשונית = Test Suite</h2>
+            </div>
+            <p>כל לשונית תפריט מקבלת <strong>Test Suite עצמאי ב-Azure DevOps</strong>, המכיל Test Cases לפי 5 סוגי בדיקות:</p>
+
+            <div class="step-flow">
+                <div class="step-flow-item">
+                    <div class="step-flow-num">1</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">Login — תנאי קדם לכל Suite</span>
+                        <p class="step-flow-desc">TC-001 עד TC-005: כניסה תקינה, כניסה עם פרטים שגויים, 2FA, Logout. כל Suite מסמן את TC-001 כ-<strong>Prerequisite</strong> — בלי כניסה מוצלחת, הבדיקות אינן רצות.</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">2</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">Functional — פונקציונליות הליבה</span>
+                        <p class="step-flow-desc">הבדיקות המרכזיות לכל לשונית. לדוגמה בלשונית "מסמכים": הצגת ת"ז, הצגת דרכון, הורדת PDF. עדיפות <strong>High</strong>.</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">3</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">Validation + Security</span>
+                        <p class="step-flow-desc">אימות קלטים לא תקינים (ת"ז בת 8 ספרות, מייל ללא @) ובדיקות אבטחה (XSS, גישה ללא הרשאה, masked data). עדיפות <strong>High</strong>.</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">4</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">UI + Accessibility</span>
+                        <p class="step-flow-desc">תצוגה רספונסיבית (375px), RTL תקין, ניווט עם Tab ו-Screen Reader, תוויות ARIA. עדיפות <strong>Medium</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>מזהה עקבי:</strong>
+                TC-001 (Login) · TC-010 (דף הבית) · TC-020 (פרטים אישיים) · TC-030 (מסמכים) · TC-040 (היסטוריה) · TC-050 (שירותים) · TC-060 (הרשאות) · TC-070 (נהיגה) · TC-080 (בריאות) · TC-090 (כסף) · TC-100 (נכסים) · TC-110 (תעסוקה) · TC-120 (עסקים)
+            </div>
+        </div>
+
+        <!-- כרטיס: טבלת Suites -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>טבלת Test Suites ב-Azure DevOps</h2>
+            </div>
+
+            <table class="general-table">
+                <thead>
+                    <tr>
+                        <th>Test Suite (לשונית)</th>
+                        <th>Area Path</th>
+                        <th>מספר TC</th>
+                        <th>עדיפות ראשית</th>
+                        <th>סוגי בדיקות</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>כניסה למערכת (Login)</strong></td><td>myGov\Login</td><td>5</td><td>High</td><td>Functional, Security, Validation</td></tr>
+                    <tr><td>דף הבית</td><td>myGov\Home</td><td>3</td><td>High</td><td>Functional, UI</td></tr>
+                    <tr><td>פרטים אישיים</td><td>myGov\PersonalDetails</td><td>5</td><td>High</td><td>Functional, Validation, Security</td></tr>
+                    <tr><td>מסמכים</td><td>myGov\Documents</td><td>5</td><td>High</td><td>Functional, Security, Validation</td></tr>
+                    <tr><td>היסטוריית פעילות</td><td>myGov\History</td><td>4</td><td>Medium</td><td>Functional, UI</td></tr>
+                    <tr><td>פעולות ושירותים</td><td>myGov\Services</td><td>4</td><td>High</td><td>Functional, Validation</td></tr>
+                    <tr><td>ניהול הרשאות</td><td>myGov\Permissions</td><td>4</td><td>High</td><td>Functional, Security</td></tr>
+                    <tr><td>נהיגה וכלי תחבורה</td><td>myGov\Driving</td><td>4</td><td>High</td><td>Functional, Validation</td></tr>
+                    <tr><td>בריאות</td><td>myGov\Health</td><td>4</td><td>High</td><td>Functional, Accessibility</td></tr>
+                    <tr><td>כסף וביטוח</td><td>myGov\Money</td><td>4</td><td>High</td><td>Functional, Security, Validation</td></tr>
+                    <tr><td>נכסים, בנייה ודיור</td><td>myGov\Assets</td><td>3</td><td>Medium</td><td>Functional, Validation</td></tr>
+                    <tr><td>תעסוקה והשכלה</td><td>myGov\Employment</td><td>4</td><td>Medium</td><td>Functional, Validation</td></tr>
+                    <tr><td>חשבון העסק שלי</td><td>myGov\Business</td><td>3</td><td>High</td><td>Functional, Security</td></tr>
+                    <tr style="font-weight:700; background:#e8f0fe;">
+                        <td>סה"כ</td><td></td><td>53</td><td></td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <strong>למה לשונית = Suite?</strong>
+                כל לשונית מייצגת תחום עצמאי (בריאות, כסף, מסמכים) עם פונקציונליות שונה לחלוטין.
+                חלוקה כזאת מאפשרת הרצת בדיקות רגרסיה ממוקדת — אם יש שינוי בלשונית "כסף", מריצים רק את Suite <code>myGov\Money</code> ללא כל שאר הסוויטות.
+            </div>
+        </div>
+
+        <!-- Summary Part II Q5 -->
+        <div class="summary-card">
+            <h2>סיכום — Part II | שאלה 5 — my.gov.il Test Cases</h2>
+            <p>
+                לאחר התחברות לפורטל my.gov.il זוהו 12 לשוניות תפריט (+ Login).
+                כל לשונית קיבלה Test Suite עצמאי ב-Azure DevOps עם Test Cases לפי 5 סוגי בדיקות.
+                סה"כ 53 Test Cases ב-13 Suites, כשה-Login מוגדר כתנאי קדם לכולם.
+            </p>
+            <div class="tags">
+                <span class="tag">my.gov.il</span>
+                <span class="tag">Azure DevOps</span>
+                <span class="tag">Manual Testing</span>
+                <span class="tag">Test Suite</span>
+                <span class="tag">Functional</span>
+                <span class="tag">Security</span>
+                <span class="tag">Accessibility</span>
                 <span class="tag">Part II</span>
             </div>
         </div>

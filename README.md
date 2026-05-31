@@ -101,6 +101,31 @@
 
 ---
 
+### שאלה 5 — סידור Test Cases לעמוד my.gov.il
+
+הפורטל הנבדק: `https://my.gov.il`
+
+לאחר התחברות לפורטל, זוהו לשוניות התפריט הבאות:
+
+| קבוצה | לשוניות |
+|-------|---------|
+| ניווט כללי | דף הבית · פרטים אישיים · מסמכים · היסטוריית פעילות · פעולות ושירותים · ניהול הרשאות |
+| המידע שלי | נהיגה וכלי תחבורה · בריאות · כסף וביטוח · נכסים, בנייה ודיור · תעסוקה והשכלה |
+| עסקים | חשבון העסק שלי |
+
+**גישת הסידור:**
+- כל לשונית = **Test Suite** עצמאי ב-Azure DevOps
+- כל Suite מכיל Test Cases לפי 5 סוגים: Functional · Validation · UI · Accessibility · Security
+- Login מוגדר כ**תנאי קדם (Prerequisite)** לכל Suite
+- עדיפות: **High** לפונקציה ראשית, **Medium** לצדדית, **Low** לקצה
+- מזהה עקבי: TC-001 (Login) · TC-010 (דף הבית) · TC-020 (פרטים אישיים) · TC-030 (מסמכים) ...
+
+סה"כ: **53 Test Cases** ב-13 Test Suites
+
+קובץ הבדיקות: `docs/Azure_DevOps_TestPlan_myGov_Q5.xlsx`
+
+---
+
 ## עדכון חשוב: חסימת gov.il
 
 במהלך הרצת בדיקות ה-Cypress מול האתר האמיתי `https://www.gov.il/he`, האתר החזיר:
@@ -131,6 +156,14 @@ Sorry, you have been blocked
 - נוסף `cypress/fixtures/filters/filterData.json` — נתוני stub לשלושת ה-endpoints
 - נוסף `cypress/fixtures/gov-demo/filters.html` — דמו מקומי לעמוד הפילטרים
 
+### שאלה 5 — my.gov Test Cases (ידני + אוטומטי)
+- נוסף `docs/Azure_DevOps_TestPlan_myGov_Q5.xlsx` — Test Plan ל-my.gov.il עם 53 Test Cases ב-13 Suites (לשונית = Suite)
+- נוסף `cypress/fixtures/gov-demo/mygov-portal.html` — דמו מקומי של הפורטל עם כל 12 לשוניות התפריט (RTL, ARIA)
+- נוסף `cypress/fixtures/mygov/myGovData.json` — נתוני fixture לבדיקות
+- נוסף `cypress/pages/MyGovPage.ts` — Page Object לפורטל my.gov
+- נוסף `cypress/e2e/mygov-tabs.cy.ts` — 6 בדיקות Cypress לניווט בין לשוניות ה-Menu Tabs
+- עודכן `index.html` — נוסף סקשן הסבר לשאלה 5
+
 ### שאלה 4 (cy.intercept — שינוי title)
 - נוסף `cypress/e2e/intercept.cy.ts` — בדיקת `req.reply()` לשינוי `title` מ-"משרד ראש הממשלה" ל-"office"
 - נוסף `cypress/fixtures/gov-demo/prime-ministers.html` — דמו לעמוד משרד ראש הממשלה
@@ -152,18 +185,23 @@ docs/
 ├── TestPlan_ImmigrationForm_AzureDevOps.xlsx       ← Part IV שאלה 1 — תסריטי בדיקה
 ├── Azure_DevOps_TestCases_myGovILManual.xlsx       ← Part IV שאלה 1 — Test Cases ידניים
 ├── Azure_DevOps_AutoTestPlan_myGovIL.xlsx          ← תכנית בדיקות אוטומטיות
+├── Azure_DevOps_TestPlan_myGov_Q5.xlsx             ← שאלה 5 — Test Plan מלא ל-my.gov.il
 └── Part4_Q2_שמירת_נתוני_טופס.docx                ← Part IV שאלה 2 — שמירת נתונים
 
 cypress/
 ├── e2e/
 │   ├── search.cy.ts                       ← שאלה 2
 │   ├── filter.cy.ts                       ← שאלה 3
-│   └── intercept.cy.ts                    ← שאלה 4
+│   ├── intercept.cy.ts                    ← שאלה 4
+│   └── mygov-tabs.cy.ts                   ← שאלה 5 — 6 בדיקות ניווט בין לשוניות
 ├── fixtures/
 │   ├── gov-demo/
 │   │   ├── search.html                    ← דמו חיפוש (שאלה 2)
 │   │   ├── filters.html                   ← דמו פילטרים (שאלה 3)
-│   │   └── prime-ministers.html           ← דמו ראש הממשלה (שאלה 4)
+│   │   ├── prime-ministers.html           ← דמו ראש הממשלה (שאלה 4)
+│   │   └── mygov-portal.html              ← דמו my.gov.il עם 12 לשוניות (שאלה 5)
+│   ├── mygov/
+│   │   └── myGovData.json                 ← fixture לבדיקות לשוניות (שאלה 5)
 │   ├── search/
 │   │   └── searchData.json
 │   ├── filters/
@@ -172,7 +210,8 @@ cypress/
 ├── pages/
 │   ├── BasePage.ts
 │   ├── SearchPage.ts
-│   └── FilterPage.ts                      ← שאלה 3
+│   ├── FilterPage.ts                      ← שאלה 3
+│   └── MyGovPage.ts                       ← שאלה 5 — לשוניות my.gov
 └── support/
     ├── commands.js
     ├── commands.ts
