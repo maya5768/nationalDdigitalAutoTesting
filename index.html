@@ -813,6 +813,8 @@
             <a href="#part2-q4">Part II — שאלה 4</a>
             <a href="#part3-q1">Part III — שאלה 1</a>
             <a href="#part3-q2">Part III — שאלה 2</a>
+            <a href="#part4-q1">Part IV — שאלה 1</a>
+            <a href="#part4-q2">Part IV — שאלה 2</a>
         </div>
     </nav>
 
@@ -838,6 +840,10 @@
                 <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
                     <a href="#part3-q1" class="header-tag">Part III &middot; שאלה 1 — כשל בקוד</a>
                     <a href="#part3-q2" class="header-tag">Part III &middot; שאלה 2 — Java</a>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
+                    <a href="#part4-q1" class="header-tag">Part IV &middot; שאלה 1 — בדיקות ידניות</a>
+                    <a href="#part4-q2" class="header-tag">Part IV &middot; שאלה 2 — שמירת נתונים</a>
                 </div>
             </div>
         </header>
@@ -3160,6 +3166,228 @@ tsconfig.json</code></pre>
             </div>
         </div>
 
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PART IV | MANUAL TESTS — שאלה 1
+        ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator" id="part4-q1">
+            <span class="part-num">Part IV | Manual Tests</span>
+            <h2>שאלה 1 — תסריטי בדיקה לטופס פניה לרשות האוכלוסין</h2>
+        </div>
+
+        <!-- כרטיס: הטופס הנבדק -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>הטופס הנבדק</h2>
+            </div>
+            <p>
+                הטופס הנבדק הוא טופס פניה מקוון לרשות האוכלוסין וההגירה, המאפשר לאזרחים לשלוח פניות
+                בנושאים שונים כגון דרכון, תעודת זהות ועוד.
+            </p>
+            <pre class="url-block"><code>https://govforms.gov.il/mw/forms/PniyaToMeyda@piba.gov.il</code></pre>
+            <div class="info">
+                הטופס כולל מספר שלבים: בחירת נושא הפניה, מילוי פרטים אישיים, צירוף מסמכים ושליחה סופית.
+                לכן נדרשות בדיקות מסוגים שונים כדי לכסות את כל היבטי האיכות.
+            </div>
+            <div class="concept-box">
+                <strong>קבצי הבדיקות:</strong><br>
+                📊 <code>docs/TestPlan_ImmigrationForm_AzureDevOps.xlsx</code> — תכנית הבדיקות המלאה<br>
+                📋 <code>docs/Azure_DevOps_TestCases_myGovILManual.xlsx</code> — Test Cases ידניים מפורטים
+            </div>
+        </div>
+
+        <!-- כרטיס: 5 סוגי הבדיקות -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>חלוקה ל-5 סוגי בדיקות</h2>
+            </div>
+            <p>תסריטי הבדיקה חולקו לפי סוגים כדי לאפשר כיסוי מלא של כל היבטי הטופס:</p>
+
+            <table class="general-table">
+                <thead>
+                    <tr>
+                        <th>סוג הבדיקה</th>
+                        <th>מה נבדק</th>
+                        <th>דוגמה לתסריט</th>
+                        <th>צפי</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Functional</strong></td>
+                        <td>שליחת טופס תקין, מעבר בין שלבים, כפתורי ניווט</td>
+                        <td>מילוי כל שדות חובה ולחיצה על "שלח"</td>
+                        <td>הגשה מוצלחת + מספר אסמכתא</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Validation</strong></td>
+                        <td>שדות חובה, פורמט ת"ז / טלפון / מייל, הודעות שגיאה</td>
+                        <td>הזנת ת"ז בת 8 ספרות (במקום 9)</td>
+                        <td>הודעת שגיאה מתאימה, הטופס לא נשלח</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UI</strong></td>
+                        <td>עיצוב, כיווניות RTL, תצוגה רספונסיבית (מובייל / דסקטופ)</td>
+                        <td>פתיחת הטופס ברוחב מסך 375px</td>
+                        <td>כל השדות גלויים ונגישים, אין חפיפת אלמנטים</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accessibility</strong></td>
+                        <td>ניווט במקלדת בלבד, תמיכת Screen Reader, תאימות WCAG 2.1</td>
+                        <td>מעבר בין שדות עם Tab בלבד ושליחה עם Enter</td>
+                        <td>כל שדה מקבל פוקוס בסדר לוגי, תוויות ברורות</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>הזרקת XSS, SQL Injection, גישה ללא הרשאה</td>
+                        <td>הזנת <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> בשדה שם</td>
+                        <td>הסקריפט לא מבוצע — מוצג כטקסט גולמי בלבד</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <strong>למה חשוב לחלק לסוגים?</strong>
+                כל סוג בדיקה מכוון לסיכון אחר. Functional מוודא שהטופס עובד, Validation שומר על אינטגריטי הנתונים,
+                UI מבטיח חווית משתמש, Accessibility מחייב תאימות לחוק שוויון זכויות, ו-Security מגן על פרטי המגיש.
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PART IV | MANUAL TESTS — שאלה 2
+        ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator" id="part4-q2">
+            <span class="part-num">Part IV | Manual Tests</span>
+            <h2>שאלה 2 — כיצד לבדוק שנתוני הטופס נשמרו?</h2>
+        </div>
+
+        <!-- כרטיס: 4 שיטות אימות -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>ארבע שיטות לאימות שמירת הנתונים</h2>
+            </div>
+
+            <p>כדי לוודא שמירת נתונים בטופס ממשלתי, יש להשתמש בשילוב של מספר שיטות:</p>
+
+            <div class="step-flow">
+                <div class="step-flow-item">
+                    <div class="step-flow-num">1</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">הודעת אישור על המסך</span>
+                        <p class="step-flow-desc">
+                            לאחר שליחה מוצלחת — בודקים שמוצג <strong>banner / מודאל אישור</strong> עם מספר אסמכתא ייחודי.
+                            נוסף לכך, מוודאים שהנתונים שמולאו מופיעים בדף הסיכום (שם, נושא הפניה, תאריך).
+                        </p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">2</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">מייל אישור</span>
+                        <p class="step-flow-desc">
+                            בודקים שמגיע <strong>מייל אוטומטי</strong> לכתובת שהוזנה בטופס, המכיל את פרטי הפניה המלאים —
+                            שם, נושא, תאריך ומספר אסמכתא. זהו אימות חיצוני שהנתונים נקלטו בשרת.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">3</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">שמירת טיוטה — ניווט וחזרה</span>
+                        <p class="step-flow-desc">
+                            ממלאים חלק מהשדות, לוחצים "חזור" ואז "המשך" — ומוודאים שהנתונים שהוזנו
+                            <strong>נשמרו בין השלבים</strong>. בנוסף, סוגרים לשונית, פותחים מחדש וחוזרים לטופס —
+                            ובודקים שמציע לשחזר את הטיוטה.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">4</div>
+                    <div class="step-flow-body">
+                        <span class="step-flow-code">אימות API / DB</span>
+                        <p class="step-flow-desc">
+                            לאחר שליחה, שולחים בקשת <strong>GET לנקודת הקצה של הגשות</strong> (אם חשופה)
+                            עם מספר האסמכתא — ומוודאים שהתגובה מכילה את הנתונים שהוזנו בדיוק.
+                            שיטה זו מאמתת שמירה ישירות ברמת הבקאנד, ללא תלות ב-UI.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <strong>מסמך ההסבר המלא:</strong><br>
+                📄 <code>docs/Part4_Q2_שמירת_נתוני_טופס.docx</code>
+            </div>
+        </div>
+
+        <!-- כרטיס: למה נדרשות כל 4 השיטות -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">4</div>
+                <h2>למה חשוב להשתמש בכל ארבע השיטות?</h2>
+            </div>
+
+            <table class="general-table">
+                <thead>
+                    <tr>
+                        <th>שיטה</th>
+                        <th>מה היא מוודאת</th>
+                        <th>מגבלה</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>הודעת אישור על המסך</td>
+                        <td>שה-UI מדווח על הצלחה</td>
+                        <td>ייתכן שה-UI מציג הצלחה גם אם השמירה נכשלה</td>
+                    </tr>
+                    <tr>
+                        <td>מייל אישור</td>
+                        <td>שהשרת קלט את הנתונים ושלח אישור חיצוני</td>
+                        <td>תלוי בזמינות שרת המייל</td>
+                    </tr>
+                    <tr>
+                        <td>שמירת טיוטה</td>
+                        <td>שהנתונים נשמרים גם בזמן מילוי (לא רק בסיום)</td>
+                        <td>מוגבל לסשן / לוקאל סטורג'</td>
+                    </tr>
+                    <tr>
+                        <td>אימות API / DB</td>
+                        <td>שהנתונים קיימים בפועל בבסיס הנתונים</td>
+                        <td>דורש גישה לכלים מתקדמים / הרשאות</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <strong>שילוב כל ארבע השיטות נותן כיסוי מלא:</strong>
+                UI → שרת → שמירה זמנית → אימות ישיר ב-DB.
+                כל שיטה מכסה סיכון שהאחרות לא מכסות.
+            </div>
+        </div>
+
+        <!-- Summary Part IV -->
+        <div class="summary-card">
+            <h2>סיכום — Part IV | Manual Tests</h2>
+            <p>
+                בחלק זה בוצעו בדיקות ידניות על טופס הפניה המקוון לרשות האוכלוסין.
+                תסריטי הבדיקה חולקו ל-5 סוגים (Functional, Validation, UI, Accessibility, Security)
+                ותועדו ב-Azure DevOps. אימות שמירת הנתונים בוצע ב-4 שיטות משלימות.
+            </p>
+            <div class="tags">
+                <span class="tag">Manual Testing</span>
+                <span class="tag">Azure DevOps</span>
+                <span class="tag">Functional</span>
+                <span class="tag">Validation</span>
+                <span class="tag">Accessibility</span>
+                <span class="tag">Security</span>
+                <span class="tag">Gov.il</span>
+                <span class="tag">Part IV</span>
+            </div>
+        </div>
 
     </main>
 </body>

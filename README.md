@@ -12,6 +12,8 @@
 - שינוי שדות בתגובות API
 - Custom Commands ב-Cypress
 - Java GCD algorithm
+- Manual Testing | בדיקות ידניות לטופס ממשלתי
+- Azure DevOps Test Plan — Test Cases ותסריטי בדיקה
 
 ---
 
@@ -64,6 +66,41 @@
 
 ---
 
+## Part IV — Manual Tests | בדיקות ידניות
+
+### שאלה 1 — תסריטי בדיקה לטופס פניה לרשות האוכלוסין
+
+הטופס הנבדק: `https://govforms.gov.il/mw/forms/PniyaToMeyda@piba.gov.il`
+
+תסריטי הבדיקה חולקו ל-5 סוגים:
+
+| סוג בדיקה | מה נבדק | דוגמה לתסריט |
+|-----------|---------|--------------|
+| **Functional** | שליחת טופס תקין, מעבר בין שלבים, כפתורים | מילוי כל שדות חובה ושליחת טופס → צפי: הגשה מוצלחת |
+| **Validation** | שדות חובה, פורמט ת"ז / טלפון / מייל, הודעות שגיאה | הזנת ת"ז בת 8 ספרות → צפי: הודעת שגיאה |
+| **UI** | עיצוב, RTL, תצוגה במובייל ובדסקטופ | פתיחה במסך 375px → צפי: תצוגה רספונסיבית תקינה |
+| **Accessibility** | ניווט במקלדת, Screen Reader, תאימות WCAG | ניווט בין שדות עם Tab בלבד → צפי: כל שדה נגיש |
+| **Security** | XSS, הזרקת קוד, גישה ללא הרשאה | הזנת `<script>alert(1)</script>` בשדה טקסט → צפי: סניטיזציה |
+
+קבצי הבדיקות:
+- `docs/TestPlan_ImmigrationForm_AzureDevOps.xlsx`
+- `docs/Azure_DevOps_TestCases_myGovILManual.xlsx`
+
+---
+
+### שאלה 2 — כיצד לבדוק שנתוני הטופס נשמרו?
+
+תוארו ארבע שיטות לאימות שמירת הנתונים:
+
+1. **הודעת אישור על המסך** — בדיקה שמופיע banner / מודאל עם מספר אסמכתא לאחר שליחה
+2. **מייל אישור** — בדיקה שמגיע מייל עם כל פרטי הפניה שהוזנו
+3. **שמירת טיוטה / ניווט וחזרה** — מילוי חלקי, ניווט אחורה, ווידוא שהנתונים נשמרו בין השלבים
+4. **אימות API / DB** — שליחת בקשה לנקודת הקצה של הגשה ובדיקה שהנתונים הוחזרו כצפוי
+
+קובץ ההסבר: `docs/Part4_Q2_שמירת_נתוני_טופס.docx`
+
+---
+
 ## עדכון חשוב: חסימת gov.il
 
 במהלך הרצת בדיקות ה-Cypress מול האתר האמיתי `https://www.gov.il/he`, האתר החזיר:
@@ -105,11 +142,17 @@ Sorry, you have been blocked
 ## מבנה הפרויקט
 
 ```text
-Gov.il API Tests.postman_collection.json   ← שאלה 1
 index.html
 README.md
 cypress.config.js
 tsconfig.json
+
+docs/
+├── exam.pdf                                        ← מסמך הבחינה
+├── TestPlan_ImmigrationForm_AzureDevOps.xlsx       ← Part IV שאלה 1 — תסריטי בדיקה
+├── Azure_DevOps_TestCases_myGovILManual.xlsx       ← Part IV שאלה 1 — Test Cases ידניים
+├── Azure_DevOps_AutoTestPlan_myGovIL.xlsx          ← תכנית בדיקות אוטומטיות
+└── Part4_Q2_שמירת_נתוני_טופס.docx                ← Part IV שאלה 2 — שמירת נתונים
 
 cypress/
 ├── e2e/
