@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gov.il Demo — Prime Ministers Office</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        color: #17324d;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 48px;
+        background: #ffffff;
+        border-bottom: 1px solid #d8e0ea;
+      }
+
+      .brand {
+        font-size: 22px;
+        font-weight: 700;
+        color: #005eb8;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 36px auto;
+        padding: 0 24px;
+      }
+
+      .dept-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .dept-description {
+        font-size: 1rem;
+        color: #4a5568;
+        margin-bottom: 24px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <header>
+      <div class="brand">gov.il demo</div>
+    </header>
+
+    <main>
+      <!--
+        כותרת המחלקה — נטענת דינמית מה-API ע"י fetch().
+        cy.intercept יירט את הבקשה וישנה את ה-title לפני שהדף מציג אותה.
+      -->
+      <h1 class="dept-title" data-testid="dept-title">טוען...</h1>
+      <p class="dept-description" data-testid="dept-description"></p>
+    </main>
+
+    <script>
+      /*
+       * הדף מדמה את: https://www.gov.il/he/department/prime_ministers_office
+       * fetch() שולח GET ל-API — Cypress יורט את הבקשה עם cy.intercept.
+       * ה-URL חייב להיות זהה למה שמרשמים ב-cy.intercept.
+       */
+      fetch('https://www.gov.il/api/content/types/department/dcterms:identifier/prime_ministers_office')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          document.querySelector('[data-testid="dept-title"]').textContent = data.title;
+          document.querySelector('[data-testid="dept-description"]').textContent = data.description || '';
+        })
+        .catch(function() {
+          document.querySelector('[data-testid="dept-title"]').textContent = 'שגיאה בטעינה';
+        });
+    </script>
+  </body>
+</html>

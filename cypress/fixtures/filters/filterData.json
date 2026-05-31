@@ -1,0 +1,45 @@
+{
+  "pageUrl": "https://www.gov.il/he/government-service-branches?limit=10&skip=0",
+  "baseApi": "https://www.gov.il/he/BureausWebApi/bureaus",
+  "cities": {
+    "apiPattern": "**/GetAggregationCities**",
+    "realUrl": "https://www.gov.il/he/BureausWebApi/bureaus/GetAggregationCities",
+    "expectedStatus": 200,
+    "stubBody": {
+      "value": [
+        { "key": "תל אביב",   "doc_count": 45 },
+        { "key": "ירושלים",   "doc_count": 38 },
+        { "key": "חיפה",      "doc_count": 22 },
+        { "key": "רחובות",    "doc_count": 12 },
+        { "key": "חולון",     "doc_count": 10 }
+      ]
+    }
+  },
+  "categories": {
+    "apiPattern": "**/GetAggregationCategories**",
+    "realUrl": "https://www.gov.il/he/BureausWebApi/bureaus/GetAggregationCategories",
+    "expectedStatus": 200,
+    "stubBody": {
+      "value": [
+        { "key": "בריאות",       "doc_count": 55 },
+        { "key": "תחבורה",       "doc_count": 30 },
+        { "key": "חינוך",        "doc_count": 28 },
+        { "key": "רווחה",        "doc_count": 20 }
+      ]
+    }
+  },
+  "accessibilitytype": {
+    "apiPattern": "**/BureausWebApi/Bureaus**",
+    "apiMethod": "POST",
+    "realUrl": "https://www.gov.il/he/BureausWebApi/Bureaus",
+    "note": "POST request sent when selecting an accessibility filter (e.g. נגישות מלאה). Payload contains accessibility:true. Different from cities/categories which are GET aggregation calls.",
+    "expectedStatus": 200,
+    "stubBody": {
+      "value": [
+        { "title": "הנבלת בתי הדין הרבניים",    "city": "ירושלים", "accessibility": true },
+        { "title": "מרכז בדיקת תכניות — דרום",  "city": "באר שבע", "accessibility": true }
+      ],
+      "totalCount": 15
+    }
+  }
+}

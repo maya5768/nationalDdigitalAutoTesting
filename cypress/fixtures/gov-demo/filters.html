@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gov.il Demo — Filter Services</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        color: #17324d;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 48px;
+        background: #ffffff;
+        border-bottom: 1px solid #d8e0ea;
+      }
+
+      .brand {
+        font-size: 22px;
+        font-weight: 700;
+        color: #005eb8;
+        margin-inline-end: auto;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .filter-toggle {
+        background: #005eb8;
+        color: #fff;
+        border: 0;
+        border-radius: 4px;
+        padding: 8px 14px;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .search-bar input {
+        width: 260px;
+        padding: 9px 12px;
+        border: 1px solid #8aa3bd;
+        border-radius: 4px;
+        font-size: 15px;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 36px auto;
+        padding: 0 24px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+        margin-bottom: 4px;
+      }
+
+      /* ─── Filter Panel ─────────────────────────────────────── */
+      .filter-panel {
+        display: none;
+        background: #fff;
+        border: 1px solid #d8e0ea;
+        border-radius: 8px;
+        padding: 20px 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      }
+
+      .filter-panel.is-open {
+        display: block;
+      }
+
+      .filter-panel h2 {
+        font-size: 1rem;
+        margin: 0 0 16px;
+        color: #4a5568;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .filter-group label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .filter-group input[type="checkbox"] {
+        width: 17px;
+        height: 17px;
+        cursor: pointer;
+        accent-color: #005eb8;
+      }
+
+      /* ─── Status area ──────────────────────────────────────── */
+      .status-area {
+        margin-bottom: 16px;
+        min-height: 22px;
+      }
+
+      .status-text {
+        font-size: 0.88rem;
+        color: #4a5568;
+      }
+
+      /* ─── Results list ─────────────────────────────────────── */
+      .results-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .result-card {
+        background: #fff;
+        border: 1px solid #d8e0ea;
+        border-radius: 8px;
+        padding: 18px 20px;
+      }
+
+      .result-card h3 {
+        margin: 0 0 6px;
+        font-size: 1rem;
+        color: #17324d;
+      }
+
+      .result-card p {
+        margin: 0;
+        font-size: 0.88rem;
+        color: #4a5568;
+      }
+    </style>
+  </head>
+  <body>
+
+    <header>
+      <div class="brand">gov.il demo</div>
+      <div class="search-bar">
+        <button class="filter-toggle" type="button" aria-label="סנן תוצאות">&#8801;</button>
+        <input type="search" placeholder="חיפוש שירות..." aria-label="חיפוש" />
+      </div>
+    </header>
+
+    <main>
+      <h1>קבלת קהל ועמדות שירותים</h1>
+      <p style="color:#4a5568; margin-bottom:20px;">מדמה את: https://www.gov.il/he/government-service-branches<br>לחץ על &#8801; לסינון לפי ערים, קטגוריות או נגישות.</p>
+
+      <!--
+        לוח הפילטרים.
+        כל checkbox נושא data-api עם ה-URL האמיתי של gov.il BureausWebApi.
+        כאשר ה-checkbox מסומן, JavaScript שולח fetch() לכתובת זו.
+        Cypress יורט את הבקשה עם cy.intercept() לפני שהיא יוצאת לרשת.
+      -->
+      <section class="filter-panel" aria-label="פילטרים">
+        <h2>סנן לפי:</h2>
+        <div class="filter-group">
+
+          <!-- cities — endpoint אמיתי: BureausWebApi/bureaus/GetAggregationCities -->
+          <label>
+            <input
+              type="checkbox"
+              name="cities"
+              data-api="https://www.gov.il/he/BureausWebApi/bureaus/GetAggregationCities"
+            />
+            cities
+          </label>
+
+          <!-- categories — endpoint אמיתי: BureausWebApi/bureaus/GetAggregationCategories -->
+          <label>
+            <input
+              type="checkbox"
+              name="categories"
+              data-api="https://www.gov.il/he/BureausWebApi/bureaus/GetAggregationCategories"
+            />
+            categories
+          </label>
+
+          <!--
+            accessibilitytype — שונה מהשניים הקודמים!
+            שולח POST ל-BureausWebApi/Bureaus עם accessibility:true בגוף הבקשה.
+            נמצא ב-DevTools: Request URL = BureausWebApi/Bureaus, Method = POST,
+            Payload = { accessibility: true, limit: "10", skip: "0" }
+          -->
+          <label>
+            <input
+              type="checkbox"
+              name="accessibilitytype"
+              data-api="https://www.gov.il/he/BureausWebApi/Bureaus"
+              data-method="POST"
+            />
+            accessibilitytype
+          </label>
+
+        </div>
+      </section>
+
+      <!-- אזור סטטוס — מציג מצב הטעינה (aria-live מודיע לקוראי מסך) -->
+      <div class="status-area" aria-live="polite">
+        <span class="status-text">בחר פילטרים כדי לסנן תוצאות</span>
+      </div>
+
+      <!-- תוצאות דמו קבועות -->
+      <ul class="results-list">
+        <li class="result-card">
+          <h3>שירות המבחן לנוער — רחובות</h3>
+          <p>אופנהיימר 10, רחובות</p>
+        </li>
+        <li class="result-card">
+          <h3>מרכז בדיקת תכניות — מחוז דרום</h3>
+          <p>לאה רבין 3, באר שבע</p>
+        </li>
+        <li class="result-card">
+          <h3>שירות המבחן לנוער — רמלה</h3>
+          <p>הרצל 91, רמלה</p>
+        </li>
+      </ul>
+    </main>
+
+    <script>
+      var filterToggle = document.querySelector('.filter-toggle');
+      var filterPanel  = document.querySelector('.filter-panel');
+      var statusText   = document.querySelector('.status-text');
+      var checkboxes   = document.querySelectorAll('input[type="checkbox"][data-api]');
+
+      // פתח / סגור את לוח הפילטרים בלחיצה על כפתור ≡
+      filterToggle.addEventListener('click', function() {
+        filterPanel.classList.toggle('is-open');
+      });
+
+      checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+          var apiUrl     = this.getAttribute('data-api');
+          var apiMethod  = this.getAttribute('data-method') || 'GET';  // GET ברירת מחדל, POST לנגישות
+          var filterName = this.getAttribute('name');
+
+          if (this.checked) {
+            statusText.textContent = 'טוען ' + filterName + '...';
+
+            /*
+             * cities ו-categories: GET ל-GetAggregationCities / GetAggregationCategories
+             * accessibilitytype:   POST ל-BureausWebApi/Bureaus עם accessibility:true בגוף
+             * Cypress יורט את כל הבקשות ומחזיר stub — ללא גישה לשרת האמיתי.
+             */
+            var fetchOptions = { method: apiMethod };
+            if (apiMethod === 'POST') {
+              fetchOptions.headers = { 'Content-Type': 'application/json' };
+              fetchOptions.body = JSON.stringify({ accessibility: true, limit: '10', skip: '0' });
+            }
+
+            fetch(apiUrl, fetchOptions)
+              .then(function(response) {
+                statusText.textContent = filterName + ' — ' + apiMethod + ' סטטוס: ' + response.status;
+                return response.json();
+              })
+              .then(function(data) {
+                var count = data.value ? data.value.length : (data.totalCount || 0);
+                statusText.textContent = filterName + ' נטען בהצלחה (' + count + ' פריטים)';
+              })
+              .catch(function(err) {
+                statusText.textContent = 'שגיאה: ' + err.message;
+              });
+          } else {
+            statusText.textContent = 'הפילטר ' + filterName + ' בוטל';
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
