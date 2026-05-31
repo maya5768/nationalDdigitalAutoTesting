@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -653,6 +653,71 @@
         .diagram .neutral { color: #93c5fd; }
         .diagram .dim     { color: #475569; }
 
+        /* Step-by-step flow list */
+        .step-flow {
+            margin: 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .step-flow-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: #f8fafc;
+            border: 1px solid #dbeafe;
+            border-radius: 8px;
+            padding: 12px 14px;
+        }
+
+        .step-flow-num {
+            background: #0b4f8a;
+            color: white;
+            min-width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .step-flow-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .step-flow-code {
+            direction: ltr;
+            text-align: left;
+            font-family: 'Consolas', monospace;
+            font-size: 0.83rem;
+            color: #2b5cb8;
+            background: #edf2ff;
+            border: 1px solid #c7d2fe;
+            border-radius: 5px;
+            padding: 5px 10px;
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-bottom: 6px;
+        }
+
+        .step-flow-desc {
+            color: #4a5568;
+            font-size: 0.88rem;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .step-flow-desc.pass { color: #166534; font-weight: 600; }
+
         /* General table used in Q1 */
         .general-table {
             width: 100%;
@@ -742,8 +807,10 @@
         <a href="#top" class="nav-brand">📋 הסברים לשאלות המבחן</a>
         <div class="nav-links">
             <a href="#part1">Part I — שאלה 1</a>
+            <a href="#part1-q2">Part I — שאלה 2</a>
             <a href="#part2">Part II — שאלה 2</a>
             <a href="#part2-q3">Part II — שאלה 3</a>
+            <a href="#part2-q4">Part II — שאלה 4</a>
             <a href="#part3-q1">Part III — שאלה 1</a>
             <a href="#part3-q2">Part III — שאלה 2</a>
         </div>
@@ -758,13 +825,20 @@
             <div class="badge">בחינה: בודק תוכנה — מערכות ממשלתיות</div>
             <h1>הסברים לשאלות המבחן</h1>
             <p>National Digital Agency | Gov.il — בדיקות אוטומציה</p>
-            <div class="tags" style="margin-top:20px;">
-                <a href="#part1"    class="header-tag">Part I &middot; שאלה 1 — בדיקת API</a>
-                <a href="#part2"    class="header-tag">Part II &middot; שאלה 2 — Cypress</a>
-                <a href="#part2-q3" class="header-tag">Part II &middot; שאלה 3 — cy.intercept</a>
-                <a href="#part2-q4" class="header-tag">Part II &middot; שאלה 4 — שינוי תגובה</a>
-                <a href="#part3-q1" class="header-tag">Part III &middot; שאלה 1 — כשל בקוד</a>
-                <a href="#part3-q2" class="header-tag">Part III &middot; שאלה 2 — Java</a>
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
+                <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
+                    <a href="#part1"    class="header-tag">Part I &middot; שאלה 1 — בדיקת API</a>
+                    <a href="#part1-q2" class="header-tag">Part I &middot; שאלה 2 — חיפוש API</a>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
+                    <a href="#part2"    class="header-tag">Part II &middot; שאלה 2 — Cypress</a>
+                    <a href="#part2-q3" class="header-tag">Part II &middot; שאלה 3 — cy.intercept</a>
+                    <a href="#part2-q4" class="header-tag">Part II &middot; שאלה 4 — שינוי תגובה</a>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
+                    <a href="#part3-q1" class="header-tag">Part III &middot; שאלה 1 — כשל בקוד</a>
+                    <a href="#part3-q2" class="header-tag">Part III &middot; שאלה 2 — Java</a>
+                </div>
             </div>
         </header>
 
@@ -799,23 +873,50 @@
 
             <pre><code><span class="cm">// Test 1: Validate that the request was successful</span>
 <span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Status code is 200"</span>, <span class="kw">function</span> () {
+    <span class="cm">// Check that the server returned HTTP status code 200</span>
     <span class="cm">// Status 200 means the page was loaded successfully</span>
     <span class="prop">pm</span>.response.to.have.<span class="fn">status</span>(<span class="num">200</span>);
 });
 
 
-<span class="cm">// Test 2: Validate that the page language is English</span>
+<span class="cm">// Test 2: Validate that the page title is in English</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Page title is in English"</span>, <span class="kw">function</span> () {
+    <span class="cm">// Get the full HTML response body as text</span>
+    <span class="kw">var</span> responseText = <span class="prop">pm</span>.response.<span class="fn">text</span>();
+
+    <span class="cm">// Extract the content of the &lt;title&gt; tag</span>
+    <span class="cm">// Example match: &lt;title&gt;HomePage&lt;/title&gt;</span>
+    <span class="kw">var</span> titleMatch = responseText.<span class="fn">match</span>(<span class="str">/&lt;title[^&gt;]*&gt;([^&lt;]+)&lt;\/title&gt;/i</span>);
+
+    <span class="cm">// Make sure the &lt;title&gt; tag exists and has content</span>
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleMatch).to.not.be.null;
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleMatch[<span class="num">1</span>].<span class="fn">trim</span>()).to.not.be.empty;
+
+    <span class="kw">var</span> titleText = titleMatch[<span class="num">1</span>].<span class="fn">trim</span>();
+
+    <span class="cm">// Verify the title does NOT contain Hebrew characters (Unicode range \u0590-\u05FF)</span>
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleText).to.not.<span class="fn">match</span>(<span class="str">/[\u0590-\u05FF]/</span>,
+        <span class="str">"Title should not contain Hebrew characters, but got: "</span> + titleText);
+
+    <span class="cm">// Verify the title contains at least one Latin letter (a-z or A-Z)</span>
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleText).to.<span class="fn">match</span>(<span class="str">/[a-zA-Z]/</span>,
+        <span class="str">"Title should contain Latin (English) characters, but got: "</span> + titleText);
+});
+
+
+<span class="cm">// Test 3: Validate that the page language is English</span>
 <span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Page language is English"</span>, <span class="kw">function</span> () {
+    <span class="cm">// Get the full HTML response body as text</span>
     <span class="kw">var</span> responseText = <span class="prop">pm</span>.response.<span class="fn">text</span>();
 
     <span class="cm">// Search for the lang attribute inside the &lt;html&gt; tag</span>
-    <span class="cm">// Example matches: &lt;html lang="en"&gt;  /  &lt;html lang="en-US"&gt;</span>
+    <span class="cm">// Example matches: &lt;html lang="en"&gt;  /  &lt;html lang="en-US"&gt;  /  &lt;html dir="ltr" lang="en"&gt;</span>
     <span class="kw">var</span> langMatch = responseText.<span class="fn">match</span>(<span class="str">/&lt;html[^&gt;]*\slang=["']([^"']+)["']/i</span>);
 
     <span class="cm">// Make sure that the lang attribute exists</span>
     <span class="prop">pm</span>.<span class="fn">expect</span>(langMatch).to.not.be.null;
 
-    <span class="cm">// Extract and normalize the language value (e.g. "en" or "en-US")</span>
+    <span class="cm">// Extract the language value — langMatch[1] יכיל "en" או "en-US"</span>
     <span class="kw">var</span> pageLang = langMatch[<span class="num">1</span>].<span class="fn">toLowerCase</span>();
 
     <span class="cm">// Verify that the language starts with "en"</span>
@@ -838,7 +939,32 @@
 
             <hr class="divider">
 
-            <h3>בדיקה 2 — שפת העמוד</h3>
+            <h3>בדיקה 2 — כותרת הדף באנגלית</h3>
+            <p>
+                שולפת את תוכן תגית <code>&lt;title&gt;</code> מה-HTML ומבצעת עליו שלוש בדיקות:
+            </p>
+            <ol style="line-height:2; padding-right:20px;">
+                <li>
+                    <strong>תגית title קיימת ואינה ריקה</strong> —
+                    <code>pm.expect(titleMatch).to.not.be.null</code>
+                </li>
+                <li>
+                    <strong>הכותרת לא מכילה תווים עבריים</strong> —
+                    regex <code>/[\u0590-\u05FF]/</code> בודק שאין תווים בטווח Unicode של עברית.
+                    אם הכותרת הייתה בעברית — הבדיקה הייתה נכשלת.
+                </li>
+                <li>
+                    <strong>הכותרת מכילה לפחות אות לטינית אחת</strong> —
+                    regex <code>/[a-zA-Z]/</code> מוודא שיש תוכן אנגלי ממשי.
+                </li>
+            </ol>
+            <div class="info">
+                שתי הבדיקות יחד מבטיחות שהכותרת היא אנגלית — לא עברית, לא ריקה, ומכילה טקסט לטיני.
+            </div>
+
+            <hr class="divider">
+
+            <h3>בדיקה 3 — שפת העמוד</h3>
             <p>
                 בודקת את מאפיין <code>lang</code> שנמצא בתגית <code>&lt;html&gt;</code>.
                 מאפיין זה מציין את שפת העמוד. לדוגמה:
@@ -858,7 +984,100 @@
                 <h2>הסבר מפורט על ה-Regular Expression</h2>
             </div>
 
-            <h3>רג'קס 1 — מציאת מאפיין השפה בתגית HTML</h3>
+            <h3>רג'קס 1 — שליפת תוכן תגית ה-title</h3>
+            <pre class="regex-block"><code>/&lt;title[^&gt;]*&gt;([^&lt;]+)&lt;\/title&gt;/i</code></pre>
+
+            <p>הרג'קס שולף את הטקסט שבין תגיות <code>&lt;title&gt;</code> ו-<code>&lt;/title&gt;</code>.</p>
+
+            <div class="regex-visual">
+                <div class="regex-part t1">
+                    <span class="token">&lt;title</span>
+                    <span class="label">התחלת תגית title</span>
+                </div>
+                <div class="regex-part t2">
+                    <span class="token">[^&gt;]*</span>
+                    <span class="label">תכונות אופציונליות</span>
+                </div>
+                <div class="regex-part t3">
+                    <span class="token">&gt;</span>
+                    <span class="label">סגירת תגית פתיחה</span>
+                </div>
+                <div class="regex-part t6">
+                    <span class="token">([^&lt;]+)</span>
+                    <span class="label">capture group — הטקסט</span>
+                </div>
+                <div class="regex-part t4">
+                    <span class="token">&lt;\/title&gt;</span>
+                    <span class="label">תגית סגירה</span>
+                </div>
+            </div>
+
+            <table class="regex-breakdown">
+                <thead>
+                    <tr>
+                        <th>חלק ברג'קס</th>
+                        <th>מה הוא עושה</th>
+                        <th>למה צריך אותו?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&lt;title</td>
+                        <td>מחפש את תגית ה-title</td>
+                        <td>נקודת ההתחלה של החיפוש</td>
+                    </tr>
+                    <tr>
+                        <td>[^&gt;]*</td>
+                        <td>כל תו שאינו <code>&gt;</code></td>
+                        <td>מאפשר תגית עם תכונות כמו <code>&lt;title lang="en"&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>([^&lt;]+)</td>
+                        <td><strong>Capture Group</strong> — כל תו שאינו <code>&lt;</code></td>
+                        <td>תופס את הטקסט עד תגית הסגירה. מוחזר ב-<code>titleMatch[1]</code></td>
+                    </tr>
+                    <tr>
+                        <td>&lt;\/title&gt;</td>
+                        <td>תגית הסגירה המדויקת</td>
+                        <td>מבטיח שנלכד רק הטקסט שבתוך ה-title</td>
+                    </tr>
+                    <tr>
+                        <td>/i</td>
+                        <td>case-insensitive</td>
+                        <td>מתאים גם ל-<code>&lt;TITLE&gt;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top:24px;">רג'קס 2 — בדיקה שהכותרת לא עברית</h3>
+            <pre class="regex-block"><code>/[\u0590-\u05FF]/</code></pre>
+            <p>
+                בודק אם הטקסט מכיל תווים בטווח Unicode של עברית (<code>U+0590</code> עד <code>U+05FF</code>).
+                השימוש הוא עם <code>.to.not.match()</code> — כלומר הבדיקה <strong>עוברת</strong> אם אין תווים עבריים.
+            </p>
+            <div class="match-examples">
+                <div class="match-box yes">
+                    <div class="match-title">✓ יעבור (.not.match)</div>
+                    <code>"gov.il | Homepage"  → ללא עברית</code>
+                    <code>"Israel Government"  → ללא עברית</code>
+                </div>
+                <div class="match-box no">
+                    <div class="match-title">✗ לא יעבור (יכשל)</div>
+                    <code>"ממשלת ישראל"  → מכיל עברית</code>
+                    <code>"Israel ממשלה"  → מכיל עברית</code>
+                </div>
+            </div>
+
+            <h3 style="margin-top:24px;">רג'קס 3 — בדיקה שהכותרת מכילה אות לטינית</h3>
+            <pre class="regex-block"><code>/[a-zA-Z]/</code></pre>
+            <p>
+                בודק שיש לפחות תו אחד מ-a עד z (קטן או גדול). משלים את הבדיקה הקודמת —
+                לא מספיק שהכותרת לא עברית, היא גם חייבת להכיל תוכן אנגלי ממשי.
+            </p>
+
+            <hr class="divider">
+
+            <h3>רג'קס 4 — מציאת מאפיין השפה בתגית HTML</h3>
             <pre class="regex-block"><code>/&lt;html[^&gt;]*\slang=["']([^"']+)["']/i</code></pre>
 
             <p>הרג'קס מחפש בתוך קוד ה-HTML של הדף את תגית <code>&lt;html&gt;</code> ומוציא ממנה את ערך השפה.</p>
@@ -967,7 +1186,7 @@
 
             <hr class="divider">
 
-            <h3>רג'קס 2 — אימות שהשפה היא אנגלית</h3>
+            <h3>רג'קס 5 — אימות שהשפה היא אנגלית</h3>
             <pre class="regex-block"><code>/^(en\b|en-)/</code></pre>
 
             <table class="regex-breakdown">
@@ -1035,6 +1254,436 @@
                 <span class="tag">RegExp</span>
                 <span class="tag">gov.il</span>
             </div>
+        </div>
+
+        <!-- Part I Q2 separator -->
+        <div class="part-separator" id="part1-q2">
+            <span class="part-num">Part I | API Testing</span>
+            <h2>שאלה 2 — בדיקת רכיב החיפוש באתר Gov.il</h2>
+        </div>
+
+        <!-- כרטיס: כתובת הבקשה -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">5</div>
+                <h2>כתובת הבקשה — Search Validate Results</h2>
+            </div>
+
+            <p>הבקשה נשלחת בשיטת <code>GET</code> לעמוד חיפוש האתר עם מילת החיפוש <code>passport</code>:</p>
+
+            <pre class="url-block"><code>https://www.gov.il/en/search?searchTerm=passport</code></pre>
+
+            <p>
+                ה-query param <code>searchTerm</code> מכיל את מילת החיפוש.
+                ה-script שולף אותו בתחילת הבדיקות:<br>
+                <code>const searchTerm = pm.request.url.query.get("searchTerm");</code>
+            </p>
+        </div>
+
+        <!-- כרטיס: קוד הבדיקה -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">6</div>
+                <h2>קוד הבדיקה — 10 Assertions</h2>
+            </div>
+
+            <pre><code><span class="cm">// שליפת מילת החיפוש מה-URL לשימוש בבדיקות</span>
+<span class="kw">const</span> <span class="prop">searchTerm</span> = <span class="prop">pm</span>.request.url.query.<span class="fn">get</span>(<span class="str">"searchTerm"</span>);
+
+<span class="cm">// Test 1: HTTP Status Code</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Status code is 200 - Search page loaded successfully"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.response.to.have.<span class="fn">status</span>(<span class="num">200</span>);
+});
+
+<span class="cm">// Test 2: Response Time</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response time is under 5000ms"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.responseTime).to.be.<span class="fn">below</span>(<span class="num">5000</span>);
+});
+
+<span class="cm">// Test 3: Content-Type is HTML</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response Content-Type is text/html"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.headers.<span class="fn">get</span>(<span class="str">"Content-Type"</span>)).to.<span class="fn">include</span>(<span class="str">"text/html"</span>);
+});
+
+<span class="cm">// Test 4: Response body is not empty</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response body is not empty"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.<span class="fn">text</span>()).to.not.be.empty;
+});
+
+<span class="cm">// Test 5: Search term reflected in response HTML</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response body contains the search term '"</span> + searchTerm + <span class="str">"'"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">responseText</span> = <span class="prop">pm</span>.response.<span class="fn">text</span>();
+    <span class="prop">pm</span>.<span class="fn">expect</span>(responseText.<span class="fn">toLowerCase</span>()).to.<span class="fn">include</span>(searchTerm.<span class="fn">toLowerCase</span>());
+});
+
+<span class="cm">// Test 6: Page contains search results section</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response HTML contains a search results section"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">responseText</span> = <span class="prop">pm</span>.response.<span class="fn">text</span>();
+    <span class="kw">const</span> <span class="prop">hasResultsSection</span> =
+        responseText.<span class="fn">includes</span>(<span class="str">"search-results"</span>) ||
+        responseText.<span class="fn">includes</span>(<span class="str">"searchResults"</span>) ||
+        responseText.<span class="fn">includes</span>(<span class="str">"results"</span>) ||
+        responseText.<span class="fn">includes</span>(<span class="str">"result"</span>);
+    <span class="prop">pm</span>.<span class="fn">expect</span>(hasResultsSection).to.be.<span class="kw">true</span>;
+});
+
+<span class="cm">// Test 7: Page language is English</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Page language attribute is English (lang='en')"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.<span class="fn">text</span>()).to.<span class="fn">match</span>(<span class="str">/&lt;html[^&gt;]+lang=["']en["']/i</span>);
+});
+
+<span class="cm">// Test 8: Page title is present and not purely Hebrew</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Page has a non-empty English &lt;title&gt;"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">titleMatch</span> = <span class="prop">pm</span>.response.<span class="fn">text</span>().<span class="fn">match</span>(<span class="str">/&lt;title[^&gt;]*&gt;([^&lt;]+)&lt;\/title&gt;/i</span>);
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleMatch).to.not.be.null;
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleMatch[<span class="num">1</span>].<span class="fn">trim</span>()).to.not.be.empty;
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleMatch[<span class="num">1</span>].<span class="fn">trim</span>()).to.not.<span class="fn">match</span>(<span class="str">/^[\u0590-\u05FF\s]+$/</span>);
+});
+
+<span class="cm">// Test 9: No server error messages</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response does not contain server error messages"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">body</span> = <span class="prop">pm</span>.response.<span class="fn">text</span>().<span class="fn">toLowerCase</span>();
+    <span class="prop">pm</span>.<span class="fn">expect</span>(body).to.not.<span class="fn">include</span>(<span class="str">"500 internal server error"</span>);
+    <span class="prop">pm</span>.<span class="fn">expect</span>(body).to.not.<span class="fn">include</span>(<span class="str">"503 service unavailable"</span>);
+    <span class="prop">pm</span>.<span class="fn">expect</span>(body).to.not.<span class="fn">include</span>(<span class="str">"error occurred"</span>);
+});
+
+<span class="cm">// Test 10: Final URL contains the searchTerm parameter</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response URL contains the searchTerm parameter"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">finalUrl</span> = <span class="prop">pm</span>.response.url || <span class="str">""</span>;
+    <span class="kw">if</span> (finalUrl) {
+        <span class="prop">pm</span>.<span class="fn">expect</span>(finalUrl.<span class="fn">toLowerCase</span>()).to.<span class="fn">include</span>(<span class="str">"searchterm="</span> + searchTerm.<span class="fn">toLowerCase</span>());
+    }
+});</code></pre>
+        </div>
+
+        <!-- כרטיס: הסבר 10 הבדיקות -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">7</div>
+                <h2>הסבר על 10 הבדיקות</h2>
+            </div>
+
+            <table style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+                <thead>
+                    <tr style="background:#1e293b; color:#e2e8f0;">
+                        <th style="padding:10px 12px; text-align:right;">#</th>
+                        <th style="padding:10px 12px; text-align:right;">שם הבדיקה</th>
+                        <th style="padding:10px 12px; text-align:right;">מה היא בודקת</th>
+                        <th style="padding:10px 12px; text-align:right;">API של Postman</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">1</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Status code is 200</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">שרת החזיר HTTP 200 OK</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>pm.response.to.have.status(200)</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">2</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Response time under 5000ms</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">זמן התגובה מתחת ל-5 שניות</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>pm.response.responseTime</code></td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">3</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Content-Type is text/html</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">header Content-Type מכיל text/html</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>pm.response.headers.get("Content-Type")</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">4</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Body is not empty</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">תגובת ה-HTML לא ריקה</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>pm.response.text()</code></td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">5</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Body contains "passport"</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">מילת החיפוש מופיעה ב-HTML המוחזר</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>responseText.toLowerCase().includes(...)</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">6</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Contains results section</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">ה-HTML מכיל אחד מ: search-results / results / result</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>includes("search-results") || ...</code></td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">7</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">lang="en"</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">תגית html מכילה <code>lang="en"</code></td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>.to.match(/&lt;html[^&gt;]+lang=["']en["']/i)</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">8</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Non-empty English title</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>&lt;title&gt;</code> לא ריק ולא מורכב מעברית בלבד</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>.not.match(/^[\u0590-\u05FF\s]+$/)</code></td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">9</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">No server errors</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">לא מכיל "500 internal server error" / "503" / "error occurred"</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>body.not.include("500...")</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px;">10</td>
+                        <td style="padding:9px 12px;">URL contains searchTerm</td>
+                        <td style="padding:9px 12px;">ה-URL הסופי (אחרי redirects) מכיל <code>searchterm=passport</code></td>
+                        <td style="padding:9px 12px;"><code>pm.response.url</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box" style="margin-top:20px;">
+                <strong>תוצאות הריצה: 10/10 PASSED · 200 OK · 212ms · 21.65 KB</strong>
+            </div>
+        </div>
+
+        <!-- sub-header: גרסה 2 של שאלה 2 -->
+        <div style="background:#e0f2fe; border-right:5px solid #0284c7; padding:14px 28px; border-radius:8px; margin:32px 0 8px;">
+            <span style="color:#0284c7; font-weight:700; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px;">שאלה 2 — גרסה משופרת</span>
+            <h3 style="margin:4px 0 0; color:#0c4a6e; font-size:1.2rem;">Search — Validate Results + Pre-request Validation</h3>
+        </div>
+
+        <!-- כרטיס: Pre-request validation -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">8</div>
+                <h2>Pre-request Validation — בדיקות לפני שליחת הבקשה</h2>
+            </div>
+
+            <div class="concept-box">
+                <strong>מה זה Pre-request script?</strong><br>
+                בניגוד ל-Post-response שרץ <em>אחרי</em> שהשרת ענה — ה-Pre-request script רץ
+                <strong>לפני</strong> שהבקשה בכלל יוצאת. הוא מאמת שה-input תקין לפני שבוזבזים
+                קריאת רשת על בקשה שברור שתיכשל.
+            </div>
+
+            <pre><code><span class="cm">// ─── Pre-Request Validation ───────────────────────────────────────────────</span>
+<span class="cm">// This script runs BEFORE the request is sent.</span>
+<span class="cm">// It validates that the search query is properly defined and meets quality criteria.</span>
+
+<span class="cm">// 1. Retrieve the query parameter value from the request URL</span>
+<span class="kw">const</span> <span class="prop">searchTerm</span> = <span class="prop">pm</span>.request.url.query.<span class="fn">get</span>(<span class="str">"query"</span>);
+
+<span class="cm">// 2. Validate: query must exist and not be empty</span>
+<span class="kw">if</span> (!searchTerm || searchTerm.<span class="fn">trim</span>() === <span class="str">""</span>) {
+    <span class="kw">throw new</span> Error(<span class="str">"Pre-request validation failed: 'query' parameter is missing or empty."</span>);
+}
+
+<span class="cm">// 3. Validate: query must be at least 2 characters long</span>
+<span class="kw">if</span> (searchTerm.<span class="fn">trim</span>().length &lt; <span class="num">2</span>) {
+    <span class="kw">throw new</span> Error(<span class="str">"Pre-request validation failed: 'query' must be at least 2 characters long."</span>);
+}
+
+<span class="cm">// 4. Validate: query must not exceed 100 characters</span>
+<span class="kw">if</span> (searchTerm.<span class="fn">trim</span>().length &gt; <span class="num">100</span>) {
+    <span class="kw">throw new</span> Error(<span class="str">"Pre-request validation failed: 'query' exceeds the maximum allowed length of 100 characters."</span>);
+}
+
+<span class="cm">// 5. Validate: query must contain at least one alphanumeric character (Latin or Hebrew)</span>
+<span class="kw">const</span> <span class="prop">alphanumericPattern</span> = <span class="str">/[a-zA-Z0-9\u0590-\u05FF]/</span>;
+<span class="kw">if</span> (!alphanumericPattern.<span class="fn">test</span>(searchTerm)) {
+    <span class="kw">throw new</span> Error(<span class="str">"Pre-request validation failed: 'query' must contain at least one alphanumeric character."</span>);
+}
+
+<span class="cm">// 6. Log the validated search query for visibility in the console</span>
+console.<span class="fn">log</span>(<span class="str">"Pre-request validation passed. Sending search request for query: '"</span> + searchTerm.<span class="fn">trim</span>() + <span class="str">"'"</span>);</code></pre>
+
+            <h3 style="margin-top:24px;">הסבר 6 ה-Validations:</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+                <thead>
+                    <tr style="background:#1e293b; color:#e2e8f0;">
+                        <th style="padding:10px 12px; text-align:right;">#</th>
+                        <th style="padding:10px 12px; text-align:right;">מה נבדק</th>
+                        <th style="padding:10px 12px; text-align:right;">הקוד</th>
+                        <th style="padding:10px 12px; text-align:right;">כישלון אם...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">1</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">param קיים ולא ריק</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>!searchTerm || trim() === ""</code></td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">query חסר מה-URL</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">2</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">אורך מינימלי 2 תווים</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>length &lt; 2</code></td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">query = "a" (תו אחד)</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">3</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">אורך מקסימלי 100 תווים</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>length &gt; 100</code></td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">query ארוך מדי</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">4</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">מכיל תו אלפאנומרי</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>/[a-zA-Z0-9\u0590-\u05FF]/</code></td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">query = "!!!" (סימנים בלבד)</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px;">5+6</td>
+                        <td style="padding:9px 12px;">לוג לקונסול</td>
+                        <td style="padding:9px 12px;"><code>console.log(...)</code></td>
+                        <td style="padding:9px 12px;">— (לנראות בלבד)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box" style="background:#fff7ed; border-color:#fb923c; margin-top:16px;">
+                <strong>throw new Error()</strong> — אם validation נכשל, הפונקציה זורקת שגיאה ו-Postman
+                <strong>מבטל את שליחת הבקשה</strong> לחלוטין. הבקשה לא יוצאת לרשת.
+            </div>
+        </div>
+
+        <!-- כרטיס: קוד Post-response מלא -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">9</div>
+                <h2>קוד Post-response המלא — 10 Assertions</h2>
+            </div>
+
+            <pre><code><span class="cm">// ─── Post-Response Tests ──────────────────────────────────────────────────</span>
+<span class="kw">const</span> <span class="prop">searchTerm</span> = <span class="prop">pm</span>.request.url.query.<span class="fn">get</span>(<span class="str">"query"</span>);  <span class="cm">// ← "query" (לא "searchTerm"!)</span>
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Status code is 200 - Search page loaded successfully"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.response.to.have.<span class="fn">status</span>(<span class="num">200</span>);
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response time is under 5000ms"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.responseTime).to.be.<span class="fn">below</span>(<span class="num">5000</span>);
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response Content-Type is text/html"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.headers.<span class="fn">get</span>(<span class="str">"Content-Type"</span>)).to.<span class="fn">include</span>(<span class="str">"text/html"</span>);
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response body is not empty"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.<span class="fn">text</span>()).to.not.be.empty;
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response body contains the search query '"</span> + searchTerm + <span class="str">"'"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.<span class="fn">text</span>().<span class="fn">toLowerCase</span>()).to.<span class="fn">include</span>(searchTerm.<span class="fn">toLowerCase</span>());
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response HTML contains a search results section"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">body</span> = <span class="prop">pm</span>.response.<span class="fn">text</span>();
+    <span class="prop">pm</span>.<span class="fn">expect</span>(
+        body.<span class="fn">includes</span>(<span class="str">"search-results"</span>) || body.<span class="fn">includes</span>(<span class="str">"searchResults"</span>) ||
+        body.<span class="fn">includes</span>(<span class="str">"results"</span>) || body.<span class="fn">includes</span>(<span class="str">"result"</span>)
+    ).to.be.<span class="kw">true</span>;
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Page language attribute is English"</span>, <span class="kw">function</span> () {
+    <span class="prop">pm</span>.<span class="fn">expect</span>(<span class="prop">pm</span>.response.<span class="fn">text</span>()).to.<span class="fn">match</span>(<span class="str">/&lt;html[^&gt;]*\slang=["']en["']/i</span>);
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Page has a non-empty English &lt;title&gt;"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">titleMatch</span> = <span class="prop">pm</span>.response.<span class="fn">text</span>().<span class="fn">match</span>(<span class="str">/&lt;title[^&gt;]*&gt;([^&lt;]+)&lt;\/title&gt;/i</span>);
+    <span class="prop">pm</span>.<span class="fn">expect</span>(titleMatch).to.not.be.null;
+    <span class="kw">const</span> <span class="prop">t</span> = titleMatch[<span class="num">1</span>].<span class="fn">trim</span>();
+    <span class="prop">pm</span>.<span class="fn">expect</span>(t).to.not.be.empty;
+    <span class="prop">pm</span>.<span class="fn">expect</span>(t).to.not.<span class="fn">match</span>(<span class="str">/^[֐-׿\s]+$/</span>);  <span class="cm">// לא עברית בלבד</span>
+    <span class="prop">pm</span>.<span class="fn">expect</span>(t).to.<span class="fn">match</span>(<span class="str">/[a-zA-Z]/</span>);                    <span class="cm">// יש אות לטינית</span>
+});
+
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response does not contain server error messages"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">body</span> = <span class="prop">pm</span>.response.<span class="fn">text</span>().<span class="fn">toLowerCase</span>();
+    <span class="prop">pm</span>.<span class="fn">expect</span>(body).to.not.<span class="fn">include</span>(<span class="str">"500 internal server error"</span>);
+    <span class="prop">pm</span>.<span class="fn">expect</span>(body).to.not.<span class="fn">include</span>(<span class="str">"503 service unavailable"</span>);
+    <span class="prop">pm</span>.<span class="fn">expect</span>(body).to.not.<span class="fn">include</span>(<span class="str">"error occurred"</span>);
+});
+
+<span class="cm">// ← הבדל עיקרי מ-v1: pm.request.url (לא pm.response.url)</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Request URL contains the query parameter"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">requestUrl</span> = <span class="prop">pm</span>.request.url.<span class="fn">toString</span>().<span class="fn">toLowerCase</span>();
+    <span class="prop">pm</span>.<span class="fn">expect</span>(requestUrl).to.<span class="fn">include</span>(<span class="str">"query="</span> + searchTerm.<span class="fn">toLowerCase</span>());
+});</code></pre>
+
+            <div class="success-box">
+                <strong>תוצאות הריצה: 10/10 PASSED · 200 OK · 189ms · 21.85 KB</strong>
+            </div>
+        </div>
+
+        <!-- כרטיס: הבדלים מגרסה 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">10</div>
+                <h2>Search ver2 — ההבדלים מגרסה 1</h2>
+            </div>
+
+            <pre class="url-block"><code>https://www.gov.il/en/search?query=passport</code></pre>
+
+            <p>גרסה 2 בודקת את אותו endpoint אבל עם <strong>שם param שונה</strong>: <code>query</code> במקום <code>searchTerm</code>.</p>
+
+            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; margin-top:16px;">
+                <thead>
+                    <tr style="background:#1e293b; color:#e2e8f0;">
+                        <th style="padding:10px 12px; text-align:right;">היבט</th>
+                        <th style="padding:10px 12px; text-align:right;">גרסה 1</th>
+                        <th style="padding:10px 12px; text-align:right;">גרסה 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Query param</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>searchTerm=passport</code></td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>query=passport</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;">Test 10 — בודק</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>pm.response.url</code> (URL סופי אחרי redirect)</td>
+                        <td style="padding:9px 12px; border-bottom:1px solid #e2e8f0;"><code>pm.request.url</code> (URL הבקשה עצמה)</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:9px 12px;">Test 8 — כותרת</td>
+                        <td style="padding:9px 12px;">לא עברית בלבד</td>
+                        <td style="padding:9px 12px;">לא עברית בלבד <strong>+ חייבת להכיל אות לטינית</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top:24px;">Test 10 — השוואת הקוד:</h3>
+            <pre><code><span class="cm">// גרסה 1 — בודק את ה-URL הסופי (אחרי redirects)</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Response URL contains the searchTerm parameter"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">finalUrl</span> = <span class="prop">pm</span>.response.url || <span class="str">""</span>;
+    <span class="kw">if</span> (finalUrl) {
+        <span class="prop">pm</span>.<span class="fn">expect</span>(finalUrl.<span class="fn">toLowerCase</span>()).to.<span class="fn">include</span>(<span class="str">"searchterm="</span> + searchTerm.<span class="fn">toLowerCase</span>());
+    }
+});
+
+<span class="cm">// גרסה 2 — בודק את ה-URL של הבקשה עצמה (לא response)</span>
+<span class="prop">pm</span>.<span class="fn">test</span>(<span class="str">"Request URL contains the query parameter"</span>, <span class="kw">function</span> () {
+    <span class="kw">const</span> <span class="prop">requestUrl</span> = <span class="prop">pm</span>.request.url.<span class="fn">toString</span>().<span class="fn">toLowerCase</span>();
+    <span class="prop">pm</span>.<span class="fn">expect</span>(requestUrl).to.<span class="fn">include</span>(<span class="str">"query="</span> + searchTerm.<span class="fn">toLowerCase</span>());
+});</code></pre>
+
+            <div class="success-box">
+                <strong>תוצאות הריצה: 10/10 PASSED · 200 OK · 189ms · 21.85 KB</strong>
+            </div>
+        </div>
+
+        <!-- תוצאות הרצה Postman -->
+        <div class="summary-card" style="border-color:#86efac; background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%); margin-bottom:32px;">
+            <h2 style="color:#15803d; display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.3rem;">📎</span> תוצאות ההרצה מצורפות
+            </h2>
+            <p style="color:#166534; margin-bottom:8px;">
+                קובץ האוסף המלא של Postman עם כל הבקשות והבדיקות מצורף לפרויקט:
+            </p>
+            <code style="display:block; direction:ltr; text-align:left; background:#d1fae5; color:#065f46; padding:10px 14px; border-radius:8px; font-size:0.9rem; border:1px solid #6ee7b7;">
+                results/postman/Gov.il API Tests.postman_collection.json
+            </code>
+            <p style="color:#166534; margin-top:12px; margin-bottom:0;">
+                ניתן לייבא את הקובץ ישירות ל-Postman ולהריץ את כל הבדיקות מחדש.
+            </p>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════
@@ -1622,20 +2271,35 @@ tsconfig.json</code></pre>
                 לאחר ה-wait, ניתן לשרשר <code>.its('response.statusCode')</code> כדי לשלוף את קוד הסטטוס.
             </p>
 
-            <div class="diagram">
-<span class="ok">1.</span> <code>cy.intercept('GET', '/api/cities', stubResponse).as('getCities')</code>
-   <span class="arrow">→</span> <span class="neutral">רישום יירוט + שם "getCities"</span>
-
-<span class="ok">2.</span> <code>filterPage.selectFilter('cities')</code>
-   <span class="arrow">→</span> <span class="neutral">לחיצה על checkbox → הדף קורא fetch('/api/cities')</span>
-   <span class="arrow">→</span> <span class="ok">Cypress יורט את הבקשה ומחזיר את stubResponse</span>
-
-<span class="ok">3.</span> <code>cy.wait('@getCities')</code>
-   <span class="arrow">→</span> <span class="neutral">ממתין עד שהבקשה "@getCities" תושלם</span>
-   <span class="arrow">→</span> <span class="neutral">מחזיר את אובייקט ה-interception (כולל request ו-response)</span>
-
-<span class="ok">4.</span> <code>.its('response.statusCode').should('eq', 200)</code>
-   <span class="arrow">→</span> <span class="ok">✓ שולף את statusCode ומאמת שהוא 200</span>
+            <div class="step-flow">
+                <div class="step-flow-item">
+                    <div class="step-flow-num">1</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.intercept('GET', '/api/cities', stubResponse).as('getCities')</code>
+                        <p class="step-flow-desc">רישום יירוט + שם alias בשם "getCities"</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">2</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">filterPage.selectFilter('cities')</code>
+                        <p class="step-flow-desc">לחיצה על checkbox — הדף קורא <code style="background:transparent;padding:0;color:inherit;">fetch('/api/cities')</code> — Cypress יורט ומחזיר את stubResponse</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">3</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.wait('@getCities')</code>
+                        <p class="step-flow-desc">ממתין עד שהבקשה "@getCities" תושלם — מחזיר את אובייקט ה-interception (כולל request ו-response)</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">4</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">.its('response.statusCode').should('eq', 200)</code>
+                        <p class="step-flow-desc pass">✓ שולף את statusCode ומאמת שהוא 200</p>
+                    </div>
+                </div>
             </div>
 
             <pre><code><span class="cm">// השרשרת המלאה:</span>
@@ -1908,6 +2572,282 @@ tsconfig.json</code></pre>
             </div>
         </div>
 
+
+
+        <!-- ═══════════════════════════════════════════════════════════
+             Part II | שאלה 4 — שינוי שדה בתגובת API עם cy.intercept
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="part-separator" id="part2-q4">
+            <span class="part-num">Part II | Cypress</span>
+            <h2>שאלה 4 — שינוי ערך שדה בתגובה עם cy.intercept()</h2>
+        </div>
+
+        <!-- ─── כרטיס 1: מה מבקשת השאלה ──────────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">1</div>
+                <h2>מה מבקשת השאלה?</h2>
+            </div>
+
+            <div class="question-quote" style="font-size:1rem; line-height:1.8;">
+                <strong>Visit page — Use cy.intercept to change value of prop:</strong><br>
+                <div style="margin-top:10px; background:#1a2035; padding:16px 24px; border-radius:6px; display:inline-block; min-width:300px;">
+                    <div style="color:#f87171; font-family:monospace; margin-bottom:8px;">
+                        &quot;title&quot;: &quot;משרד ראש הממשלה&quot;
+                    </div>
+                    <div style="color:#94a3b8; font-size:0.85rem; margin-bottom:8px;">↓ שנה ל:</div>
+                    <div style="color:#4ade80; font-family:monospace;">
+                        &quot;title&quot;: &quot;office&quot;
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top:16px;">
+                הבקשה נמצאה ב-DevTools תחת Fetch/XHR בשם <code>prime_ministers_office</code> —
+                בקשת GET שמחזירה JSON עם שדה <code>title</code>.
+            </p>
+
+            <div class="tags">
+                <span class="tag">cy.intercept()</span>
+                <span class="tag">req.reply()</span>
+                <span class="tag">title modification</span>
+                <span class="tag">JSON stub</span>
+            </div>
+        </div>
+
+        <!-- ─── כרטיס 2: ההבדל בין stub מלא לשינוי שדה ──────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">2</div>
+                <h2>שלוש דרכים לעבוד עם cy.intercept()</h2>
+            </div>
+
+            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; margin-bottom:20px;">
+                <thead>
+                    <tr style="background:#1e293b; color:#e2e8f0;">
+                        <th style="padding:10px 14px; text-align:right; border-radius:6px 0 0 0;">שיטה</th>
+                        <th style="padding:10px 14px; text-align:right;">מה היא עושה</th>
+                        <th style="padding:10px 14px; text-align:right; border-radius:0 6px 0 0;">מתי להשתמש</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><code>{ body: stub }</code></td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">מחליף את כל ה-body בנתונים קבועים</td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">שאלה 3 — בדיקת status code עם נתוני דמו</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><code>req.reply()</code></td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">stub מלא — Cypress עונה, לא פונה לשרת</td>
+                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><strong>שאלה 4</strong> — כשהשרת חסום (Cloudflare)</td>
+                    </tr>
+                    <tr style="background:#f8fafc;">
+                        <td style="padding:10px 14px;"><code>req.continue(res)</code></td>
+                        <td style="padding:10px 14px;">מקבל תגובה אמיתית ואז משנה שדה ספציפי</td>
+                        <td style="padding:10px 14px;">כשהשרת נגיש ומחזיר JSON תקין</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box" style="background:#fef9c3; border-color:#fbbf24;">
+                <strong>למה לא משתמשים ב-req.continue() על gov.il?</strong><br>
+                gov.il מוגן ב-Cloudflare. בקשות אוטומטיות (Cypress, CI) מקבלות דף HTML של חסימה במקום JSON.
+                <code>req.continue()</code> יחכה לתגובה אמיתית — ויקבל HTML, לא JSON — ואז <code>res.body.title</code> יכשל.
+                לכן משתמשים ב-<code>req.reply()</code> עם דמו מקומי.
+            </div>
+
+            <div class="step-flow" style="margin-top:20px;">
+                <div class="step-flow-item" style="background:#f0fdf4; border-color:#bbf7d0;">
+                    <div class="step-flow-num" style="background:#15803d;">1</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code" style="color:#166534; background:#dcfce7; border-color:#bbf7d0;">דמו HTML → fetch('/api/.../prime_ministers_office')</code>
+                        <p class="step-flow-desc">הדמו שולח בקשה לאותו endpoint שמרשמים ב-cy.intercept</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">2</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.intercept תופס את הבקשה</code>
+                        <p class="step-flow-desc">Cypress יורט — הבקשה לא מגיעה לשרת האמיתי</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">3</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">req.reply({ body: { title: 'office' } })</code>
+                        <p class="step-flow-desc">Cypress מחזיר תגובה מדומה — לא פונה לשרת האמיתי</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">4</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">הדמו מציג "office" ב-&lt;h1&gt;</code>
+                        <p class="step-flow-desc">ה-DOM מתעדכן עם הערך המדומה</p>
+                    </div>
+                </div>
+                <div class="step-flow-item" style="background:#f0fdf4; border-color:#bbf7d0;">
+                    <div class="step-flow-num" style="background:#15803d;">✓</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code" style="color:#166534; background:#dcfce7; border-color:#bbf7d0;">cy.wait('@getPMOffice').its('response.body.title').should('eq', 'office')</code>
+                        <p class="step-flow-desc pass">הבדיקה מאמתת שה-title בתגובה הוא 'office'</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── כרטיס 3: עמוד הדמו prime-ministers.html ───────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">3</div>
+                <h2>עמוד הדמו — prime-ministers.html</h2>
+            </div>
+
+            <p>
+                כמו בשאלות 2 ו-3, גם כאן נדרש <strong>דמו מקומי</strong> —
+                קובץ HTML שמדמה את עמוד gov.il ושולח <code>fetch()</code> לאותו URL שרשמנו ב-<code>cy.intercept</code>.
+            </p>
+
+            <pre><code><span class="cm">/* cypress/fixtures/gov-demo/prime-ministers.html */</span>
+
+<span class="cm">&lt;!-- כותרת המחלקה — מתמלאת מהAPI --&gt;</span>
+&lt;<span class="prop">h1</span> <span class="prop">data-testid</span>=<span class="str">"dept-title"</span>&gt;טוען...&lt;/<span class="prop">h1</span>&gt;
+
+&lt;<span class="prop">script</span>&gt;
+  <span class="cm">// הדמו שולח fetch לאותו URL שמרשמים ב-cy.intercept</span>
+  <span class="fn">fetch</span>(<span class="str">'https://www.gov.il/api/content/types/department/dcterms:identifier/prime_ministers_office'</span>)
+    .<span class="fn">then</span>(<span class="kw">function</span>(res) { <span class="kw">return</span> res.<span class="fn">json</span>(); })
+    .<span class="fn">then</span>(<span class="kw">function</span>(data) {
+      <span class="cm">// cy.intercept יירט את הבקשה ויחזיר { title: 'office' }</span>
+      <span class="cm">// אז data.title יהיה 'office' — לא "משרד ראש הממשלה"</span>
+      document.<span class="fn">querySelector</span>(<span class="str">'[data-testid="dept-title"]'</span>).textContent = data.title;
+    });
+&lt;/<span class="prop">script</span>&gt;</code></pre>
+
+            <div class="success-box">
+                <strong>הכלל:</strong> ה-URL בתוך <code>fetch()</code> בדמו חייב להתאים ל-URL pattern שרשמנו ב-<code>cy.intercept</code>.
+                Cypress יורט כל בקשה שה-URL שלה מתאים ל-<code>**/prime_ministers_office**</code>.
+            </div>
+        </div>
+
+        <!-- ─── כרטיס 4: intercept.cy.ts ─────────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">4</div>
+                <h2>intercept.cy.ts — קובץ הבדיקה</h2>
+            </div>
+
+            <p>סדר הפעולות בבדיקה — <strong>חשוב: intercept חייב לרוץ לפני visit!</strong></p>
+
+            <div class="step-flow">
+                <div class="step-flow-item">
+                    <div class="step-flow-num">1</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.intercept('GET', '**/prime_ministers_office**', req =&gt; req.reply({ body: { title: 'office' } }))</code>
+                        <p class="step-flow-desc">רישום המארב — Cypress ממתין לבקשה תואמת</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">2</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.visit('cypress/fixtures/gov-demo/prime-ministers.html')</code>
+                        <p class="step-flow-desc">הדמו נפתח ושולח fetch()</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">3</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.wait('@getPMOffice')</code>
+                        <p class="step-flow-desc">ממתין שה-intercept יתפוס את הבקשה</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">4</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">.its('response.body.title').should('eq', 'office')</code>
+                        <p class="step-flow-desc pass">✓ מאמת שה-title בתגובה הוא 'office'</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">5</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.get('[data-testid="dept-title"]').should('have.text', 'office')</code>
+                        <p class="step-flow-desc pass">✓ מאמת שה-DOM התעדכן</p>
+                    </div>
+                </div>
+            </div>
+
+            <pre><code><span class="fn">it</span>(<span class="str">'should change the page title via cy.intercept from "משרד ראש הממשלה" to "office"'</span>, () =&gt; {
+
+  <span class="cm">// 1. רישום intercept — req.reply() = stub מלא, לא פונה לשרת</span>
+  <span class="prop">cy</span>.<span class="fn">intercept</span>(
+    <span class="str">'GET'</span>,
+    <span class="str">'**/prime_ministers_office**'</span>,
+    (req) =&gt; {
+      req.<span class="fn">reply</span>({
+        statusCode: <span class="num">200</span>,
+        body: {
+          title:       <span class="str">'office'</span>,   <span class="cm">// ← השינוי שהשאלה מבקשת</span>
+          description: <span class="str">''</span>,
+          urlName:     <span class="str">'prime_ministers_office'</span>
+        }
+      });
+    }
+  ).<span class="fn">as</span>(<span class="str">'getPMOffice'</span>);
+
+  <span class="cm">// 2. פותח את הדמו המקומי</span>
+  <span class="prop">cy</span>.<span class="fn">visit</span>(<span class="str">'cypress/fixtures/gov-demo/prime-ministers.html'</span>);
+
+  <span class="cm">// 3+4. ממתין לבקשה ומאמת שה-title הוא 'office'</span>
+  <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getPMOffice'</span>)
+    .<span class="fn">its</span>(<span class="str">'response.body.title'</span>)
+    .<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="str">'office'</span>);
+
+  <span class="cm">// 5. מאמת שה-DOM עודכן</span>
+  <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'[data-testid="dept-title"]'</span>)
+    .<span class="fn">should</span>(<span class="str">'have.text'</span>, <span class="str">'office'</span>);
+});</code></pre>
+        </div>
+
+        <!-- ─── כרטיס 5: תוצאה ומבנה פרויקט ──────────────────────── -->
+        <div class="card">
+            <div class="card-header">
+                <div class="step-badge">5</div>
+                <h2>מבנה הפרויקט לאחר שאלה 4</h2>
+            </div>
+
+            <div class="success-box">
+                <strong>הבדיקה עוברת בהצלחה:</strong><br>
+                ✓ should change the page title via cy.intercept from "משרד ראש הממשלה" to "office"
+            </div>
+
+            <pre class="url-block"><code>cypress/
+├── e2e/
+│   ├── search.cy.ts             ← שאלה 2 — בדיקות חיפוש
+│   ├── filter.cy.ts             ← שאלה 3 — בדיקות intercept (פילטרים)
+│   └── intercept.cy.ts          ← שאלה 4 — שינוי title (חדש)
+├── fixtures/
+│   ├── gov-demo/
+│   │   ├── search.html          ← דמו חיפוש (שאלה 2)
+│   │   ├── filters.html         ← דמו פילטרים (שאלה 3)
+│   │   └── prime-ministers.html ← דמו ראש הממשלה (שאלה 4, חדש)
+│   ├── search/searchData.json
+│   ├── filters/filterData.json
+│   └── primeMinistersOffice.json
+└── pages/
+    ├── BasePage.ts
+    ├── SearchPage.ts
+    └── FilterPage.ts</code></pre>
+
+            <div class="tags">
+                <span class="tag">Cypress</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">cy.intercept()</span>
+                <span class="tag">req.reply()</span>
+                <span class="tag">JSON Stub</span>
+                <span class="tag">Part II</span>
+            </div>
+        </div>
+
         <!-- Part III Q1 separator -->
         <div class="part-separator" id="part3-q1">
             <span class="part-num">Part III | General Questions</span>
@@ -1954,17 +2894,53 @@ tsconfig.json</code></pre>
             <p>הבעיה בקוד: <code>cy.get('.gLFyf')</code> נרשם לתור הפקודות <strong>לפני</strong> <code>cy.visit()</code>.<br>
             כשהתור מתבצע — Cypress מנסה למצוא את האלמנט על עמוד שעדיין לא נטען.</p>
 
-            <div class="diagram">
-<span class="neutral">שלב 1:</span> cy.get('.gLFyf')   <span class="arrow">→</span> <span class="bad">נוסף לתור "חיפוש אלמנט"</span><br>
-<span class="neutral">           </span>  SearchInputBox = Chainer (לא תוצאה מיידית!)<br>
-<br>
-<span class="neutral">שלב 2:</span> cy.visit(...)       <span class="arrow">→</span> <span class="ok">נוסף לתור "טעינת עמוד"</span><br>
-<span class="neutral">שלב 3:</span> .first().type(...)  <span class="arrow">→</span> <span class="ok">נוסף לתור "הקלד"</span><br>
-<br>
-<span class="arrow">── ביצוע התור ─────────────────────────────</span><br>
-<span class="bad">✗  "חיפוש .gLFyf"  → רץ לפני שהדף נטען! האלמנט לא קיים.</span><br>
-<span class="ok">✓   "טעינת עמוד"</span><br>
-<span class="ok">✓   "הקלד"</span>
+            <p style="font-weight:600; color:#1e3a5f; margin-bottom:8px;">שלב א׳ — רישום לתור (לפי סדר הקוד):</p>
+            <div class="step-flow">
+                <div class="step-flow-item" style="background:#fff5f5; border-color:#fca5a5;">
+                    <div class="step-flow-num" style="background:#b91c1c;">1</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code" style="color:#b91c1c; background:#fff5f5; border-color:#fca5a5;">const SearchInputBox = cy.get('.gLFyf');</code>
+                        <p class="step-flow-desc" style="color:#b91c1c;">נוסף לתור "חיפוש אלמנט" — SearchInputBox הוא Chainer, לא תוצאה מיידית!</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">2</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">cy.visit('https://www.google.com/');</code>
+                        <p class="step-flow-desc">נוסף לתור "טעינת עמוד"</p>
+                    </div>
+                </div>
+                <div class="step-flow-item">
+                    <div class="step-flow-num">3</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code">SearchInputBox.first().type('Gov.il');</code>
+                        <p class="step-flow-desc">נוסף לתור "הקלד"</p>
+                    </div>
+                </div>
+            </div>
+            <p style="font-weight:600; color:#1e3a5f; margin:16px 0 8px;">שלב ב׳ — ביצוע התור (בסדר זה):</p>
+            <div class="step-flow">
+                <div class="step-flow-item" style="background:#fff5f5; border-color:#fca5a5; border-width:2px;">
+                    <div class="step-flow-num" style="background:#b91c1c;">✗</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code" style="color:#b91c1c; background:#fff5f5; border-color:#fca5a5;">cy.get('.gLFyf')  // "חיפוש אלמנט"</code>
+                        <p class="step-flow-desc" style="color:#b91c1c; font-weight:600;">רץ לפני שהדף נטען — האלמנט לא קיים, הבדיקה נכשלת!</p>
+                    </div>
+                </div>
+                <div class="step-flow-item" style="background:#f0fdf4; border-color:#bbf7d0;">
+                    <div class="step-flow-num" style="background:#15803d;">✓</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code" style="color:#166534; background:#dcfce7; border-color:#bbf7d0;">cy.visit(...)  // "טעינת עמוד"</code>
+                        <p class="step-flow-desc pass">עמוד נטען בהצלחה</p>
+                    </div>
+                </div>
+                <div class="step-flow-item" style="background:#f0fdf4; border-color:#bbf7d0;">
+                    <div class="step-flow-num" style="background:#15803d;">✓</div>
+                    <div class="step-flow-body">
+                        <code class="step-flow-code" style="color:#166534; background:#dcfce7; border-color:#bbf7d0;">.first().type(...)  // "הקלד"</code>
+                        <p class="step-flow-desc pass">הקלדה בוצעה</p>
+                    </div>
+                </div>
             </div>
 
             <table class="general-table">
@@ -2184,235 +3160,6 @@ tsconfig.json</code></pre>
             </div>
         </div>
 
-
-        <!-- ═══════════════════════════════════════════════════════════
-             Part II | שאלה 4 — שינוי שדה בתגובת API עם cy.intercept
-             ═══════════════════════════════════════════════════════════ -->
-        <div class="part-separator" id="part2-q4">
-            <span class="part-num">Part II | Cypress</span>
-            <h2>שאלה 4 — שינוי ערך שדה בתגובה עם cy.intercept()</h2>
-        </div>
-
-        <!-- ─── כרטיס 1: מה מבקשת השאלה ──────────────────────────── -->
-        <div class="card">
-            <div class="card-header">
-                <div class="step-badge">1</div>
-                <h2>מה מבקשת השאלה?</h2>
-            </div>
-
-            <div class="question-quote" style="font-size:1rem; line-height:1.8;">
-                <strong>Visit page — Use cy.intercept to change value of prop:</strong><br>
-                <div style="margin-top:10px; background:#1a2035; padding:16px 24px; border-radius:6px; display:inline-block; min-width:300px;">
-                    <div style="color:#f87171; font-family:monospace; margin-bottom:8px;">
-                        &quot;title&quot;: &quot;משרד ראש הממשלה&quot;
-                    </div>
-                    <div style="color:#94a3b8; font-size:0.85rem; margin-bottom:8px;">↓ שנה ל:</div>
-                    <div style="color:#4ade80; font-family:monospace;">
-                        &quot;title&quot;: &quot;office&quot;
-                    </div>
-                </div>
-            </div>
-
-            <p style="margin-top:16px;">
-                הבקשה נמצאה ב-DevTools תחת Fetch/XHR בשם <code>prime_ministers_office</code> —
-                בקשת GET שמחזירה JSON עם שדה <code>title</code>.
-            </p>
-
-            <div class="tags">
-                <span class="tag">cy.intercept()</span>
-                <span class="tag">req.reply()</span>
-                <span class="tag">title modification</span>
-                <span class="tag">JSON stub</span>
-            </div>
-        </div>
-
-        <!-- ─── כרטיס 2: ההבדל בין stub מלא לשינוי שדה ──────────── -->
-        <div class="card">
-            <div class="card-header">
-                <div class="step-badge">2</div>
-                <h2>שלוש דרכים לעבוד עם cy.intercept()</h2>
-            </div>
-
-            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; margin-bottom:20px;">
-                <thead>
-                    <tr style="background:#1e293b; color:#e2e8f0;">
-                        <th style="padding:10px 14px; text-align:right; border-radius:6px 0 0 0;">שיטה</th>
-                        <th style="padding:10px 14px; text-align:right;">מה היא עושה</th>
-                        <th style="padding:10px 14px; text-align:right; border-radius:0 6px 0 0;">מתי להשתמש</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><code>{ body: stub }</code></td>
-                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">מחליף את כל ה-body בנתונים קבועים</td>
-                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">שאלה 3 — בדיקת status code עם נתוני דמו</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><code>req.reply()</code></td>
-                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;">stub מלא — Cypress עונה, לא פונה לשרת</td>
-                        <td style="padding:10px 14px; border-bottom:1px solid #e2e8f0;"><strong>שאלה 4</strong> — כשהשרת חסום (Cloudflare)</td>
-                    </tr>
-                    <tr style="background:#f8fafc;">
-                        <td style="padding:10px 14px;"><code>req.continue(res)</code></td>
-                        <td style="padding:10px 14px;">מקבל תגובה אמיתית ואז משנה שדה ספציפי</td>
-                        <td style="padding:10px 14px;">כשהשרת נגיש ומחזיר JSON תקין</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="concept-box" style="background:#fef9c3; border-color:#fbbf24;">
-                <strong>למה לא משתמשים ב-req.continue() על gov.il?</strong><br>
-                gov.il מוגן ב-Cloudflare. בקשות אוטומטיות (Cypress, CI) מקבלות דף HTML של חסימה במקום JSON.
-                <code>req.continue()</code> יחכה לתגובה אמיתית — ויקבל HTML, לא JSON — ואז <code>res.body.title</code> יכשל.
-                לכן משתמשים ב-<code>req.reply()</code> עם דמו מקומי.
-            </div>
-
-            <div class="diagram" style="margin-top:20px;">
-<span class="ok">זרימה עם cy.intercept + req.reply():</span>
-
-<span class="neutral">דמו HTML</span>  →  <span class="neutral">fetch('/api/.../prime_ministers_office')</span>
-                        ↓
-             <span class="ok">cy.intercept תופס את הבקשה</span>
-                        ↓
-        <span class="ok">req.reply({ body: { title: 'office' } })</span>  ← לא פונה לשרת האמיתי
-                        ↓
-           <span class="neutral">הדמו מציג "office" ב-&lt;h1&gt;</span>
-                        ↓
-              <span class="ok">✓ cy.wait('@getPMOffice').its('response.body.title').should('eq', 'office')</span>
-            </div>
-        </div>
-
-        <!-- ─── כרטיס 3: עמוד הדמו prime-ministers.html ───────────── -->
-        <div class="card">
-            <div class="card-header">
-                <div class="step-badge">3</div>
-                <h2>עמוד הדמו — prime-ministers.html</h2>
-            </div>
-
-            <p>
-                כמו בשאלות 2 ו-3, גם כאן נדרש <strong>דמו מקומי</strong> —
-                קובץ HTML שמדמה את עמוד gov.il ושולח <code>fetch()</code> לאותו URL שרשמנו ב-<code>cy.intercept</code>.
-            </p>
-
-            <pre><code><span class="cm">/* cypress/fixtures/gov-demo/prime-ministers.html */</span>
-
-<span class="cm">&lt;!-- כותרת המחלקה — מתמלאת מהAPI --&gt;</span>
-&lt;<span class="prop">h1</span> <span class="prop">data-testid</span>=<span class="str">"dept-title"</span>&gt;טוען...&lt;/<span class="prop">h1</span>&gt;
-
-&lt;<span class="prop">script</span>&gt;
-  <span class="cm">// הדמו שולח fetch לאותו URL שמרשמים ב-cy.intercept</span>
-  <span class="fn">fetch</span>(<span class="str">'https://www.gov.il/api/content/types/department/dcterms:identifier/prime_ministers_office'</span>)
-    .<span class="fn">then</span>(<span class="kw">function</span>(res) { <span class="kw">return</span> res.<span class="fn">json</span>(); })
-    .<span class="fn">then</span>(<span class="kw">function</span>(data) {
-      <span class="cm">// cy.intercept יירט את הבקשה ויחזיר { title: 'office' }</span>
-      <span class="cm">// אז data.title יהיה 'office' — לא "משרד ראש הממשלה"</span>
-      document.<span class="fn">querySelector</span>(<span class="str">'[data-testid="dept-title"]'</span>).textContent = data.title;
-    });
-&lt;/<span class="prop">script</span>&gt;</code></pre>
-
-            <div class="success-box">
-                <strong>הכלל:</strong> ה-URL בתוך <code>fetch()</code> בדמו חייב להתאים ל-URL pattern שרשמנו ב-<code>cy.intercept</code>.
-                Cypress יורט כל בקשה שה-URL שלה מתאים ל-<code>**/prime_ministers_office**</code>.
-            </div>
-        </div>
-
-        <!-- ─── כרטיס 4: intercept.cy.ts ─────────────────────────── -->
-        <div class="card">
-            <div class="card-header">
-                <div class="step-badge">4</div>
-                <h2>intercept.cy.ts — קובץ הבדיקה</h2>
-            </div>
-
-            <p>סדר הפעולות בבדיקה — <strong>חשוב: intercept חייב לרוץ לפני visit!</strong></p>
-
-            <div class="diagram">
-<span class="ok">1.</span> <code>cy.intercept('GET', '**/prime_ministers_office**', req =&gt; req.reply({ body: { title: 'office' } }))</code>
-   <span class="arrow">→</span> <span class="neutral">רישום המארב — Cypress ממתין לבקשה תואמת</span>
-
-<span class="ok">2.</span> <code>cy.visit('cypress/fixtures/gov-demo/prime-ministers.html')</code>
-   <span class="arrow">→</span> <span class="neutral">הדמו נפתח ושולח fetch()</span>
-
-<span class="ok">3.</span> <code>cy.wait('@getPMOffice')</code>
-   <span class="arrow">→</span> <span class="neutral">ממתין שה-intercept יתפוס את הבקשה</span>
-
-<span class="ok">4.</span> <code>.its('response.body.title').should('eq', 'office')</code>
-   <span class="arrow">→</span> <span class="ok">✓ מאמת שה-title בתגובה הוא 'office'</span>
-
-<span class="ok">5.</span> <code>cy.get('[data-testid="dept-title"]').should('have.text', 'office')</code>
-   <span class="arrow">→</span> <span class="ok">✓ מאמת שה-DOM התעדכן</span>
-            </div>
-
-            <pre><code><span class="fn">it</span>(<span class="str">'should change the page title via cy.intercept from "משרד ראש הממשלה" to "office"'</span>, () =&gt; {
-
-  <span class="cm">// 1. רישום intercept — req.reply() = stub מלא, לא פונה לשרת</span>
-  <span class="prop">cy</span>.<span class="fn">intercept</span>(
-    <span class="str">'GET'</span>,
-    <span class="str">'**/prime_ministers_office**'</span>,
-    (req) =&gt; {
-      req.<span class="fn">reply</span>({
-        statusCode: <span class="num">200</span>,
-        body: {
-          title:       <span class="str">'office'</span>,   <span class="cm">// ← השינוי שהשאלה מבקשת</span>
-          description: <span class="str">''</span>,
-          urlName:     <span class="str">'prime_ministers_office'</span>
-        }
-      });
-    }
-  ).<span class="fn">as</span>(<span class="str">'getPMOffice'</span>);
-
-  <span class="cm">// 2. פותח את הדמו המקומי</span>
-  <span class="prop">cy</span>.<span class="fn">visit</span>(<span class="str">'cypress/fixtures/gov-demo/prime-ministers.html'</span>);
-
-  <span class="cm">// 3+4. ממתין לבקשה ומאמת שה-title הוא 'office'</span>
-  <span class="prop">cy</span>.<span class="fn">wait</span>(<span class="str">'@getPMOffice'</span>)
-    .<span class="fn">its</span>(<span class="str">'response.body.title'</span>)
-    .<span class="fn">should</span>(<span class="str">'eq'</span>, <span class="str">'office'</span>);
-
-  <span class="cm">// 5. מאמת שה-DOM עודכן</span>
-  <span class="prop">cy</span>.<span class="fn">get</span>(<span class="str">'[data-testid="dept-title"]'</span>)
-    .<span class="fn">should</span>(<span class="str">'have.text'</span>, <span class="str">'office'</span>);
-});</code></pre>
-        </div>
-
-        <!-- ─── כרטיס 5: תוצאה ומבנה פרויקט ──────────────────────── -->
-        <div class="card">
-            <div class="card-header">
-                <div class="step-badge">5</div>
-                <h2>מבנה הפרויקט לאחר שאלה 4</h2>
-            </div>
-
-            <div class="success-box">
-                <strong>הבדיקה עוברת בהצלחה:</strong><br>
-                ✓ should change the page title via cy.intercept from "משרד ראש הממשלה" to "office"
-            </div>
-
-            <pre class="url-block"><code>cypress/
-├── e2e/
-│   ├── search.cy.ts             ← שאלה 2 — בדיקות חיפוש
-│   ├── filter.cy.ts             ← שאלה 3 — בדיקות intercept (פילטרים)
-│   └── intercept.cy.ts          ← שאלה 4 — שינוי title (חדש)
-├── fixtures/
-│   ├── gov-demo/
-│   │   ├── search.html          ← דמו חיפוש (שאלה 2)
-│   │   ├── filters.html         ← דמו פילטרים (שאלה 3)
-│   │   └── prime-ministers.html ← דמו ראש הממשלה (שאלה 4, חדש)
-│   ├── search/searchData.json
-│   ├── filters/filterData.json
-│   └── primeMinistersOffice.json
-└── pages/
-    ├── BasePage.ts
-    ├── SearchPage.ts
-    └── FilterPage.ts</code></pre>
-
-            <div class="tags">
-                <span class="tag">Cypress</span>
-                <span class="tag">TypeScript</span>
-                <span class="tag">cy.intercept()</span>
-                <span class="tag">req.reply()</span>
-                <span class="tag">JSON Stub</span>
-                <span class="tag">Part II</span>
-            </div>
-        </div>
 
     </main>
 </body>
