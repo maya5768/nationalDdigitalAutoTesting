@@ -2,6 +2,58 @@
 
 מדריך ופרויקט תרגול לבדיקות API ולבדיקות אוטומטיות עם Cypress — מבחן בדיקות gov.il.
 
+## מבנה הפרויקט
+
+```text
+index.html
+README.md
+cypress.config.js
+tsconfig.json
+
+docs/
+├── exam.pdf                                        ← מסמך הבחינה
+├── TestPlan_ImmigrationForm_AzureDevOps.xlsx       ← Part IV שאלה 1 — תסריטי בדיקה
+├── Azure_DevOps_TestCases_myGovILManual.xlsx       ← Part IV שאלה 1 — Test Cases ידניים
+├── Azure_DevOps_AutoTestPlan_myGovIL.xlsx          ← תכנית בדיקות אוטומטיות
+├── Azure_DevOps_TestPlan_myGov_Q5.xlsx             ← שאלה 5 — Test Plan מלא ל-my.gov.il
+└── Part4_Q2_שמירת_נתוני_טופס.docx                ← Part IV שאלה 2 — שמירת נתונים
+
+cypress/
+├── e2e/
+│   ├── search.cy.ts                       ← שאלה 2
+│   ├── filter.cy.ts                       ← שאלה 3
+│   ├── intercept.cy.ts                    ← שאלה 4
+│   └── mygov-tabs.cy.ts                   ← שאלה 5 — 7 בדיקות ניווט בין לשוניות
+├── fixtures/
+│   ├── gov-demo/
+│   │   ├── search.html                    ← דמו חיפוש (שאלה 2)
+│   │   ├── filters.html                   ← דמו פילטרים (שאלה 3)
+│   │   ├── prime-ministers.html           ← דמו ראש הממשלה (שאלה 4)
+│   │   └── mygov-portal.html              ← דמו my.gov.il עם 12 לשוניות (שאלה 5)
+│   ├── mygov/
+│   │   └── myGovData.json                 ← fixture לבדיקות לשוניות (שאלה 5)
+│   ├── search/
+│   │   └── searchData.json
+│   ├── filters/
+│   │   └── filterData.json                ← שאלה 3
+│   └── primeMinistersOffice.json          ← שאלה 4
+├── pages/
+│   ├── BasePage.ts
+│   ├── SearchPage.ts
+│   ├── FilterPage.ts                      ← שאלה 3
+│   └── MyGovPage.ts                       ← שאלה 5 — לשוניות my.gov
+└── support/
+    ├── commands.js
+    ├── commands.ts
+    ├── e2e.ts
+    └── index.d.ts
+
+results/
+└── postman/                               ← תוצאות Postman Collection Run
+```
+
+---
+
 ## נושאים
 
 - API Testing מול `gov.il` באמצעות Postman
@@ -287,58 +339,6 @@ Sorry, you have been blocked
 ```
 
 זו חסימת אבטחה (Cloudflare) שמזהה תעבורת אוטומציה. לכן נוצרו דפי דמו מקומיים לכל שאלה.
-
----
-
-## מבנה הפרויקט
-
-```text
-index.html
-README.md
-cypress.config.js
-tsconfig.json
-
-docs/
-├── exam.pdf                                        ← מסמך הבחינה
-├── TestPlan_ImmigrationForm_AzureDevOps.xlsx       ← Part IV שאלה 1 — תסריטי בדיקה
-├── Azure_DevOps_TestCases_myGovILManual.xlsx       ← Part IV שאלה 1 — Test Cases ידניים
-├── Azure_DevOps_AutoTestPlan_myGovIL.xlsx          ← תכנית בדיקות אוטומטיות
-├── Azure_DevOps_TestPlan_myGov_Q5.xlsx             ← שאלה 5 — Test Plan מלא ל-my.gov.il
-└── Part4_Q2_שמירת_נתוני_טופס.docx                ← Part IV שאלה 2 — שמירת נתונים
-
-cypress/
-├── e2e/
-│   ├── search.cy.ts                       ← שאלה 2
-│   ├── filter.cy.ts                       ← שאלה 3
-│   ├── intercept.cy.ts                    ← שאלה 4
-│   └── mygov-tabs.cy.ts                   ← שאלה 5 — 7 בדיקות ניווט בין לשוניות
-├── fixtures/
-│   ├── gov-demo/
-│   │   ├── search.html                    ← דמו חיפוש (שאלה 2)
-│   │   ├── filters.html                   ← דמו פילטרים (שאלה 3)
-│   │   ├── prime-ministers.html           ← דמו ראש הממשלה (שאלה 4)
-│   │   └── mygov-portal.html              ← דמו my.gov.il עם 12 לשוניות (שאלה 5)
-│   ├── mygov/
-│   │   └── myGovData.json                 ← fixture לבדיקות לשוניות (שאלה 5)
-│   ├── search/
-│   │   └── searchData.json
-│   ├── filters/
-│   │   └── filterData.json                ← שאלה 3
-│   └── primeMinistersOffice.json          ← שאלה 4
-├── pages/
-│   ├── BasePage.ts
-│   ├── SearchPage.ts
-│   ├── FilterPage.ts                      ← שאלה 3
-│   └── MyGovPage.ts                       ← שאלה 5 — לשוניות my.gov
-└── support/
-    ├── commands.js
-    ├── commands.ts
-    ├── e2e.ts
-    └── index.d.ts
-
-results/
-└── postman/                               ← תוצאות Postman Collection Run
-```
 
 ---
 
