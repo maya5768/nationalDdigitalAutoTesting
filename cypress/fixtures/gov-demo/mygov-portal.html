@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my.gov.il — הפורטל הממשלתי האישי (דמו)</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a2e;
+            direction: rtl;
+        }
+
+        /* ── Header ─────────────────────────────────────────────── */
+        .mygov-header {
+            background: #fff;
+            border-bottom: 2px solid #0057a8;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .mygov-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #0057a8;
+            letter-spacing: -0.5px;
+        }
+        .mygov-logo span { color: #1ac99e; }
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.9rem;
+            color: #444;
+        }
+        .btn-logout {
+            background: none;
+            border: 1px solid #0057a8;
+            color: #0057a8;
+            padding: 5px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: background 0.15s;
+        }
+        .btn-logout:hover { background: #e8f0fe; }
+
+        /* ── Layout ──────────────────────────────────────────────── */
+        .mygov-layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* ── Sidebar ─────────────────────────────────────────────── */
+        .mygov-sidebar {
+            width: 230px;
+            background: #fff;
+            border-left: 1px solid #e0e7ef;
+            padding: 16px 0;
+            flex-shrink: 0;
+        }
+        .nav-tabs { list-style: none; }
+
+        .nav-section-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 20px 4px;
+        }
+
+        .tab-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 20px;
+            color: #444;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-right: 3px solid transparent;
+            transition: background 0.12s, color 0.12s;
+            cursor: pointer;
+        }
+        .tab-link:hover { background: #f0f5ff; color: #0057a8; }
+        .tab-link.active {
+            background: #e8f0fe;
+            color: #0057a8;
+            font-weight: 600;
+            border-right-color: #0057a8;
+        }
+        .tab-link[aria-selected="true"] {
+            background: #e8f0fe;
+            color: #0057a8;
+            font-weight: 600;
+            border-right-color: #0057a8;
+        }
+        .tab-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+        /* ── Main Content ────────────────────────────────────────── */
+        .mygov-content {
+            flex: 1;
+            padding: 32px 40px;
+        }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        .panel-header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e0e7ef;
+            padding-bottom: 16px;
+        }
+        .panel-header h1 {
+            font-size: 1.5rem;
+            color: #0057a8;
+            margin-bottom: 4px;
+        }
+        .panel-header p { color: #666; font-size: 0.9rem; }
+
+        .info-card {
+            background: #fff;
+            border: 1px solid #e0e7ef;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+        .info-card h3 { font-size: 1rem; margin-bottom: 12px; color: #333; }
+        .info-row {
+            display: flex;
+            gap: 8px;
+            font-size: 0.9rem;
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { color: #888; min-width: 140px; }
+        .info-value { font-weight: 500; color: #222; }
+
+        .action-btn {
+            display: inline-block;
+            background: #0057a8;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 22px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.15s;
+        }
+        .action-btn:hover { background: #004080; }
+
+        .update-card {
+            background: #fff;
+            border: 1px solid #e0e7ef;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .update-icon { font-size: 1.4rem; }
+        .update-body h4 { font-size: 0.95rem; margin-bottom: 4px; }
+        .update-body p { font-size: 0.84rem; color: #666; }
+        .update-meta { font-size: 0.78rem; color: #aaa; margin-top: 4px; }
+
+        .badge-high { background: #fff0f0; color: #c0392b; border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; }
+        .badge-med  { background: #fffbe6; color: #d4930a; border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; }
+        .badge-ok   { background: #eafaf1; color: #1a9e5c; border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; }
+    </style>
+</head>
+<body>
+
+    <header class="mygov-header">
+        <div class="mygov-logo">my<span>.</span>gov<span>.il</span></div>
+        <div class="header-user">
+            <span>שלום, מיה שקרי</span>
+            <button class="btn-logout" data-testid="logout-btn">יציאה ⇦</button>
+        </div>
+    </header>
+
+    <div class="mygov-layout">
+
+        <!-- ── Sidebar Navigation ─────────────────────────────── -->
+        <nav class="mygov-sidebar" aria-label="תפריט ראשי">
+            <ul class="nav-tabs" role="tablist">
+                <li>
+                    <a class="tab-link active" data-tab="home" role="tab"
+                       aria-selected="true" aria-controls="tab-home" tabindex="0">
+                        <span class="tab-icon">🏠</span>דף הבית
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="personal" role="tab"
+                       aria-selected="false" aria-controls="tab-personal" tabindex="-1">
+                        <span class="tab-icon">👤</span>פרטים אישיים
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="documents" role="tab"
+                       aria-selected="false" aria-controls="tab-documents" tabindex="-1">
+                        <span class="tab-icon">📄</span>מסמכים
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="history" role="tab"
+                       aria-selected="false" aria-controls="tab-history" tabindex="-1">
+                        <span class="tab-icon">🔄</span>היסטוריית פעילות
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="services" role="tab"
+                       aria-selected="false" aria-controls="tab-services" tabindex="-1">
+                        <span class="tab-icon">⚙️</span>פעולות ושירותים
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="permissions" role="tab"
+                       aria-selected="false" aria-controls="tab-permissions" tabindex="-1">
+                        <span class="tab-icon">👥</span>ניהול הרשאות
+                    </a>
+                </li>
+
+                <li class="nav-section-title">המידע שלי</li>
+
+                <li>
+                    <a class="tab-link" data-tab="driving" role="tab"
+                       aria-selected="false" aria-controls="tab-driving" tabindex="-1">
+                        <span class="tab-icon">🚗</span>נהיגה וכלי תחבורה
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="health" role="tab"
+                       aria-selected="false" aria-controls="tab-health" tabindex="-1">
+                        <span class="tab-icon">🏥</span>בריאות
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="money" role="tab"
+                       aria-selected="false" aria-controls="tab-money" tabindex="-1">
+                        <span class="tab-icon">💰</span>כסף וביטוח
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="assets" role="tab"
+                       aria-selected="false" aria-controls="tab-assets" tabindex="-1">
+                        <span class="tab-icon">🏢</span>נכסים, בנייה ודיור
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="employment" role="tab"
+                       aria-selected="false" aria-controls="tab-employment" tabindex="-1">
+                        <span class="tab-icon">💼</span>תעסוקה והשכלה
+                    </a>
+                </li>
+                <li>
+                    <a class="tab-link" data-tab="business" role="tab"
+                       aria-selected="false" aria-controls="tab-business" tabindex="-1">
+                        <span class="tab-icon">🏪</span>חשבון העסק שלי
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- ── Tab Panels ─────────────────────────────────────── -->
+        <main class="mygov-content">
+
+            <!-- דף הבית -->
+            <div class="tab-panel active" id="tab-home" role="tabpanel" aria-labelledby="tab-home-link">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">ברוכה הבאה, מיה</h1>
+                    <p data-testid="tab-content">כאן תוכלי לראות את הנתונים האישיים שלך ועדכונים ממשרדי הממשלה</p>
+                </div>
+                <div class="update-card">
+                    <div class="update-icon">📋</div>
+                    <div class="update-body">
+                        <h4>רישום למעונות יום לחנה שקרי</h4>
+                        <p>סטטוס הרישום — ממתין לאישור</p>
+                        <div class="update-meta">31/05/2026 · משרד העבודה <span class="badge-med">ממתין</span></div>
+                    </div>
+                </div>
+                <div class="update-card">
+                    <div class="update-icon">🏠</div>
+                    <div class="update-body">
+                        <h4>זכאות לסיוע בדיור הסתיימה</h4>
+                        <p>תאריך סיום: 14/05/2026</p>
+                        <div class="update-meta">14/05/2026 · משרד הבינוי <span class="badge-high">לטיפול</span></div>
+                    </div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">חיפוש שירות</button>
+            </div>
+
+            <!-- פרטים אישיים -->
+            <div class="tab-panel" id="tab-personal" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">הפרטים האישיים שלך</h1>
+                    <p data-testid="tab-content">פרטי הזהות הרשמיים שלך במאגר האוכלוסין</p>
+                </div>
+                <div class="info-card">
+                    <h3>פרטים אישיים</h3>
+                    <div class="info-row"><span class="info-label">שם מלא</span><span class="info-value">מיה שקרי</span></div>
+                    <div class="info-row"><span class="info-label">תעודת זהות</span><span class="info-value">2XXXXXXX3</span></div>
+                    <div class="info-row"><span class="info-label">תאריך לידה</span><span class="info-value">01/01/1990</span></div>
+                    <div class="info-row"><span class="info-label">כתובת</span><span class="info-value">תל אביב</span></div>
+                    <div class="info-row"><span class="info-label">טלפון</span><span class="info-value">05X-XXXXXXX</span></div>
+                    <div class="info-row"><span class="info-label">מייל</span><span class="info-value">maya5768@gmail.com</span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">עדכון פרטים</button>
+            </div>
+
+            <!-- מסמכים -->
+            <div class="tab-panel" id="tab-documents" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">המסמכים שלך</h1>
+                    <p data-testid="tab-content">תעודות ומסמכים רשמיים הקשורים אליך</p>
+                </div>
+                <div class="info-card">
+                    <h3>תעודת זהות</h3>
+                    <div class="info-row"><span class="info-label">מספר</span><span class="info-value">2XXXXXXX3</span></div>
+                    <div class="info-row"><span class="info-label">תוקף</span><span class="info-value">01/2032 <span class="badge-ok">בתוקף</span></span></div>
+                </div>
+                <div class="info-card">
+                    <h3>דרכון</h3>
+                    <div class="info-row"><span class="info-label">מספר</span><span class="info-value">2X3XXXXXX</span></div>
+                    <div class="info-row"><span class="info-label">תוקף</span><span class="info-value">03/2027 <span class="badge-med">פג בקרוב</span></span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">הורדת מסמך</button>
+            </div>
+
+            <!-- היסטוריית פעילות -->
+            <div class="tab-panel" id="tab-history" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">היסטוריית הפעולות</h1>
+                    <p data-testid="tab-content">כל הפעולות שביצעת בפורטל ב-12 החודשים האחרונים</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-row"><span class="info-label">01/05/2026</span><span class="info-value">הורדת תעודת זהות</span></div>
+                    <div class="info-row"><span class="info-label">15/04/2026</span><span class="info-value">שליחת פניה — דרכון</span></div>
+                    <div class="info-row"><span class="info-label">02/03/2026</span><span class="info-value">עדכון מספר טלפון</span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">סינון פעולות</button>
+            </div>
+
+            <!-- פעולות ושירותים -->
+            <div class="tab-panel" id="tab-services" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">שירותים ופעולות</h1>
+                    <p data-testid="tab-content">פניות, שירותים ממשלתיים ובקשות</p>
+                </div>
+                <div class="info-card">
+                    <h3>פניות פתוחות</h3>
+                    <div class="info-row"><span class="info-label">פניה #12345</span><span class="info-value">בקשת דרכון <span class="badge-med">בטיפול</span></span></div>
+                    <div class="info-row"><span class="info-label">פניה #12210</span><span class="info-value">זכאות מעון יום <span class="badge-ok">אושר</span></span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">פניה חדשה</button>
+            </div>
+
+            <!-- ניהול הרשאות -->
+            <div class="tab-panel" id="tab-permissions" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">ניהול הרשאות</h1>
+                    <p data-testid="tab-content">מי יכול לצפות במידע שלך ולפעול בשמך</p>
+                </div>
+                <div class="info-card">
+                    <h3>מורשים פעילים</h3>
+                    <div class="info-row"><span class="info-label">ת.ז. XXXXXXXXX</span><span class="info-value">צפייה בלבד <span class="badge-ok">פעיל</span></span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">הוספת מורשה</button>
+            </div>
+
+            <!-- נהיגה וכלי תחבורה -->
+            <div class="tab-panel" id="tab-driving" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">הרכב והנהיגה שלך</h1>
+                    <p data-testid="tab-content">רישיון נהיגה, פרטי רכב, ביטוח ודוחות תנועה</p>
+                </div>
+                <div class="info-card">
+                    <h3>רישיון נהיגה</h3>
+                    <div class="info-row"><span class="info-label">מספר רישיון</span><span class="info-value">XXXXXXXX</span></div>
+                    <div class="info-row"><span class="info-label">קטגוריות</span><span class="info-value">B</span></div>
+                    <div class="info-row"><span class="info-label">תוקף</span><span class="info-value">2030 <span class="badge-ok">בתוקף</span></span></div>
+                </div>
+                <div class="info-card">
+                    <h3>ביטוח רכב</h3>
+                    <div class="info-row"><span class="info-label">חברת ביטוח</span><span class="info-value">הפניקס</span></div>
+                    <div class="info-row"><span class="info-label">תוקף</span><span class="info-value">12/2025 <span class="badge-high">פג תוקף</span></span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">חידוש ביטוח</button>
+            </div>
+
+            <!-- בריאות -->
+            <div class="tab-panel" id="tab-health" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">המידע הבריאותי שלך</h1>
+                    <p data-testid="tab-content">ביטוח בריאות, תיק רפואי ותרופות קבועות</p>
+                </div>
+                <div class="info-card">
+                    <h3>ביטוח בריאות</h3>
+                    <div class="info-row"><span class="info-label">קופת חולים</span><span class="info-value">מכבי <span class="badge-ok">פעיל</span></span></div>
+                    <div class="info-row"><span class="info-label">מספר חבר</span><span class="info-value">XXXXXXXX</span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">הצגת תיק רפואי</button>
+            </div>
+
+            <!-- כסף וביטוח -->
+            <div class="tab-panel" id="tab-money" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">הכסף וביטוח שלך</h1>
+                    <p data-testid="tab-content">קצבאות, תשלומים ופרטי חשבון בנק</p>
+                </div>
+                <div class="info-card">
+                    <h3>קצבאות פעילות</h3>
+                    <div class="info-row"><span class="info-label">קצבת ילדים</span><span class="info-value">₪ 193 / חודש <span class="badge-ok">פעיל</span></span></div>
+                </div>
+                <div class="info-card">
+                    <h3>חשבון בנק (masked)</h3>
+                    <div class="info-row"><span class="info-label">בנק</span><span class="info-value">הפועלים</span></div>
+                    <div class="info-row"><span class="info-label">חשבון</span><span class="info-value">****1234</span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">הצגת תשלומים</button>
+            </div>
+
+            <!-- נכסים, בנייה ודיור -->
+            <div class="tab-panel" id="tab-assets" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">הנכסים שלך</h1>
+                    <p data-testid="tab-content">נכסי מקרקעין, היתרי בנייה וזכאות לדיור</p>
+                </div>
+                <div class="info-card">
+                    <h3>נכסי מקרקעין</h3>
+                    <div class="info-row"><span class="info-label">כתובת</span><span class="info-value">תל אביב</span></div>
+                    <div class="info-row"><span class="info-label">גוש / חלקה</span><span class="info-value">XXXX / XX</span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">בדיקת זכאות דיור</button>
+            </div>
+
+            <!-- תעסוקה והשכלה -->
+            <div class="tab-panel" id="tab-employment" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">תעסוקה והשכלה</h1>
+                    <p data-testid="tab-content">היסטוריית מעסיקים, תארים ונתוני פנסיה</p>
+                </div>
+                <div class="info-card">
+                    <h3>מעסיק נוכחי</h3>
+                    <div class="info-row"><span class="info-label">שם מעסיק</span><span class="info-value">לא זמין</span></div>
+                </div>
+                <div class="info-card">
+                    <h3>השכלה</h3>
+                    <div class="info-row"><span class="info-label">תואר</span><span class="info-value">B.Sc. מדעי המחשב</span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">הצגת פנסיה</button>
+            </div>
+
+            <!-- חשבון העסק שלי -->
+            <div class="tab-panel" id="tab-business" role="tabpanel">
+                <div class="panel-header">
+                    <h1 data-testid="tab-title">חשבון העסק</h1>
+                    <p data-testid="tab-content">פרטי עסק, תשלומי מע"מ ומס הכנסה</p>
+                </div>
+                <div class="info-card">
+                    <h3>פרטי עסק</h3>
+                    <div class="info-row"><span class="info-label">סטטוס</span><span class="info-value">אין עסק פעיל רשום</span></div>
+                </div>
+                <button class="action-btn" data-testid="tab-action">פתיחת עסק</button>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab-link');
+        const panels = document.querySelectorAll('.tab-panel');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-tab');
+
+                // update tab states
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                this.setAttribute('tabindex', '0');
+
+                // update panel visibility
+                panels.forEach(p => p.classList.remove('active'));
+                const target = document.getElementById('tab-' + targetId);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

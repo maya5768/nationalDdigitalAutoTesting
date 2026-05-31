@@ -3,3 +3,4 @@ Thumbs.db
 *.log
 cypress/videos/
 node_modules/
+~$*

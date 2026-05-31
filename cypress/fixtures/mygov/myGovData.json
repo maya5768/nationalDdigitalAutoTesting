@@ -1,0 +1,19 @@
+{
+  "tabs": [
+    { "id": "home",        "label": "דף הבית",             "expectedTitle": "ברוכה הבאה, מיה" },
+    { "id": "personal",    "label": "פרטים אישיים",         "expectedTitle": "הפרטים האישיים שלך" },
+    { "id": "documents",   "label": "מסמכים",               "expectedTitle": "המסמכים שלך" },
+    { "id": "history",     "label": "היסטוריית פעילות",     "expectedTitle": "היסטוריית הפעולות" },
+    { "id": "services",    "label": "פעולות ושירותים",      "expectedTitle": "שירותים ופעולות" },
+    { "id": "permissions", "label": "ניהול הרשאות",         "expectedTitle": "ניהול הרשאות" },
+    { "id": "driving",     "label": "נהיגה וכלי תחבורה",   "expectedTitle": "הרכב והנהיגה שלך" },
+    { "id": "health",      "label": "בריאות",               "expectedTitle": "המידע הבריאותי שלך" },
+    { "id": "money",       "label": "כסף וביטוח",           "expectedTitle": "הכסף וביטוח שלך" },
+    { "id": "assets",      "label": "נכסים, בנייה ודיור",  "expectedTitle": "הנכסים שלך" },
+    { "id": "employment",  "label": "תעסוקה והשכלה",        "expectedTitle": "תעסוקה והשכלה" },
+    { "id": "business",    "label": "חשבון העסק שלי",       "expectedTitle": "חשבון העסק" }
+  ],
+  "totalTabs": 12,
+  "defaultTab": "home",
+  "myInfoTabs": ["driving", "health", "money", "assets", "employment"]
+}
